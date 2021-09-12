@@ -41,6 +41,7 @@
     </dependencies>
     <build>
         <plugins>
+            <!-- 解决找不到程序包问题 -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
