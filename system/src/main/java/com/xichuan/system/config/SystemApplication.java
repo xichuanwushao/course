@@ -1,4 +1,4 @@
-package com.xichuan.system;
+package com.xichuan.system.config;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 
 @ComponentScan("com.xichuan")
-@MapperScan("com.xichuan.system.mapper")
+@MapperScan("com.xichuan.server.mapper")
 @EnableEurekaClient
 @SpringBootApplication
 public class SystemApplication {
