@@ -980,7 +980,14 @@
     </div>
 </template>
 <script>
-    $('body').removeClass('login-layout light-login');
-    $('body').attr('class', 'no-skin');
+    export default {
+        name: "admin",
+        mounted:function () {
+            $("body").removeClass("login-layout light-login");
+            $("body").attr("class", "no-skin");
+        },
+        methods:{
+        }
 
+    }
 </script>
