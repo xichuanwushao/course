@@ -979,3 +979,8 @@
         </div><!-- /.main-container -->
     </div>
 </template>
+<script>
+    $('body').removeClass('login-layout light-login');
+    $('body').attr('class', 'no-skin');
+
+</script>
