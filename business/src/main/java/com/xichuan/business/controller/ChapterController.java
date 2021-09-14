@@ -1,6 +1,7 @@
 package com.xichuan.business.controller;
 
 import com.xichuan.server.domain.Chapter;
+import com.xichuan.server.resp.ChapterResp;
 import com.xichuan.server.service.ChapterService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +21,7 @@ public class ChapterController {
     }
 
     @RequestMapping("chapterlist")
-    public List<Chapter> chapterlist(){
+    public List<ChapterResp> chapterlist(){
        return chapterService.list();
     }
 }

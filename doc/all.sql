@@ -15,3 +15,6 @@ create table `test` (
 ) engine=innodb default charset=utf8mb4 comment='测试';
 
 insert into `test` (id, name) values (1, '测试');
+
+insert into `chapter` (id, course_id, name) values ('2','2','骆驼祥子');
+insert into `chapter` (id, course_id, name) values ('3','3','西游记');
