@@ -484,61 +484,6 @@
 
                                 <b class="arrow"></b>
 
-                                <ul class="submenu">
-                                    <li class="">
-                                        <a href="top-menu.html">
-                                            <i class="menu-icon fa fa-caret-right"></i>
-                                            Top Menu
-                                        </a>
-
-                                        <b class="arrow"></b>
-                                    </li>
-
-                                    <li class="">
-                                        <a href="two-menu-1.html">
-                                            <i class="menu-icon fa fa-caret-right"></i>
-                                            Two Menus 1
-                                        </a>
-
-                                        <b class="arrow"></b>
-                                    </li>
-
-                                    <li class="">
-                                        <a href="two-menu-2.html">
-                                            <i class="menu-icon fa fa-caret-right"></i>
-                                            Two Menus 2
-                                        </a>
-
-                                        <b class="arrow"></b>
-                                    </li>
-
-                                    <li class="">
-                                        <a href="mobile-menu-1.html">
-                                            <i class="menu-icon fa fa-caret-right"></i>
-                                            Default Mobile Menu
-                                        </a>
-
-                                        <b class="arrow"></b>
-                                    </li>
-
-                                    <li class="">
-                                        <a href="mobile-menu-2.html">
-                                            <i class="menu-icon fa fa-caret-right"></i>
-                                            Mobile Menu 2
-                                        </a>
-
-                                        <b class="arrow"></b>
-                                    </li>
-
-                                    <li class="">
-                                        <a href="mobile-menu-3.html">
-                                            <i class="menu-icon fa fa-caret-right"></i>
-                                            Mobile Menu 3
-                                        </a>
-
-                                        <b class="arrow"></b>
-                                    </li>
-                                </ul>
                             </li>
 
                             <li class="">
@@ -615,11 +560,27 @@
     </div>
 </template>
 <script>
+
     export default {
         name: "admin",
         mounted:function () {
+            let _this = this;
             $("body").removeClass("login-layout light-login");
             $("body").attr("class", "no-skin");
+            _this.activeSidebar(_this.$route.name.replace("/", "-") + "-sidebar");
+        },
+        watch: {
+            $route: {
+                handler:function(val, oldVal){
+                    // sidebar激活样式方法二
+                    console.log("---->页面跳转：", val, oldVal);
+                    let _this = this;
+
+                    _this.$nextTick(function(){  //页面加载完成后执行
+                        _this.activeSidebar(_this.$route.name.replace("/", "-") + "-sidebar");
+                    })
+                }
+            }
         },
         methods:{
 
