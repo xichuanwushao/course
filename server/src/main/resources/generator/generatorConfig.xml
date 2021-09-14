@@ -39,7 +39,8 @@
                              targetPackage="com.xichuan.server.mapper"
                              type="XMLMAPPER" />
 
-        <table tableName="test" domainObjectName="TestGen"/>
+<!--        <table tableName="test" domainObjectName="TestGen"/>-->
+        <table tableName="chapter" domainObjectName="Chapter"/>
 
 
 
