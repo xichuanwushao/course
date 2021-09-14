@@ -359,7 +359,7 @@
                 </div><!-- /.sidebar-shortcuts -->
 
                 <ul class="nav nav-list">
-                    <li class="">
+                    <li class="" id="welcome-sidebar">
                         <a href="index.html">
                             <i class="menu-icon fa fa-tachometer"></i>
                             <span class="menu-text"> 欢迎 </span>
@@ -368,7 +368,7 @@
                         <b class="arrow"></b>
                     </li>
 
-                    <li class="active open">
+                    <li class=""><!--active open-->
                         <a href="#" class="dropdown-toggle">
                             <i class="menu-icon fa fa-desktop"></i>
                             <span class="menu-text">
@@ -461,7 +461,7 @@
                         </ul>
                     </li>
 
-                    <li class="active open">
+                    <li class="">
                         <a href="#" class="dropdown-toggle">
                             <i class="menu-icon fa fa-desktop"></i>
                             <span class="menu-text">
@@ -474,7 +474,7 @@
                         <b class="arrow"></b>
 
                         <ul class="submenu">
-                            <li class="active">
+                            <li class="" id="business-chapter-sidebar">
                                 <a href="#" class="dropdown-toggle">
                                     <i class="menu-icon fa fa-caret-right"></i>
 
@@ -622,6 +622,26 @@
             $("body").attr("class", "no-skin");
         },
         methods:{
+
+            /**
+             * 菜单激活样式，id是当前点击的菜单的id
+             * @param id
+             */
+            activeSidebar: function (id) {
+                // 兄弟菜单去掉active样式，自身增加active样式
+                $("#" + id).siblings().removeClass("active");
+                $("#" + id).siblings().find("li").removeClass("active");
+                $("#" + id).addClass("active");
+
+                // 如果有父菜单，父菜单的兄弟菜单去掉open active，父菜单增加open active
+                let parentLi = $("#" + id).parents("li");
+                if (parentLi) {
+                    parentLi.siblings().removeClass("open active");
+                    parentLi.siblings().find("li").removeClass("active");
+                    parentLi.addClass("open active");
+                }
+            },
+
         }
 
     }
