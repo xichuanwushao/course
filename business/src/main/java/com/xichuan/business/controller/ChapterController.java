@@ -10,17 +10,18 @@ import javax.annotation.Resource;
 import java.util.List;
 
 //@Controller 如果接口返回页面用Controller
+@RequestMapping("chapter")
 @RestController//@Controller 如果接口返回Json 用RestController
 public class ChapterController {
     @Resource
     private ChapterService chapterService;
 
-    @RequestMapping("chapter")
+    @RequestMapping("test")
     public String chapter(){
         return "success";
     }
 
-    @RequestMapping("chapterlist")
+    @RequestMapping("list")
     public List<ChapterResp> chapterlist(){
        return chapterService.list();
     }
