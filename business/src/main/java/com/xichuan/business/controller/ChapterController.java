@@ -4,6 +4,7 @@ import com.xichuan.server.domain.Chapter;
 import com.xichuan.server.req.ChapterReq;
 import com.xichuan.server.req.PageReq;
 import com.xichuan.server.resp.ChapterResp;
+import com.xichuan.server.resp.CommonResp;
 import com.xichuan.server.service.ChapterService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,13 +31,17 @@ public class ChapterController {
     }
 
     @RequestMapping("listPage")
-    public PageReq listPage(@RequestBody PageReq pageReq){
+    public CommonResp listPage(@RequestBody PageReq pageReq){
+        CommonResp commonResp = new CommonResp();
         chapterService.listPage(pageReq);
-        return pageReq;
+        commonResp.setContent(pageReq);
+        return commonResp;
     }
     @RequestMapping("/save")
-    public ChapterReq save(@RequestBody ChapterReq chapterReq){
+    public CommonResp save(@RequestBody ChapterReq chapterReq){
+        CommonResp commonResp = new CommonResp();
         chapterService.save(chapterReq);
-        return chapterReq;
+        commonResp.setContent(chapterReq);
+        return commonResp;
     }
 }

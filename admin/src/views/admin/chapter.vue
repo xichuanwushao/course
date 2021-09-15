@@ -152,18 +152,22 @@
                 _this.$ajax.post("http://127.0.0.1:9000/business/chapter/listPage",{
                     page:page,
                     size:_this.$refs.pagination.size,
-                }).then((resp=>{
-                    console.log("查询章列表结果：",resp);
-                    _this.chapters = resp.data.list;
-                    console.info("resp.content "+resp.data)
-                    console.info("resp.content "+resp.data)
-                    _this.$refs.pagination.render(page, resp.data.total);
+                }).then((response=>{
+                    console.log("查询章列表结果：",response);
+                    let resp = response.data;
+                    _this.chapters = resp.content.list;
+                    _this.$refs.pagination.render(page, resp.content.total);
                 }))
             },
             save(){
                 let _this = this;
-                _this.$ajax.post("http://127.0.0.1:9000/business/chapter/save", _this.chapter).then((resp=>{
-                    $(".modal").modal("hide")
+                _this.$ajax.post("http://127.0.0.1:9000/business/chapter/save", _this.chapter).then((response=>{
+                    console.log("保存章列表结果：",response);
+                    let resp = response.data;
+                    if (resp.success){
+                        $(".modal").modal("hide");
+                        _this.list(1);
+                    }
                 }))
             }
         }
