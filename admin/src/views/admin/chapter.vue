@@ -105,20 +105,20 @@
                             <div class="form-group">
                                 <label  class="col-sm-2 control-label">名称</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control"  placeholder="名称">
+                                    <input v-model="chapter.name" type="text" class="form-control"  placeholder="名称">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label  class="col-sm-2 control-label">课程编号</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control"  placeholder="课程编号">
+                                    <input v-model="chapter.courseId" type="text" class="form-control"  placeholder="课程编号">
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="button" class="btn btn-primary">保存</button>
+                        <button v-on:click="save()" type="button" class="btn btn-primary">保存</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -132,6 +132,7 @@
         name: "chapter",
         data:function (){
             return{
+                chapter:{},
                 chapters:[]
             }
         },
@@ -157,6 +158,12 @@
                     console.info("resp.content "+resp.data)
                     console.info("resp.content "+resp.data)
                     _this.$refs.pagination.render(page, resp.data.total);
+                }))
+            },
+            save(){
+                let _this = this;
+                _this.$ajax.post("http://127.0.0.1:9000/business/chapter/save", _this.chapter).then((resp=>{
+                    $(".modal").modal("hide")
                 }))
             }
         }
