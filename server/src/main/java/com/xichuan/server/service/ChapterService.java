@@ -1,7 +1,9 @@
 package com.xichuan.server.service;
 
+import cn.hutool.core.util.IdUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.xichuan.server.req.ChapterReq;
 import com.xichuan.server.req.PageReq;
 import com.xichuan.server.domain.Chapter;
 import com.xichuan.server.domain.ChapterExample;
@@ -48,5 +50,11 @@ public class ChapterService {
             chapterRespList.add(chapterResp);
         }
         pageReq.setList(chapterRespList);
+    }
+    public void save(ChapterReq chapterReq) {
+        chapterReq.setId(IdUtil.simpleUUID());
+        Chapter chapter = new Chapter();
+        BeanUtils.copyProperties(chapterReq,chapter);
+        chapterMapper.insert(chapter);
     }
 }

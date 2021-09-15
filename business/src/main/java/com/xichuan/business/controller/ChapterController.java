@@ -1,6 +1,7 @@
 package com.xichuan.business.controller;
 
 import com.xichuan.server.domain.Chapter;
+import com.xichuan.server.req.ChapterReq;
 import com.xichuan.server.req.PageReq;
 import com.xichuan.server.resp.ChapterResp;
 import com.xichuan.server.service.ChapterService;
@@ -32,5 +33,10 @@ public class ChapterController {
     public PageReq listPage(@RequestBody PageReq pageReq){
         chapterService.listPage(pageReq);
         return pageReq;
+    }
+    @RequestMapping("/save")
+    public ChapterReq save(@RequestBody ChapterReq chapterReq){
+        chapterService.save(chapterReq);
+        return chapterReq;
     }
 }
