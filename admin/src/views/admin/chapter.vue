@@ -3,12 +3,13 @@
 
 
     <div>
-        <button v-on:click="list()" id="loading-btn" type="button" class="btn btn-success" data-loading-text="Loading..."><i class="ace-icon fa fa-refresh "></i><font class="loading-font">刷新</font></button>
-<!--        <button class="btn btn-white btn-default btn-round">-->
-<!--            <i class="ace-icon fa fa-refresh red2"></i>-->
-<!--            刷新-->
-<!--        </button>-->
+<!--        <button v-on:click="list(1)" id="loading-btn" type="button" class="btn btn-success" data-loading-text="Loading..."><i class="ace-icon fa fa-refresh "></i><font class="loading-font">刷新</font></button>-->
+        <button v-on:click="list(1)" class="btn btn-white btn-default btn-round">
+            <i class="ace-icon fa fa-refresh "></i>
+            刷新
+        </button>
         <!-- PAGE CONTENT BEGINS -->
+        <pagination  ref="pagination" v-bind:list="list" v-bind:itemCount="3"></pagination>
         <table id="simple-table" class="table  table-bordered table-hover">
                     <thead>
                     <tr>
@@ -90,7 +91,9 @@
     </div>
 </template>
 <script>
+    import Pagination from "../../components/pagination";
     export default {
+        components: {Pagination},
         name: "chapter",
         data:function (){
             return{
@@ -100,17 +103,21 @@
         mounted:function () {
             // this.$parent.activeSidebar("business-chapter-sidebar");
             let _this = this;
-            _this.list();
+            _this.$refs.pagination.size = 5;
+            _this.list(1);
         },
         methods:{
-            list(){
+            list(page){
                 let _this = this;
                 _this.$ajax.post("http://127.0.0.1:9000/business/chapter/listPage",{
-                    page:1,
-                    size:1
-                }).then((response=>{
-                    console.log("查询章列表结果：",response);
-                    _this.chapters = response.data.list;
+                    page:page,
+                    size:_this.$refs.pagination.size,
+                }).then((resp=>{
+                    console.log("查询章列表结果：",resp);
+                    _this.chapters = resp.data.list;
+                    console.info("resp.content "+resp.data)
+                    console.info("resp.content "+resp.data)
+                    _this.$refs.pagination.render(page, resp.data.total);
                 }))
             }
         }
@@ -119,7 +126,8 @@
 </script>
 <style>
     .btn{
-        margin-bottom: 6px;
+        margin-top: 0;
+        margin-right: 5px;
     }
     #loading-btn{
         width: 120px;
