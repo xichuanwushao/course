@@ -1,6 +1,7 @@
 package com.xichuan.business.controller;
 
 import com.xichuan.server.domain.Chapter;
+import com.xichuan.server.req.PageReq;
 import com.xichuan.server.resp.ChapterResp;
 import com.xichuan.server.service.ChapterService;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,8 +22,14 @@ public class ChapterController {
         return "success";
     }
 
-    @RequestMapping("list")
-    public List<ChapterResp> chapterlist(){
-       return chapterService.list();
+    @RequestMapping("all")
+    public List<ChapterResp> all(){
+        return chapterService.all();
+    }
+
+    @RequestMapping("listPage")
+    public PageReq listPage(PageReq pageReq){
+        chapterService.listPage(pageReq);
+        return pageReq;
     }
 }
