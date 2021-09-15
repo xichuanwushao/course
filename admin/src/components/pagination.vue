@@ -1,10 +1,6 @@
 <template>
   <div class="pagination" role="group" aria-label="分页">
-    <button type="button" class="btn btn-default btn-white btn-round" 
-            v-bind:disabled="page === 1"
-            v-on:click="selectPage(1)">
-      1
-    </button>
+
     <button type="button" class="btn btn-default btn-white btn-round" 
             v-bind:disabled="page === 1"
             v-on:click="selectPage(page - 1)">
@@ -21,11 +17,7 @@
             v-on:click="selectPage(page + 1)">
       下一页
     </button>
-    <button type="button" class="btn btn-default btn-white btn-round"
-            v-bind:disabled="page === pageTotal"
-            v-on:click="selectPage(pageTotal)">
-      {{pageTotal||1}}
-    </button>
+
     &nbsp;
     <span class="m--padding-10">
         每页

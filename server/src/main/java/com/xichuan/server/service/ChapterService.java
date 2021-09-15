@@ -9,6 +9,7 @@ import com.xichuan.server.domain.Chapter;
 import com.xichuan.server.domain.ChapterExample;
 import com.xichuan.server.mapper.ChapterMapper;
 import com.xichuan.server.resp.ChapterResp;
+import com.xichuan.server.util.CopyUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -42,19 +43,12 @@ public class ChapterService {
         List<Chapter> chapterList = chapterMapper.selectByExample(chapterExample);//写在select的下一行
         PageInfo<Chapter> pageInfo = new PageInfo<>(chapterList);
         pageReq.setTotal(pageInfo.getTotal());
-        List<ChapterResp> chapterRespList =new ArrayList<ChapterResp>() ;
-        for(int i = 0;i<chapterList.size();i++){
-            Chapter chapter = chapterList.get(i);
-            ChapterResp chapterResp = new ChapterResp();
-            BeanUtils.copyProperties(chapter,chapterResp);
-            chapterRespList.add(chapterResp);
-        }
-        pageReq.setList(chapterRespList);
+        List<ChapterResp> chapterDtoList = CopyUtil.copyList(chapterList, ChapterResp.class);
+        pageReq.setList(chapterDtoList);
     }
     public void save(ChapterReq chapterReq) {
         chapterReq.setId(IdUtil.simpleUUID());
-        Chapter chapter = new Chapter();
-        BeanUtils.copyProperties(chapterReq,chapter);
+        Chapter chapter = CopyUtil.copy(chapterReq, Chapter.class);
         chapterMapper.insert(chapter);
     }
 }
