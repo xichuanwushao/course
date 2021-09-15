@@ -156,6 +156,10 @@
             _this.list(1);
         },
         methods:{
+            add(){
+                let _this = this;
+                $(".modal").modal("show")
+            },
             list(page){
                 let _this = this;
                 _this.$ajax.post("http://127.0.0.1:9000/business/chapter/listPage",{
