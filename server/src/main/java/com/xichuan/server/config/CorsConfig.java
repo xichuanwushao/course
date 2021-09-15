@@ -14,13 +14,14 @@ public class CorsConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        logger.warn("server模块......跨域配置已经加载......");
-        registry.addMapping("/**")
-                .allowedOrigins("*")
-                .allowedHeaders(CorsConfiguration.ALL)
-                .allowedMethods(CorsConfiguration.ALL)
-                .allowCredentials(true)
-                .maxAge(3600); // 1小时内不需要再预检（发OPTIONS请求）
+        logger.warn("server模块跨域配置已经失效 使用路由模块跨域配置......");
+//        logger.warn("server模块......跨域配置已经加载......");
+//        registry.addMapping("/**")
+//                .allowedOrigins("*")
+//                .allowedHeaders(CorsConfiguration.ALL)
+//                .allowedMethods(CorsConfiguration.ALL)
+//                .allowCredentials(true)
+//                .maxAge(3600); // 1小时内不需要再预检（发OPTIONS请求）
     }
 
 }
