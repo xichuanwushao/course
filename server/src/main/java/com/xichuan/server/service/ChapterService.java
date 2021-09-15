@@ -1,6 +1,7 @@
 package com.xichuan.server.service;
 
 import com.fasterxml.jackson.databind.util.BeanUtil;
+import com.github.pagehelper.PageHelper;
 import com.xichuan.server.domain.Chapter;
 import com.xichuan.server.domain.ChapterExample;
 import com.xichuan.server.mapper.ChapterMapper;
@@ -18,6 +19,7 @@ public class ChapterService {
     private ChapterMapper chapterMapper;
 
     public List<ChapterResp> list() {
+        PageHelper.startPage(1,2);
         ChapterExample chapterExample = new ChapterExample();
 //        chapterExample.createCriteria().andIdEqualTo("1");
 //        chapterExample.setOrderByClause("id desc");
