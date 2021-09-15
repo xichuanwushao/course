@@ -4,6 +4,7 @@ import com.xichuan.server.domain.Chapter;
 import com.xichuan.server.req.PageReq;
 import com.xichuan.server.resp.ChapterResp;
 import com.xichuan.server.service.ChapterService;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,7 +29,7 @@ public class ChapterController {
     }
 
     @RequestMapping("listPage")
-    public PageReq listPage(PageReq pageReq){
+    public PageReq listPage(@RequestBody PageReq pageReq){
         chapterService.listPage(pageReq);
         return pageReq;
     }
