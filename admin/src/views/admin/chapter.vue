@@ -1,5 +1,13 @@
-<template>
+<template xmlns:v-on="http://www.w3.org/1999/xhtml">
+
+
+
     <div>
+        <button v-on:click="list()" id="loading-btn" type="button" class="btn btn-success" data-loading-text="Loading..."><i class="ace-icon fa fa-refresh "></i><font class="loading-font">刷新</font></button>
+<!--        <button class="btn btn-white btn-default btn-round">-->
+<!--            <i class="ace-icon fa fa-refresh red2"></i>-->
+<!--            刷新-->
+<!--        </button>-->
         <!-- PAGE CONTENT BEGINS -->
         <table id="simple-table" class="table  table-bordered table-hover">
                     <thead>
@@ -109,3 +117,19 @@
 
     }
 </script>
+<style>
+    .btn{
+        margin-bottom: 6px;
+    }
+    #loading-btn{
+        width: 120px;
+        height: 20px;
+        margin-bottom: 6px;
+        font-size: 14px;
+        font-margin-bottom: 6px;
+        padding-bottom: 25px;
+    }
+    .loading-font{
+        /*padding-bottom: 12px;*/
+    }
+</style>
