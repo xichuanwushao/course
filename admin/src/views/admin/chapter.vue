@@ -140,7 +140,7 @@
 
             edit(chapter){
                 let _this = this;
-                _this.chapter = chapter;
+                _this.chapter = $.extend({},chapter);//对象复制
                 $("#form-modal").modal("show")
             },
             list(page){
