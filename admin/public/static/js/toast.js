@@ -23,7 +23,7 @@ toast = {
             timer: 3000
         })
     },
-    error:function () {
+    error:function (message) {
         Swal.fire({
             position: 'top-end',
             icon: 'error',
@@ -32,7 +32,7 @@ toast = {
             timer: 3000
         })
     },
-    warning:function () {
+    warning:function (message) {
         Swal.fire({
             position: 'top-end',
             icon: 'warning',
