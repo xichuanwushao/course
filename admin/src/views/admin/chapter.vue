@@ -135,6 +135,7 @@
         methods:{
             add(){
                 let _this = this;
+                _this.chapter={};
                 $("#form-modal").modal("show")
             },
 
