@@ -167,6 +167,7 @@
                     if (resp.success){
                         $("#form-modal").modal("hide");
                         _this.list(1);
+                        toast.success("保存成功")
                     }
                 }))
             },
