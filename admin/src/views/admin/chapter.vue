@@ -124,6 +124,7 @@
             return{
                 chapter:{},
                 chapters:[],
+                currentPage:{},
             }
         },
         mounted:function () {
@@ -146,6 +147,7 @@
             },
             list(page){
                 let _this = this;
+                _this.currentPage=page,
                 _this.$ajax.post("http://127.0.0.1:9000/business/chapter/listPage",{
                     page:page,
                     size:_this.$refs.pagination.size,
@@ -173,7 +175,7 @@
                     console.log("删除大章列表结果：",response);
                     let resp = response.data;
                     if (resp.success){
-                        _this.list(1);
+                        _this.list( _this.currentPage);
                     }
                 }))
             }

@@ -29,7 +29,7 @@
             <option value="50">50</option>
             <option value="100">100</option>
         </select>
-        条，共【{{total}}】条
+        条，共【{{total}}】条，当前第【{{page}}】页
     </span>
   </div>
 </template>
