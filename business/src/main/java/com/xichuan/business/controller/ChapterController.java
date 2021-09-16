@@ -41,15 +41,10 @@ public class ChapterController {
     @PostMapping("/save")
     public CommonResp save(@RequestBody ChapterReq chapterReq){
         // 保存校验
-        try {
-            ValidatorUtil.require(chapterReq.getName(), "名称");
-            ValidatorUtil.require(chapterReq.getCourseId(), "课程ID");
-            ValidatorUtil.length(chapterReq.getCourseId(), "课程ID", 1, 8);
-        }catch (ValidatorException e){
-            CommonResp commonResp = new CommonResp();
-            commonResp.setSuccess(false);
-            commonResp.setMessage(e.getMessage());
-        }
+        ValidatorUtil.require(chapterReq.getName(), "名称");
+        ValidatorUtil.require(chapterReq.getCourseId(), "课程ID");
+        ValidatorUtil.length(chapterReq.getCourseId(), "课程ID", 1, 8);
+
         CommonResp commonResp = new CommonResp();
         chapterService.save(chapterReq);
         commonResp.setContent(chapterReq);
