@@ -2,11 +2,13 @@ package com.xichuan.business.controller;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.xichuan.server.domain.Chapter;
+import com.xichuan.server.exception.ValidatorException;
 import com.xichuan.server.req.ChapterReq;
 import com.xichuan.server.req.PageReq;
 import com.xichuan.server.resp.ChapterResp;
 import com.xichuan.server.resp.CommonResp;
 import com.xichuan.server.service.ChapterService;
+import com.xichuan.server.util.ValidatorUtil;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -38,6 +40,16 @@ public class ChapterController {
     }
     @PostMapping("/save")
     public CommonResp save(@RequestBody ChapterReq chapterReq){
+        // 保存校验
+        try {
+            ValidatorUtil.require(chapterReq.getName(), "名称");
+            ValidatorUtil.require(chapterReq.getCourseId(), "课程ID");
+            ValidatorUtil.length(chapterReq.getCourseId(), "课程ID", 1, 8);
+        }catch (ValidatorException e){
+            CommonResp commonResp = new CommonResp();
+            commonResp.setSuccess(false);
+            commonResp.setMessage(e.getMessage());
+        }
         CommonResp commonResp = new CommonResp();
         chapterService.save(chapterReq);
         commonResp.setContent(chapterReq);
