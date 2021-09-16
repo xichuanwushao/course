@@ -16,8 +16,7 @@ public class ControllerExceptionHandler {
     public CommonResp validatorExceptionHandler(ValidatorException e) {
         CommonResp responseDto = new CommonResp();
         responseDto.setSuccess(false);
-        LOG.warn(e.getMessage());
-        responseDto.setMessage(e.getMessage());
+        LOG.warn(e.getMessage());responseDto.setMessage("后台效验异常："+e.getMessage());
         return responseDto;
     }
 }
