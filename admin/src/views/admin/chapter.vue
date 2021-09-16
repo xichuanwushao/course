@@ -3,7 +3,7 @@
 
 
     <div>
-<!--        <button v-on:click="list(1)" id="loading-btn" type="button" class="btn btn-success" data-loading-text="Loading..."><i class="ace-icon fa fa-refresh "></i><font class="loading-font">刷新</font></button>-->
+<!--        <button v-on:click="list(1)" id="Loading-btn" type="button" class="btn btn-success" data-Loading-text="Loading..."><i class="ace-icon fa fa-refresh "></i><font class="Loading-font">刷新</font></button>-->
         <button v-on:click="add()" class="btn btn-white btn-default btn-round">
             <i class="ace-icon fa fa-edit "></i>
             新增
@@ -148,11 +148,13 @@
             },
             list(page){
                 let _this = this;
+                Loading.show();
                 _this.currentPage=page,
                 _this.$ajax.post("http://127.0.0.1:9000/business/chapter/listPage",{
                     page:page,
                     size:_this.$refs.pagination.size,
                 }).then((response=>{
+                    Loading.hide();
                     console.log("查询章列表结果：",response);
                     let resp = response.data;
                     _this.chapters = resp.content.list;
@@ -161,7 +163,9 @@
             },
             save(){
                 let _this = this;
+                Loading.show();
                 _this.$ajax.post("http://127.0.0.1:9000/business/chapter/save", _this.chapter).then((response=>{
+                    Loading.hide();
                     console.log("保存章列表结果：",response);
                     let resp = response.data;
                     if (resp.success){
@@ -183,7 +187,9 @@
                     confirmButtonText: '确认!'
                 }).then((result) => {
                     if (result.isConfirmed) {
+                        Loading.show();
                         _this.$ajax.delete("http://127.0.0.1:9000/business/chapter/delete/"+id, _this.chapter).then((response=>{
+                            Loading.hide();
                             console.log("删除大章列表结果：",response);
                             let resp = response.data;
                             if (resp.success){
@@ -204,7 +210,7 @@
         margin-top: 0;
         margin-right: 5px;
     }
-    #loading-btn{
+    #Loading-btn{
         width: 120px;
         height: 20px;
         margin-bottom: 6px;
@@ -212,7 +218,7 @@
         font-margin-bottom: 6px;
         padding-bottom: 25px;
     }
-    .loading-font{
+    .Loading-font{
         /*padding-bottom: 12px;*/
     }
 </style>
