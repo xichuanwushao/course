@@ -117,6 +117,7 @@
 </template>
 <script>
     import Pagination from "../../components/pagination";
+    import Swal from 'sweetalert2'
     export default {
         components: {Pagination},
         name: "chapter",
@@ -171,13 +172,31 @@
             },
             del(id){
                 let _this = this;
-                _this.$ajax.delete("http://127.0.0.1:9000/business/chapter/delete/"+id, _this.chapter).then((response=>{
-                    console.log("删除大章列表结果：",response);
-                    let resp = response.data;
-                    if (resp.success){
-                        _this.list( _this.currentPage);
+                Swal.fire({
+                    title: '确认删除?',
+                    text: "删除不可恢复确认删除?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '确认!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        _this.$ajax.delete("http://127.0.0.1:9000/business/chapter/delete/"+id, _this.chapter).then((response=>{
+                            console.log("删除大章列表结果：",response);
+                            let resp = response.data;
+                            if (resp.success){
+                                _this.list( _this.currentPage);
+                                Swal.fire(
+                                    '删除成功!',
+                                    '删除成功!',
+                                    'success'
+                                )
+                            }
+                        }))
                     }
-                }))
+                });
+
             }
         }
 
