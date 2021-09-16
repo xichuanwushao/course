@@ -12,6 +12,7 @@ import com.xichuan.server.resp.ChapterResp;
 import com.xichuan.server.util.CopyUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -47,8 +48,23 @@ public class ChapterService {
         pageReq.setList(chapterDtoList);
     }
     public void save(ChapterReq chapterReq) {
-        chapterReq.setId(IdUtil.simpleUUID());
+        System.out.println("chapterReq"+chapterReq.getId());
+        System.out.println("chapterReq"+chapterReq.getId());
+        System.out.println("chapterReq"+chapterReq.getId());
         Chapter chapter = CopyUtil.copy(chapterReq, Chapter.class);
+        if(StringUtils.isEmpty(chapterReq.getId())){
+            this.insert(chapter);
+        }else{
+            this.update(chapter);
+        }
+    }
+    public void insert(Chapter chapter) {
+        chapter.setId(IdUtil.simpleUUID());
         chapterMapper.insert(chapter);
     }
+    public void update(Chapter chapter) {
+        chapterMapper.updateByPrimaryKey(chapter);
+    }
+
+
 }

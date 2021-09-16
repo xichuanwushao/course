@@ -21,9 +21,6 @@
                         <th>名称</th>
                         <th>课程编号</th>
                         <th>操作</th>
-
-
-                        <th></th>
                     </tr>
                     </thead>
 
@@ -34,14 +31,10 @@
                         <td>{{chapter.id}}</td>
                         <td>{{chapter.name}}</td>
                         <td>{{chapter.courseId}}</td>
-                        <td>{{chapter.id}}</td>
                         <td>
                             <div class="hidden-sm hidden-xs btn-group">
-                                <button class="btn btn-xs btn-success">
-                                    <i class="ace-icon fa fa-check bigger-120"></i>
-                                </button>
 
-                                <button class="btn btn-xs btn-info">
+                                <button v-on:click="edit(chapter)" class="btn btn-xs btn-info">
                                     <i class="ace-icon fa fa-pencil bigger-120"></i>
                                 </button>
 
@@ -49,9 +42,6 @@
                                     <i class="ace-icon fa fa-trash-o bigger-120"></i>
                                 </button>
 
-                                <button class="btn btn-xs btn-warning">
-                                    <i class="ace-icon fa fa-flag bigger-120"></i>
-                                </button>
                             </div>
 
                             <div class="hidden-md hidden-lg">
@@ -145,6 +135,12 @@
         methods:{
             add(){
                 let _this = this;
+                $("#form-modal").modal("show")
+            },
+
+            edit(chapter){
+                let _this = this;
+                _this.chapter = chapter;
                 $("#form-modal").modal("show")
             },
             list(page){
