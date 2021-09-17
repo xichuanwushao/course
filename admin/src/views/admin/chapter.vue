@@ -155,7 +155,7 @@
                     size:_this.$refs.pagination.size,
                 }).then((response=>{
                     Loading.hide();
-                    console.log("查询章列表结果：",response);
+                    // console.log("查询章列表结果：",response);
                     let resp = response.data;
                     _this.chapters = resp.content.list;
                     _this.$refs.pagination.render(page, resp.content.total);
@@ -172,7 +172,7 @@
                 Loading.show();
                 _this.$ajax.post("http://127.0.0.1:9000/business/chapter/save", _this.chapter).then((response=>{
                     Loading.hide();
-                    console.log("保存章列表结果：",response);
+                    // console.log("保存章列表结果：",response);
                     let resp = response.data;
                     if (resp.success){
                         $("#form-modal").modal("hide");
@@ -189,7 +189,7 @@
                     Loading.show();
                     _this.$ajax.delete("http://127.0.0.1:9000/business/chapter/delete/"+id, _this.chapter).then((response=>{
                         Loading.hide();
-                        console.log("删除大章列表结果：",response);
+                        // console.log("删除大章列表结果：",response);
                         let resp = response.data;
                         if (resp.success){
                             _this.list( _this.currentPage);
