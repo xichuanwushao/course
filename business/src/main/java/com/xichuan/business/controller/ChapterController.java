@@ -15,12 +15,14 @@ import javax.annotation.Resource;
 import java.util.List;
 
 //@Controller 如果接口返回页面用Controller
+
+
 @RequestMapping("chapter")
 @RestController//@Controller 如果接口返回Json 用RestController
 public class ChapterController {
     @Resource
     private ChapterService chapterService;
-
+    public static final String BUSINESS_NAME="大章相关业务接口";
     @RequestMapping("test")
     public String chapter(){
         return "success";
