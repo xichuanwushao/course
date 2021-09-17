@@ -7,8 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ServerGenerator {
-    static String toPath = "generator\\src\\main\\java\\com\\xichuan\\generator\\test\\";
     static String toServicePath = "server\\src\\main\\java\\com\\xichuan\\server\\service\\";
+    static String toControllerPath = "business\\src\\main\\java\\com\\xichuan\\business\\controller\\";
     public static void main(String[] args) throws Exception {
         String Domain = "Section";
         String domain = "section";
@@ -17,6 +17,9 @@ public class ServerGenerator {
         map.put("domain",domain);
         FreemarkerUtil.initConfig("service.ftl");
         FreemarkerUtil.generator(toServicePath+Domain+"Service.java",map);
+
+        FreemarkerUtil.initConfig("controller.ftl");
+        FreemarkerUtil.generator(toControllerPath+Domain+"Controller.java",map);
     }
 
 
