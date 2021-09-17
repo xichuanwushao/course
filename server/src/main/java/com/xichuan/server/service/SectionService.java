@@ -37,11 +37,11 @@ public class SectionService {
         return sectionRespList;
     }
     public void listPage(PageReq pageReq) {
-        PageHelper.startPage(pageReq.getPage(),pageReq.getSize());//对第�?个select有用
+        PageHelper.startPage(pageReq.getPage(),pageReq.getSize());//对第一个select有用
         SectionExample sectionExample = new SectionExample();
 //        sectionExample.createCriteria().andIdEqualTo("1");
 //        sectionExample.setOrderByClause("id desc");
-        List<Section> sectionList = sectionMapper.selectByExample(sectionExample);//写在select的下�?�?
+        List<Section> sectionList = sectionMapper.selectByExample(sectionExample);//写在select的下一行
         PageInfo<Section> pageInfo = new PageInfo<>(sectionList);
         pageReq.setTotal(pageInfo.getTotal());
         List<SectionResp> sectionDtoList = CopyUtil.copyList(sectionList, SectionResp.class);

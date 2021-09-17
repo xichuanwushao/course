@@ -1,4 +1,4 @@
-package com.xichuan.business.controller;
+package com.xichuan.${module}.controller;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.xichuan.server.domain.${Domain};
@@ -22,10 +22,8 @@ import java.util.List;
 public class ${Domain}Controller {
     @Resource
     private ${Domain}Service ${domain}Service;
-    /***
-    * TODO 业务名称
-    ***/
-    public static final String BUSINESS_NAME="";
+
+    public static final String BUSINESS_NAME="${tableNameCn}";
     @RequestMapping("test")
     public String ${domain}(){
         return "success";

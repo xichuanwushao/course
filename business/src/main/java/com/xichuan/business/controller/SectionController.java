@@ -22,10 +22,8 @@ import java.util.List;
 public class SectionController {
     @Resource
     private SectionService sectionService;
-    /***
-    * TODO 业务名称
-    ***/
-    public static final String BUSINESS_NAME="";
+
+    public static final String BUSINESS_NAME="小节";
     @RequestMapping("test")
     public String section(){
         return "success";
