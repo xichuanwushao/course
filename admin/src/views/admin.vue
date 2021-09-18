@@ -485,7 +485,17 @@
                                 <b class="arrow"></b>
 
                             </li>
+                            <li class="" id="business-section-sidebar">
+                                <router-link to="/business/sections" class="dropdown-toggle">
+                                    <i class="menu-icon fa fa-caret-right"></i>
 
+                                    小节管理
+                                    <b class="arrow fa fa-angle-down"></b>
+                                </router-link>
+
+                                <b class="arrow"></b>
+
+                            </li>
                             <li class="">
                                 <a href="typography.html">
                                     <i class="menu-icon fa fa-caret-right"></i>

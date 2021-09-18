@@ -179,7 +179,7 @@
     import Swal from 'sweetalert2'
     export default {
         components: {Pagination},
-        name: "section",
+        name: "sections",
         data:function (){
             return{
             section:{},
@@ -202,7 +202,7 @@
 
             edit(section){
                 let _this = this;
-                _this.section = $.extend({},section);//对象复制
+                _this.section = $.extend({},section1);//对象复制
                 $("#form-modal").modal("show")
             },
             list(page){
@@ -227,7 +227,7 @@
                 Loading.show();
                 _this.$ajax.post(process.env.VUE_APP_SERVER+"/business/section/save", _this.section).then((response=>{
                     Loading.hide();
-                    // console.log("保存章列表结果：",response);
+                     console.log("保存章列表结果：",response);
                     let resp = response.data;
                     if (resp.success){
                         $("#form-modal").modal("hide");
