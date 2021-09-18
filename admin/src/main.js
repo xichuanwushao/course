@@ -23,3 +23,5 @@ axios.interceptors.response.use(function (response) {
   console.log("返回结果：", response);
   return response;
 }, error => {});
+
+console.log("环境：", process.env.NODE_ENV);

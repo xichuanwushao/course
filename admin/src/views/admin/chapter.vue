@@ -150,7 +150,7 @@
                 let _this = this;
                 Loading.show();
                 _this.currentPage=page,
-                _this.$ajax.post("http://127.0.0.1:9000/business/chapter/listPage",{
+                _this.$ajax.post(process.env.VUE_APP_SERVER+"/business/chapter/listPage",{
                     page:page,
                     size:_this.$refs.pagination.size,
                 }).then((response=>{
@@ -170,7 +170,7 @@
                     return;
                 }
                 Loading.show();
-                _this.$ajax.post("http://127.0.0.1:9000/business/chapter/save", _this.chapter).then((response=>{
+                _this.$ajax.post(process.env.VUE_APP_SERVER+"/business/chapter/save", _this.chapter).then((response=>{
                     Loading.hide();
                     // console.log("保存章列表结果：",response);
                     let resp = response.data;
@@ -187,7 +187,7 @@
                 let _this = this;
                 Confirm.show("删除章节不可恢复确认删除?",function (){
                     Loading.show();
-                    _this.$ajax.delete("http://127.0.0.1:9000/business/chapter/delete/"+id, _this.chapter).then((response=>{
+                    _this.$ajax.delete(process.env.VUE_APP_SERVER+"/business/chapter/delete/"+id, _this.chapter).then((response=>{
                         Loading.hide();
                         // console.log("删除大章列表结果：",response);
                         let resp = response.data;
