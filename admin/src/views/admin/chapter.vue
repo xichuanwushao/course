@@ -1,7 +1,4 @@
 <template xmlns:v-on="http://www.w3.org/1999/xhtml">
-
-
-
     <div>
 <!--        <button v-on:click="list(1)" id="Loading-btn" type="button" class="btn btn-success" data-Loading-text="Loading..."><i class="ace-icon fa fa-refresh "></i><font class="Loading-font">刷新</font></button>-->
         <button v-on:click="add()" class="btn btn-white btn-default btn-round">

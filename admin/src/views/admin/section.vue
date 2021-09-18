@@ -13,27 +13,43 @@
         <pagination  ref="pagination" v-bind:list="list" v-bind:itemCount="3"></pagination>
         <table id="simple-table" class="table  table-bordered table-hover">
             <thead>
-            <tr><#list fieldList as field>
-                <th>${field.nameCn}</th></#list>
+            <tr>
+                <th>ID</th>
+                <th>标题</th>
+                <th>课程</th>
+                <th>大章</th>
+                <th>视频</th>
+                <th>时长</th>
+                <th>收费</th>
+                <th>顺序</th>
+                <th>创建时间</th>
+                <th>修改时间</th>
                 <th>操作</th>
             <tr/>
         </thead>
 
         <tbody>
-        <tr v-for="${domain} in ${domain}s">
+        <tr v-for="section in sections">
 
 
-            <#list fieldList as field>
-            <td>{{${domain}.${field.nameHump}}}</td>
-        </#list>
+            <td>{{section.id}}</td>
+            <td>{{section.title}}</td>
+            <td>{{section.courseId}}</td>
+            <td>{{section.chapterId}}</td>
+            <td>{{section.video}}</td>
+            <td>{{section.time}}</td>
+            <td>{{section.charge}}</td>
+            <td>{{section.sort}}</td>
+            <td>{{section.createdAt}}</td>
+            <td>{{section.updatedAt}}</td>
         <td>
             <div class="hidden-sm hidden-xs btn-group">
 
-                <button v-on:click="edit(${domain})" class="btn btn-xs btn-info">
+                <button v-on:click="edit(section)" class="btn btn-xs btn-info">
                     <i class="ace-icon fa fa-pencil bigger-120"></i>
                 </button>
 
-                <button v-on:click="del(${domain}.id)" class="btn btn-xs btn-danger">
+                <button v-on:click="del(section.id)" class="btn btn-xs btn-danger">
                     <i class="ace-icon fa fa-trash-o bigger-120"></i>
                 </button>
 
@@ -87,14 +103,66 @@
                     </div>
                     <div class="modal-body">
                         <form class="form-horizontal">
-                            <#list fieldList as field>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">${field.nameCn}</label>
+                                <label class="col-sm-2 control-label">ID</label>
                                 <div class="col-sm-10">
-                                    <input v-model="${domain}.${field.nameHump}" class="form-control">
+                                    <input v-model="section.id" class="form-control">
                                 </div>
                             </div>
-                        </#list>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">标题</label>
+                                <div class="col-sm-10">
+                                    <input v-model="section.title" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">课程</label>
+                                <div class="col-sm-10">
+                                    <input v-model="section.courseId" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">大章</label>
+                                <div class="col-sm-10">
+                                    <input v-model="section.chapterId" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">视频</label>
+                                <div class="col-sm-10">
+                                    <input v-model="section.video" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">时长</label>
+                                <div class="col-sm-10">
+                                    <input v-model="section.time" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">收费</label>
+                                <div class="col-sm-10">
+                                    <input v-model="section.charge" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">顺序</label>
+                                <div class="col-sm-10">
+                                    <input v-model="section.sort" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">创建时间</label>
+                                <div class="col-sm-10">
+                                    <input v-model="section.createdAt" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">修改时间</label>
+                                <div class="col-sm-10">
+                                    <input v-model="section.updatedAt" class="form-control">
+                                </div>
+                            </div>
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -111,16 +179,16 @@
     import Swal from 'sweetalert2'
     export default {
         components: {Pagination},
-        name: "${domain}",
+        name: "section",
         data:function (){
             return{
-            ${domain}:{},
-            ${domain}s:[],
+            section:{},
+            sections:[],
                 currentPage:{},
         }
         },
         mounted:function () {
-            // this.$parent.activeSidebar("${module}-${domain}-sidebar");
+            // this.$parent.activeSidebar("business-section-sidebar");
             let _this = this;
             _this.$refs.pagination.size = 5;
             _this.list(1);
@@ -128,27 +196,27 @@
         methods:{
             add(){
                 let _this = this;
-                _this.${domain}={};
+                _this.section={};
                 $("#form-modal").modal("show")
             },
 
-            edit(${domain}){
+            edit(section){
                 let _this = this;
-                _this.${domain} = $.extend({},${domain});//对象复制
+                _this.section = $.extend({},section);//对象复制
                 $("#form-modal").modal("show")
             },
             list(page){
                 let _this = this;
                 Loading.show();
                 _this.currentPage=page,
-                    _this.$ajax.post(process.env.VUE_APP_SERVER+"/${module}/${domain}/listPage",{
+                    _this.$ajax.post(process.env.VUE_APP_SERVER+"/business/section/listPage",{
                         page:page,
                         size:_this.$refs.pagination.size,
                     }).then((response=>{
                         Loading.hide();
                         // console.log("查询章列表结果：",response);
                         let resp = response.data;
-                        _this.${domain}s = resp.content.list;
+                        _this.sections = resp.content.list;
                         _this.$refs.pagination.render(page, resp.content.total);
                     }))
             },
@@ -157,7 +225,7 @@
                 // 保存校验 TODO
 
                 Loading.show();
-                _this.$ajax.post(process.env.VUE_APP_SERVER+"/${module}/${domain}/save", _this.${domain}).then((response=>{
+                _this.$ajax.post(process.env.VUE_APP_SERVER+"/business/section/save", _this.section).then((response=>{
                     Loading.hide();
                     // console.log("保存章列表结果：",response);
                     let resp = response.data;
@@ -174,9 +242,9 @@
                 let _this = this;
                 Confirm.show("删除章节不可恢复确认删除?",function (){
                     Loading.show();
-                    _this.$ajax.delete(process.env.VUE_APP_SERVER+"/${module}/${domain}/delete/"+id, _this.${domain}).then((response=>{
+                    _this.$ajax.delete(process.env.VUE_APP_SERVER+"/business/section/delete/"+id, _this.section).then((response=>{
                         Loading.hide();
-                        // console.log("删除${tableNameCn}列表结果：",response);
+                        // console.log("删除小节列表结果：",response);
                         let resp = response.data;
                         if (resp.success){
                             _this.list( _this.currentPage);
@@ -195,9 +263,9 @@
                 // }).then((result) => {
                 //     if (result.isConfirmed) {
                 //         Loading.show();
-                //         _this.$ajax.delete("http://127.0.0.1:9000/${module}/${domain}/delete/"+id, _this.${domain}).then((response=>{
+                //         _this.$ajax.delete("http://127.0.0.1:9000/business/section/delete/"+id, _this.section).then((response=>{
                 //             Loading.hide();
-                //             console.log("删除${tableNameCn}列表结果：",response);
+                //             console.log("删除小节列表结果：",response);
                 //             let resp = response.data;
                 //             if (resp.success){
                 //                 _this.list( _this.currentPage);
