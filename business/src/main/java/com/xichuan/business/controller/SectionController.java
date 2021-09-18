@@ -17,24 +17,24 @@ import java.util.List;
 //@Controller 如果接口返回页面用Controller
 
 
-@RequestMapping("section")
+@RequestMapping("/section")
 @RestController//@Controller 如果接口返回Json 用RestController
 public class SectionController {
     @Resource
     private SectionService sectionService;
 
     public static final String BUSINESS_NAME="小节";
-    @RequestMapping("test")
+    @RequestMapping("/test")
     public String section(){
         return "success";
     }
 
-    @RequestMapping("all")
+    @RequestMapping("/all")
     public List<SectionResp> all(){
         return sectionService.all();
     }
 
-    @PostMapping("listPage")
+    @PostMapping("/listPage")
     public CommonResp listPage(@RequestBody PageReq pageReq){
         CommonResp commonResp = new CommonResp();
         sectionService.listPage(pageReq);

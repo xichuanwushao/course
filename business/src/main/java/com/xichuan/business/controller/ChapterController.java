@@ -17,23 +17,23 @@ import java.util.List;
 //@Controller 如果接口返回页面用Controller
 
 
-@RequestMapping("chapter")
+@RequestMapping("/chapter")
 @RestController//@Controller 如果接口返回Json 用RestController
 public class ChapterController {
     @Resource
     private ChapterService chapterService;
     public static final String BUSINESS_NAME="大章相关业务接口";
-    @RequestMapping("test")
+    @RequestMapping("/test")
     public String chapter(){
         return "success";
     }
 
-    @RequestMapping("all")
+    @RequestMapping("/all")
     public List<ChapterResp> all(){
         return chapterService.all();
     }
 
-    @PostMapping("listPage")
+    @PostMapping("/listPage")
     public CommonResp listPage(@RequestBody PageReq pageReq){
         CommonResp commonResp = new CommonResp();
         chapterService.listPage(pageReq);

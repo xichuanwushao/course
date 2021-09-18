@@ -1,6 +1,6 @@
 drop table id exists `chapter`;
 create table `chapter`(
-    `id` char(8) not null comment 'ID',
+    `id` char(50) not null comment 'ID',
     `course_id` char(8)  comment '课程ID',
     `name` varchar(50)  comment '名称',
     primary key (`id`)
@@ -42,7 +42,7 @@ insert into `chapter` (id, course_id, name) values ('24','24','《舒婷诗集�
 
 Drop TABLE IF EXISTS `section`;
 CREATE TABLE `section`(
-    `id` CHAR(8) NOT NULL DEFAULT '' COMMENT 'ID',
+    `id` CHAR(50) NOT NULL DEFAULT '' COMMENT 'ID',
     `title` VARCHAR (50) NOT NULL COMMENT '标题',
     `course_id` CHAR (8) COMMENT '课程|course.id',
     `chapter_id` CHAR(8) COMMENT '大章|chapter.id',
@@ -50,30 +50,30 @@ CREATE TABLE `section`(
     `time` INT COMMENT '时长|单位秒',
     `charge` CHAR (1) COMMENT '收费|C 收费;F 免费',
     `sort` INT COMMENT '顺序',
-    `created_at` DATETIME(3) COMMENT '创建时间',
-    `updated_at` DATETIME(3) COMMENT '修改时间',
+    `created_at` DATETIME COMMENT '创建时间',
+    `updated_at` DATETIME COMMENT '修改时间',
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='小节';
 
 INSERT INTO `section` (id, title, course_id, chapter_id, video, time, charge, sort, created_at, updated_at)
-VALUES ('1','钢铁侠','1','0','','500','F','1',now(),now());
+VALUES ('1','钢铁侠','1','0','','500','F','1',null,null);
 INSERT INTO `section` (id, title, course_id, chapter_id, video, time, charge, sort, created_at, updated_at)
-VALUES ('2','变形金刚5','1','0','','500','F','1',now(),now());
+VALUES ('2','变形金刚5','1','0','','500','F','1',null,null);
 INSERT INTO `section` (id, title, course_id, chapter_id, video, time, charge, sort, created_at, updated_at)
-VALUES ('3','阿凡达3','1','0','','500','F','1',now(),now());
+VALUES ('3','阿凡达3','1','0','','500','F','1',null,null);
 INSERT INTO `section` (id, title, course_id, chapter_id, video, time, charge, sort, created_at, updated_at)
-VALUES ('4','大黄蜂','1','0','','500','F','1',now(),now());
+VALUES ('4','大黄蜂','1','0','','500','F','1',null,null);
 INSERT INTO `section` (id, title, course_id, chapter_id, video, time, charge, sort, created_at, updated_at)
-VALUES ('5','绿巨人','1','0','','500','F','1',now(),now());
+VALUES ('5','绿巨人','1','0','','500','F','1',null,null);
 INSERT INTO `section` (id, title, course_id, chapter_id, video, time, charge, sort, created_at, updated_at)
-VALUES ('6','血战钢锯岭','1','0','','500','F','1',now(),now());
+VALUES ('6','血战钢锯岭','1','0','','500','F','1',null,null);
 INSERT INTO `section` (id, title, course_id, chapter_id, video, time, charge, sort, created_at, updated_at)
-VALUES ('7','战狼3','1','0','','500','F','1',now(),now());
+VALUES ('7','战狼3','1','0','','500','F','1',null,null);
 INSERT INTO `section` (id, title, course_id, chapter_id, video, time, charge, sort, created_at, updated_at)
-VALUES ('8','泰囧','1','0','','500','F','1',now(),now());
+VALUES ('8','泰囧','1','0','','500','F','1',null,null);
 INSERT INTO `section` (id, title, course_id, chapter_id, video, time, charge, sort, created_at, updated_at)
-VALUES ('9','我和我的祖国','1','0','','500','F','1',now(),now());
+VALUES ('9','我和我的祖国','1','0','','500','F','1',null,null);
 INSERT INTO `section` (id, title, course_id, chapter_id, video, time, charge, sort, created_at, updated_at)
-VALUES ('10','反贪风暴','1','0','','500','F','1',now(),now());
+VALUES ('10','反贪风暴','1','0','','500','F','1',null,null);
 INSERT INTO `section` (id, title, course_id, chapter_id, video, time, charge, sort, created_at, updated_at)
-VALUES ('11','流浪地球','1','0','','500','F','1',now(),now());
+VALUES ('11','流浪地球','1','0','','500','F','1',null,null);
