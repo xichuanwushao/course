@@ -44,7 +44,17 @@ public class ${Domain}Controller {
     @PostMapping("/save")
     public CommonResp save(@RequestBody ${Domain}Req ${domain}Req){
         // TODO 保存校验
-
+        // 保存校验
+        <#list fieldList as field>
+            <#if field.name!="id" && field.nameHump!="createdAt" && field.nameHump!="updatedAt" && field.nameHump!="sort">
+                <#if !field.nullAble>
+        ValidatorUtil.require(${domain}Req.get${field.nameBigHump}(), "${field.nameCn}");
+                </#if>
+                <#if (field.length > 0)>
+        ValidatorUtil.length(${domain}Req.get${field.nameBigHump}(), "${field.nameCn}", 1, ${field.length?c});
+                </#if>
+            </#if>
+        </#list>
 
         CommonResp commonResp = new CommonResp();
         ${domain}Service.save(${domain}Req);

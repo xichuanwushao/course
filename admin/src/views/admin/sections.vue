@@ -202,7 +202,7 @@
 
             edit(section){
                 let _this = this;
-                _this.section = $.extend({},section1);//对象复制
+                _this.section = $.extend({},section);//对象复制
                 $("#form-modal").modal("show")
             },
             list(page){
@@ -223,6 +223,13 @@
             save(){
                 let _this = this;
                 // 保存校验 TODO
+                if (1 != 1
+                    || !Validator.require(_this.section.title, "标题")
+                    || !Validator.length(_this.section.title, "标题", 1, 50)
+                    || !Validator.length(_this.section.video, "视频", 1, 200)
+                ) {
+                    return;
+                }
 
                 Loading.show();
                 _this.$ajax.post(process.env.VUE_APP_SERVER+"/business/section/save", _this.section).then((response=>{
