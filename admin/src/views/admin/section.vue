@@ -157,7 +157,7 @@
     import Swal from 'sweetalert2'
     export default {
         components: {Pagination},
-        name: "sections",
+        name: "business-section",
         data:function (){
             return{
             section:{},

@@ -486,7 +486,7 @@
 
                             </li>
                             <li class="" id="business-section-sidebar">
-                                <router-link to="/business/sections" class="dropdown-toggle">
+                                <router-link to="/business/section" class="dropdown-toggle">
                                     <i class="menu-icon fa fa-caret-right"></i>
 
                                     小节管理
