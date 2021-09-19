@@ -17,7 +17,7 @@ import org.springframework.util.StringUtils;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Date;
 @Service
 public class SectionService {
     @Resource
@@ -41,6 +41,7 @@ public class SectionService {
         SectionExample sectionExample = new SectionExample();
 //        sectionExample.createCriteria().andIdEqualTo("1");
 //        sectionExample.setOrderByClause("id desc");
+        sectionExample.setOrderByClause("sort asc");
         List<Section> sectionList = sectionMapper.selectByExample(sectionExample);//写在select的下一行
         PageInfo<Section> pageInfo = new PageInfo<>(sectionList);
         pageReq.setTotal(pageInfo.getTotal());
@@ -48,9 +49,6 @@ public class SectionService {
         pageReq.setList(sectionDtoList);
     }
     public void save(SectionReq sectionReq) {
-        System.out.println("sectionReq"+sectionReq.getId());
-        System.out.println("sectionReq"+sectionReq.getId());
-        System.out.println("sectionReq"+sectionReq.getId());
         Section section = CopyUtil.copy(sectionReq, Section.class);
         if(StringUtils.isEmpty(sectionReq.getId())){
             this.insert(section);
@@ -59,10 +57,14 @@ public class SectionService {
         }
     }
     public void insert(Section section) {
+        Date now = new Date();
+        section.setCreatedAt(now);
+        section.setUpdatedAt(now);
         section.setId(IdUtil.simpleUUID());
         sectionMapper.insert(section);
     }
     public void update(Section section) {
+        section.setUpdatedAt(new Date());
         sectionMapper.updateByPrimaryKey(section);
     }
     public void delete(String id) {
