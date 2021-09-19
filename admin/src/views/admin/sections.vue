@@ -34,7 +34,7 @@
             <td>{{section.chapterId}}</td>
             <td>{{section.video}}</td>
             <td>{{section.time}}</td>
-            <td>{{section.charge}}</td>
+            <td>{{CHARGE | optionKV(section.charge)}}</td>
             <td>{{section.sort}}</td>
         <td>
             <div class="hidden-sm hidden-xs btn-group">
@@ -163,7 +163,7 @@
             section:{},
             sections:[],
             currentPage:{},
-            CHARGE:[{key:"C",value:"收费"},{key:"F",value:"免费"}]
+            CHARGE:[{key:"C",value:"收费"},{key:"F",value:"免费"}],
         }
         },
         mounted:function () {
