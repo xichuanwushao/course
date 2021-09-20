@@ -80,11 +80,11 @@ VALUES ('11','流浪地球','1','0','','500','F','1',null,null);
 
 drop table if exists course;
 create table course (
-    id char(8) not null default '' comment 'id',
+    id char(50) not null default '' comment 'id',
     name varchar(50) not null  comment '名称',
     summary varchar(2000)  comment '概述',
     time int default 0  comment '时长|单位秒',
-    price decimal(8,2) not null default 0.00 comment '价格(元)',
+    price decimal(8,2) default 0.00 comment '价格(元)',
     image varchar(100) comment '封面',
     level char(1) not null comment '级别|ONE("1","初级"),TWO("2","中级"),THREE("3","高级")',
     charge char(1)  comment '收费|CHARGE("C","收费"),FREE("F","免费")',
