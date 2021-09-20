@@ -93,12 +93,23 @@
                         <form class="form-horizontal">
                             <#list fieldList as field>
                                 <#if field.name!="id" && field.nameHump!="createdAt" && field.nameHump!="updatedAt">
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">${field.nameCn}</label>
-                                <div class="col-sm-10">
-                                    <input v-model="${domain}.${field.nameHump}" class="form-control">
-                                </div>
-                            </div>
+                                    <#if field.enums>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">${field.nameCn}</label>
+                                            <div class="col-sm-10">
+                                                <select v-model="${domain}.${field.nameHump}" class="form-control">
+                                                    <option v-for="o in ${field.enumsConst}" v-bind:value="o.key">{{o.value}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    <#else>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">${field.nameCn}</label>
+                                            <div class="col-sm-10">
+                                                <input v-model="${domain}.${field.nameHump}" class="form-control">
+                                            </div>
+                                        </div>
+                                    </#if>
                                 </#if>
                             </#list>
                         </form>
@@ -119,11 +130,15 @@
         components: {Pagination},
         name: "${domain}",
         data:function (){
-            return{
-            ${domain}:{},
-            ${domain}s:[],
-                currentPage:{},
-        }
+            return {
+                ${domain}: {},
+                ${domain}s: [],
+                <#list fieldList as field>
+                <#if field.enums>
+                ${field.enumsConst}: ${field.enumsConst},
+                </#if>
+                </#list>
+            }
         },
         mounted:function () {
             // this.$parent.activeSidebar("${module}-${domain}-sidebar");

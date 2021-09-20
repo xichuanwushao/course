@@ -10,7 +10,9 @@ public class Field {
     private String comment; // 注释：课程|ID
     private Boolean nullAble; // 是否可为空
     private Integer length; // 字符串长度
+    //vue页面自动生成枚举代码
     private Boolean enums; // 是否是枚举
+    //vue页面自动生成枚举代码
     private String enumsConst; // 枚举常量 COURSE_LEVEL
 
     public String getName() {

@@ -1,6 +1,8 @@
 package com.xichuan.generator.util;
 
 
+import com.xichuan.generator.enums.EnumGenerator;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -85,6 +87,7 @@ public class DbUtil {
                 } else {
                     field.setLength(0);
                 }
+                //vue页面自动生成枚举代码
                 if (comment.contains("枚举")) {
                     field.setEnums(true);
 
@@ -92,8 +95,8 @@ public class DbUtil {
                     int start = comment.indexOf("[");
                     int end = comment.indexOf("]");
                     String enumsName = comment.substring(start + 1, end);
-//                    String enumsConst = EnumGenerator.toUnderline(enumsName);
-//                    field.setEnumsConst(enumsConst);
+                    String enumsConst = EnumGenerator.toUnderline(enumsName);
+                    field.setEnumsConst(enumsConst);
                 } else {
                     field.setEnums(false);
                 }
