@@ -26,7 +26,15 @@
                         <h3 class="search-title">
                             <a href="#" class="blue">{{course.name}}</a>
                         </h3>
+                        <p>
+                            <span class="blue bolder bigger-150">{{course.price}}&nbsp;<i class="fa fa-rmb"></i></span>&nbsp;
+                        </p>
                         <p>{{course.summary}}</p>
+                        <p>
+                            <span class="badge badge-info">{{course.id}}</span>
+                            <span class="badge badge-info">排序：{{course.sort}}</span>
+                            <span class="badge badge-info">{{course.time | formatSecond}}</span>
+                        </p>
                         <p>
                             <button v-on:click="edit(course)" class="btn btn-xs btn-info">
                                 <i class="ace-icon fa fa-pencil bigger-120"></i>
@@ -326,7 +334,10 @@
 
     }
 </script>
-<style>
+<style scoped>
+    .caption h3{
+       font-size: 20px;
+    }
     .btn{
         margin-top: 0;
         margin-right: 5px;
