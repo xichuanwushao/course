@@ -187,14 +187,13 @@
         components: {Pagination},
         name: "course",
         data:function (){
-            return{
-            course:{},
-            courses:[],
-            currentPage:{},
-            COURSE_CHARGE:COURSE_CHARGE,
-            COURSE_LEVEL:COURSE_LEVEL,
-            COURSE_STATUS:COURSE_STATUS
-        }
+            return {
+                course: {},
+                courses: [],
+                COURSE_LEVEL: COURSE_LEVEL,
+                COURSE_CHARGE: COURSE_CHARGE,
+                COURSE_STATUS: COURSE_STATUS,
+            }
         },
         mounted:function () {
             // this.$parent.activeSidebar("business-course-sidebar");
@@ -236,7 +235,6 @@
                     || !Validator.require(_this.course.name, "名称")
                     || !Validator.length(_this.course.name, "名称", 1, 50)
                     || !Validator.length(_this.course.summary, "概述", 1, 2000)
-                    || !Validator.require(_this.course.price, "价格(元)")
                     || !Validator.length(_this.course.image, "封面", 1, 100)
                     || !Validator.require(_this.course.level, "级别")
                 ) {
