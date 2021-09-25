@@ -11,6 +11,23 @@
         </button>
         <!-- PAGE CONTENT BEGINS -->
         <pagination  ref="pagination" v-bind:list="list" v-bind:itemCount="3"></pagination>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="thumbnail search-thumbnail">
+                    <img class="media-object" data-src="holder.js/100px200?theme=gray" />
+                    <div class="caption">
+                        <div class="clearfix">
+                            <span class="pull-right label label-grey info-label">Tokyo</span>
+                        </div>
+
+                        <h3 class="search-title">
+                            <a href="#" class="blue">Thumbnail label</a>
+                        </h3>
+                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam ...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
         <table id="simple-table" class="table  table-bordered table-hover">
             <thead>
             <tr>
