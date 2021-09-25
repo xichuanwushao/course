@@ -3,6 +3,10 @@
         <h3>{{course.name}}</h3>
 <!--        <button v-on:click="list(1)" id="Loading-btn" type="button" class="btn btn-success" data-Loading-text="Loading..."><i class="ace-icon fa fa-refresh "></i><font class="Loading-font">刷新</font></button>-->
         <p>
+        <router-link to="/business/course" class="btn btn-white btn-default btn-round">
+            <i class="ace-icon fa fa-arrow-left "></i>
+            返回课程
+        </router-link>
         <button v-on:click="add()" class="btn btn-white btn-default btn-round">
             <i class="ace-icon fa fa-edit "></i>
             新增
