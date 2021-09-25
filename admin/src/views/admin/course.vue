@@ -12,18 +12,30 @@
         <!-- PAGE CONTENT BEGINS -->
         <pagination  ref="pagination" v-bind:list="list" v-bind:itemCount="3"></pagination>
         <div class="row">
-            <div class="col-md-4">
+            <div v-for="course in courses" class="col-md-3">
                 <div class="thumbnail search-thumbnail">
-                    <img class="media-object" data-src="holder.js/100px200?theme=gray" />
+                    <img v-show="!course.image" class="media-object" src="/static/image/demo-course.jpg" />
+                    <img  v-show="course.image" class="media-object" v-bind:src="course.image" />
                     <div class="caption">
                         <div class="clearfix">
-                            <span class="pull-right label label-grey info-label">Tokyo</span>
+                            <span class="pull-right label label-grey info-label">{{COURSE_LEVEL | optionKV(course.level)}}</span>
+                            <span class="pull-right label label-grey info-label">{{COURSE_CHARGE | optionKV(course.charge)}}</span>
+                            <span class="pull-right label label-grey info-label">{{COURSE_STATUS | optionKV(course.status)}}</span>
                         </div>
 
                         <h3 class="search-title">
-                            <a href="#" class="blue">Thumbnail label</a>
+                            <a href="#" class="blue">{{course.name}}</a>
                         </h3>
-                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam ...</p>
+                        <p>{{course.summary}}</p>
+                        <p>
+                            <button v-on:click="edit(course)" class="btn btn-xs btn-info">
+                                <i class="ace-icon fa fa-pencil bigger-120"></i>
+                            </button>
+
+                            <button v-on:click="del(course.id)" class="btn btn-xs btn-danger">
+                                <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                            </button>
+                        </p>
                     </div>
                 </div>
             </div>
