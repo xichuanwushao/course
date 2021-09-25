@@ -1,6 +1,8 @@
 <template xmlns:v-on="http://www.w3.org/1999/xhtml">
     <div>
+        <h3>{{course.name}}</h3>
 <!--        <button v-on:click="list(1)" id="Loading-btn" type="button" class="btn btn-success" data-Loading-text="Loading..."><i class="ace-icon fa fa-refresh "></i><font class="Loading-font">刷新</font></button>-->
+        <p>
         <button v-on:click="add()" class="btn btn-white btn-default btn-round">
             <i class="ace-icon fa fa-edit "></i>
             新增
@@ -9,6 +11,7 @@
             <i class="ace-icon fa fa-refresh "></i>
             刷新
         </button>
+        </p>
         <!-- PAGE CONTENT BEGINS -->
         <pagination  ref="pagination" v-bind:list="list" v-bind:itemCount="3"></pagination>
         <table id="simple-table" class="table  table-bordered table-hover">
@@ -123,6 +126,7 @@
                 chapter:{},
                 chapters:[],
                 currentPage:{},
+                course:{}
             }
         },
         mounted:function () {
@@ -130,6 +134,11 @@
             let _this = this;
             _this.$refs.pagination.size = 5;
             _this.list(1);
+            let course = SessionStorage.get("course")|| {};
+            if(Tool.isEmpty(course)){
+                _this.$router.push("/welcome")
+            }
+            _this.course=course;
         },
         methods:{
             add(){
