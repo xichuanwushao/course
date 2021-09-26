@@ -108,3 +108,5 @@ insert into course (id, name, summary, time, price, image, level, charge, status
 insert into course (id, name, summary, time, price, image, level, charge, status, enroll, sort, created_at, updated_at) VALUES ('10','反贪风暴','电影获得奥斯卡奖项,年度最佳纸片人',7200,19.8,'',0,'C','D',100,0,now(),now());
 insert into course (id, name, summary, time, price, image, level, charge, status, enroll, sort, created_at, updated_at) VALUES ('11','流浪地球','电影获得奥斯卡奖项,年度最佳纸片人',7200,19.8,'',0,'C','D',100,0,now(),now());
 insert into course (id, name, summary, time, price, image, level, charge, status, enroll, sort, created_at, updated_at) VALUES ('12','刺客信条','电影获得奥斯卡奖项,年度最佳纸片人',7200,19.8,'',0,'C','D',100,0,now(),now());
+update course c set `time` = (select sum(`time`) from `section` where course_id = #{courseId})
+where c.id = #{courseId}

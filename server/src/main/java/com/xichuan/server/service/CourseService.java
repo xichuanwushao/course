@@ -3,6 +3,7 @@ package com.xichuan.server.service;
 import cn.hutool.core.util.IdUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.xichuan.server.mapper.CourseMapperCust;
 import com.xichuan.server.req.CourseReq;
 import com.xichuan.server.req.PageReq;
 import com.xichuan.server.domain.Course;
@@ -10,6 +11,8 @@ import com.xichuan.server.domain.CourseExample;
 import com.xichuan.server.mapper.CourseMapper;
 import com.xichuan.server.resp.CourseResp;
 import com.xichuan.server.util.CopyUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -20,8 +23,13 @@ import java.util.List;
         import java.util.Date;
 @Service
 public class CourseService {
+    private static final Logger logger = LoggerFactory.getLogger(CourseService.class);
+
     @Resource
     private CourseMapper courseMapper;
+
+    @Resource
+    private CourseMapperCust courseMapperCust;
     public List<CourseResp> all() {
         CourseExample courseExample = new CourseExample();
 //        courseExample.createCriteria().andIdEqualTo("1");
@@ -69,6 +77,16 @@ public class CourseService {
     }
     public void delete(String id) {
         courseMapper.deleteByPrimaryKey( id);
+    }
+
+    /**
+     * 更新课程时长
+     * @param courseId
+     * @return
+     */
+    public void updateTime(String courseId) {
+        logger.info("更新课程时长：{}", courseId);
+        courseMapperCust.updateTime(courseId);
     }
 
 }

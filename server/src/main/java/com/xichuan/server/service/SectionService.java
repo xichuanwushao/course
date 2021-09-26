@@ -23,6 +23,9 @@ import java.util.Date;
 public class SectionService {
     @Resource
     private SectionMapper sectionMapper;
+    @Resource
+    private CourseService courseService;
+
     public List<SectionResp> all() {
         SectionExample sectionExample = new SectionExample();
 //        sectionExample.createCriteria().andIdEqualTo("1");
@@ -63,6 +66,8 @@ public class SectionService {
         }else{
             this.update(section);
         }
+        courseService.updateTime(sectionReq.getCourseId());
+
     }
     public void insert(Section section) {
         Date now = new Date();
