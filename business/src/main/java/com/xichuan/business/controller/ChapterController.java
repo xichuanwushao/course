@@ -1,10 +1,7 @@
 package com.xichuan.business.controller;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.xichuan.server.domain.Chapter;
-import com.xichuan.server.exception.ValidatorException;
+import com.xichuan.server.req.ChapterPageReq;
 import com.xichuan.server.req.ChapterReq;
-import com.xichuan.server.req.PageReq;
 import com.xichuan.server.resp.ChapterResp;
 import com.xichuan.server.resp.CommonResp;
 import com.xichuan.server.service.ChapterService;
@@ -34,10 +31,11 @@ public class ChapterController {
     }
 
     @PostMapping("/listPage")
-    public CommonResp listPage(@RequestBody PageReq pageReq){
+    public CommonResp listPage(@RequestBody ChapterPageReq chapterPageReq){
         CommonResp commonResp = new CommonResp();
-        chapterService.listPage(pageReq);
-        commonResp.setContent(pageReq);
+        ValidatorUtil.require(chapterPageReq.getCourseId(), "课程ID");
+        chapterService.listPage(chapterPageReq);
+        commonResp.setContent(chapterPageReq);
         return commonResp;
     }
     @PostMapping("/save")

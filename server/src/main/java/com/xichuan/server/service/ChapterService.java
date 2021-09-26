@@ -3,6 +3,7 @@ package com.xichuan.server.service;
 import cn.hutool.core.util.IdUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.xichuan.server.req.ChapterPageReq;
 import com.xichuan.server.req.ChapterReq;
 import com.xichuan.server.req.PageReq;
 import com.xichuan.server.domain.Chapter;
@@ -36,16 +37,23 @@ public class ChapterService {
         }
         return chapterRespList;
     }
-    public void listPage(PageReq pageReq) {
-        PageHelper.startPage(pageReq.getPage(),pageReq.getSize());//对第一个select有用
+    public void listPage(ChapterPageReq chapterPageReq) {
+        PageHelper.startPage(chapterPageReq.getPage(),chapterPageReq.getSize());//对第一个select有用
         ChapterExample chapterExample = new ChapterExample();
+        ChapterExample.Criteria criteria = chapterExample.createCriteria();
 //        chapterExample.createCriteria().andIdEqualTo("1");
 //        chapterExample.setOrderByClause("id desc");
+        if(!StringUtils.isEmpty(chapterPageReq.getCourseId())){
+            criteria.andCourseIdEqualTo(chapterPageReq.getCourseId());
+        }
+        if(!StringUtils.isEmpty(chapterPageReq.getCourseId())){
+            criteria.andCourseIdEqualTo(chapterPageReq.getCourseId());
+        }
         List<Chapter> chapterList = chapterMapper.selectByExample(chapterExample);//写在select的下一行
         PageInfo<Chapter> pageInfo = new PageInfo<>(chapterList);
-        pageReq.setTotal(pageInfo.getTotal());
+        chapterPageReq.setTotal(pageInfo.getTotal());
         List<ChapterResp> chapterDtoList = CopyUtil.copyList(chapterList, ChapterResp.class);
-        pageReq.setList(chapterDtoList);
+        chapterPageReq.setList(chapterDtoList);
     }
     public void save(ChapterReq chapterReq) {
         System.out.println("chapterReq"+chapterReq.getId());
