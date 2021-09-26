@@ -3,6 +3,7 @@ package com.xichuan.server.service;
 import cn.hutool.core.util.IdUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.xichuan.server.req.SectionPageReq;
 import com.xichuan.server.req.SectionReq;
 import com.xichuan.server.req.PageReq;
 import com.xichuan.server.domain.Section;
@@ -36,17 +37,24 @@ public class SectionService {
         }
         return sectionRespList;
     }
-    public void listPage(PageReq pageReq) {
-        PageHelper.startPage(pageReq.getPage(),pageReq.getSize());//对第一个select有用
+    public void listPage(SectionPageReq sectionPageReq) {
+        PageHelper.startPage(sectionPageReq.getPage(),sectionPageReq.getSize());//对第一个select有用
         SectionExample sectionExample = new SectionExample();
 //        sectionExample.createCriteria().andIdEqualTo("1");
 //        sectionExample.setOrderByClause("id desc");
+        SectionExample.Criteria criteria = sectionExample.createCriteria();
+        if (!StringUtils.isEmpty(sectionPageReq.getCourseId())) {
+            criteria.andCourseIdEqualTo(sectionPageReq.getCourseId());
+        }
+        if (!StringUtils.isEmpty(sectionPageReq.getChapterId())) {
+            criteria.andChapterIdEqualTo(sectionPageReq.getChapterId());
+        }
         sectionExample.setOrderByClause("sort asc");
-        List<Section> sectionList = sectionMapper.selectByExample(sectionExample);//写在select的下一行
+        List<Section> sectionList = sectionMapper.selectByExample(sectionExample);
         PageInfo<Section> pageInfo = new PageInfo<>(sectionList);
-        pageReq.setTotal(pageInfo.getTotal());
+        sectionPageReq.setTotal(pageInfo.getTotal());
         List<SectionResp> sectionDtoList = CopyUtil.copyList(sectionList, SectionResp.class);
-        pageReq.setList(sectionDtoList);
+        sectionPageReq.setList(sectionDtoList);
     }
     public void save(SectionReq sectionReq) {
         Section section = CopyUtil.copy(sectionReq, Section.class);

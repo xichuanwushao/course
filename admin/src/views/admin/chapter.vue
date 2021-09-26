@@ -1,8 +1,11 @@
 <template xmlns:v-on="http://www.w3.org/1999/xhtml">
-    <div>
-        <h3>{{course.name}}</h3>
-<!--        <button v-on:click="list(1)" id="Loading-btn" type="button" class="btn btn-success" data-Loading-text="Loading..."><i class="ace-icon fa fa-refresh "></i><font class="Loading-font">刷新</font></button>-->
-        <p>
+        <div>
+            <h4 class="lighter">
+                <i class="ace-icon fa fa-hand-o-right icon-animated-hand-pointer blue"></i>
+                <router-link to="/business/course" class="pink"> {{course.name}} </router-link>
+            </h4>
+            <hr>
+            <p>
         <router-link to="/business/course" class="btn btn-white btn-default btn-round">
             <i class="ace-icon fa fa-arrow-left "></i>
             返回课程
@@ -23,7 +26,6 @@
                     <tr>
                         <th>章节编号</th>
                         <th>名称</th>
-                        <th>课程编号</th>
                         <th>操作</th>
                     </tr>
                     </thead>
@@ -34,16 +36,16 @@
 
                         <td>{{chapter.id}}</td>
                         <td>{{chapter.name}}</td>
-                        <td>{{chapter.courseId}}</td>
                         <td>
                             <div class="hidden-sm hidden-xs btn-group">
-
-                                <button v-on:click="edit(chapter)" class="btn btn-xs btn-info">
-                                    <i class="ace-icon fa fa-pencil bigger-120"></i>
-                                </button>
-
-                                <button v-on:click="del(chapter.id)" class="btn btn-xs btn-danger">
-                                    <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                <button v-on:click="toSection(chapter)" class="btn btn-white btn-xs btn-info btn-round">
+                                    小节
+                                </button>&nbsp;
+                                <button v-on:click="edit(chapter)" class="btn btn-white btn-xs btn-info btn-round">
+                                    编辑
+                                </button>&nbsp;
+                                <button v-on:click="del(chapter.id)" class="btn btn-white btn-xs btn-warning btn-round">
+                                    删除
                                 </button>
 
                             </div>
@@ -231,6 +233,14 @@
                 //     }
                 // });
 
+            },
+            /**
+             * 点击【小节】
+             */
+            toSection(chapter) {
+                let _this = this;
+                SessionStorage.set("chapter", chapter);
+                _this.$router.push("/business/section");
             }
         }
 

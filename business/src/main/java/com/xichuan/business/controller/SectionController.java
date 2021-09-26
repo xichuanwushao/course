@@ -3,6 +3,7 @@ package com.xichuan.business.controller;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.xichuan.server.domain.Section;
 import com.xichuan.server.exception.ValidatorException;
+import com.xichuan.server.req.SectionPageReq;
 import com.xichuan.server.req.SectionReq;
 import com.xichuan.server.req.PageReq;
 import com.xichuan.server.resp.SectionResp;
@@ -35,10 +36,12 @@ public class SectionController {
     }
 
     @PostMapping("listPage")
-    public CommonResp listPage(@RequestBody PageReq pageReq){
+    public CommonResp listPage(@RequestBody SectionPageReq sectionPageReq){
         CommonResp commonResp = new CommonResp();
-        sectionService.listPage(pageReq);
-        commonResp.setContent(pageReq);
+        ValidatorUtil.require(sectionPageReq.getCourseId(), "课程ID");
+        ValidatorUtil.require(sectionPageReq.getChapterId(), "大章ID");
+        sectionService.listPage(sectionPageReq);
+        commonResp.setContent(sectionPageReq);
         return commonResp;
     }
     @PostMapping("/save")
