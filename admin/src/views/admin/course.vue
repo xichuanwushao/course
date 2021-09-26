@@ -18,9 +18,9 @@
                     <img  v-show="course.image" class="media-object" v-bind:src="course.image" />
                     <div class="caption">
                         <div class="clearfix">
-                            <span class="pull-right label label-grey info-label">{{COURSE_LEVEL | optionKV(course.level)}}</span>
-                            <span class="pull-right label label-grey info-label">{{COURSE_CHARGE | optionKV(course.charge)}}</span>
-                            <span class="pull-right label label-grey info-label">{{COURSE_STATUS | optionKV(course.status)}}</span>
+                            <span class="pull-right label label-primary info-label">{{COURSE_LEVEL | optionKV(course.level)}}</span>
+                            <span class="pull-right label label-primary info-label">{{COURSE_CHARGE | optionKV(course.charge)}}</span>
+                            <span class="pull-right label label-primary info-label">{{COURSE_STATUS | optionKV(course.status)}}</span>
                         </div>
 
                         <h3 class="search-title">
