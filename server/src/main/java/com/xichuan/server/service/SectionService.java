@@ -13,6 +13,7 @@ import com.xichuan.server.resp.SectionResp;
 import com.xichuan.server.util.CopyUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
@@ -59,6 +60,7 @@ public class SectionService {
         List<SectionResp> sectionDtoList = CopyUtil.copyList(sectionList, SectionResp.class);
         sectionPageReq.setList(sectionDtoList);
     }
+    @Transactional (rollbackFor = Exception.class )//抛出exception异常时 也可以触发事务
     public void save(SectionReq sectionReq) {
         Section section = CopyUtil.copy(sectionReq, Section.class);
         if(StringUtils.isEmpty(sectionReq.getId())){
