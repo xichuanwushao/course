@@ -51,11 +51,16 @@ public class SectionController {
         ValidatorUtil.require(sectionReq.getTitle(), "标题");
         ValidatorUtil.length(sectionReq.getTitle(), "标题", 1, 50);
         ValidatorUtil.length(sectionReq.getVideo(), "视频", 1, 200);
+        try {
 
-        CommonResp commonResp = new CommonResp();
-        sectionService.save(sectionReq);
-        commonResp.setContent(sectionReq);
-        return commonResp;
+            CommonResp commonResp = new CommonResp();
+            sectionService.save(sectionReq);
+            commonResp.setContent(sectionReq);
+            return commonResp;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @DeleteMapping("/delete/{id}")

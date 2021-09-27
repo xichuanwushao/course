@@ -61,12 +61,15 @@ public class SectionService {
         sectionPageReq.setList(sectionDtoList);
     }
     @Transactional (rollbackFor = Exception.class )//抛出exception异常时 也可以触发事务
-    public void save(SectionReq sectionReq) {
+    public void save(SectionReq sectionReq) throws Exception {
         Section section = CopyUtil.copy(sectionReq, Section.class);
         if(StringUtils.isEmpty(sectionReq.getId())){
             this.insert(section);
         }else{
             this.update(section);
+        }
+        if(true){
+            throw new Exception("事务测试RuntimeException");
         }
         courseService.updateTime(sectionReq.getCourseId());
 
