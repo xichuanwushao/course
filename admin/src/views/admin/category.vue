@@ -1,4 +1,4 @@
-<template xmlns:v-on="http://www.w3.org/1999/xhtml">
+<template xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
   <div>
 <div class="row">
   <div class="col-md-6">
@@ -25,7 +25,7 @@
           </thead>
 
           <tbody>
-          <tr v-for="category in level1" v-on:click="onClickLevel1(category)">
+          <tr v-for="category in level1" v-on:click="onClickLevel1(category)" v-bind:class="{'active':category.id === active.id}">
               <td>{{category.id}}</td>
               <td>{{category.name}}</td>
               <td>{{category.sort}}</td>
@@ -87,10 +87,6 @@
             <button v-on:click="add()" class="btn btn-white btn-default btn-round">
                 <i class="ace-icon fa fa-edit "></i>
                 新增
-            </button>
-            <button v-on:click="all()" class="btn btn-white btn-default btn-round">
-                <i class="ace-icon fa fa-refresh "></i>
-                刷新
             </button>
         </p>
         <!-- PAGE CONTENT BEGINS -->
@@ -212,6 +208,7 @@
                 categorys: [],
                 level1: [],
                 level2: [],
+                active: {},
             }
         },
         mounted:function () {
@@ -241,7 +238,7 @@
                         let resp = response.data;
                         _this.categorys = resp.content;
                         // 将所有记录格式化成树形结构
-                        _this.level1 = [];
+                        _this.level1 = [];//格式化之前先将level1清空
                         for (let i = 0; i < _this.categorys.length; i++) {
                             let c = _this.categorys[i];
                             if (c.parent === '0') {
@@ -324,6 +321,7 @@
             },
             onClickLevel1(category){
                 let _this = this;
+                _this.active = category;
                 _this.level2 = category.children;
             }
 
@@ -331,20 +329,8 @@
 
     }
 </script>
-<style>
-    .btn{
-        margin-top: 0;
-        margin-right: 5px;
-    }
-    #Loading-btn{
-        width: 120px;
-        height: 20px;
-        margin-bottom: 6px;
-        font-size: 14px;
-        font-margin-bottom: 6px;
-        padding-bottom: 25px;
-    }
-    .Loading-font{
-        /*padding-bottom: 12px;*/
+<style scoped>
+    .active td {
+        background-color: #d6e9c6 !important;
     }
 </style>
