@@ -115,8 +115,8 @@ insert into course (id, name, summary, time, price, image, level, charge, status
 # 分类
 drop table if exists `category`;
 create table `category` (
-    `id` char(8) not null default '' comment 'id',
-    `parent` char(8)  not null default '' comment '父id',
+    `id` char(50) not null default '' comment 'id',
+    `parent` char(50)  not null default '' comment '父id',
     `name` varchar(50) not null comment '名称',
     `sort` int comment '顺序',
     primary key (`id`)

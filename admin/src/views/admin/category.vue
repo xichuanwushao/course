@@ -4,9 +4,9 @@
   <div class="col-md-6">
       <p>
           <!--        <button v-on:click="list(1)" id="Loading-btn" type="button" class="btn btn-success" data-Loading-text="Loading..."><i class="ace-icon fa fa-refresh "></i><font class="Loading-font">刷新</font></button>-->
-          <button v-on:click="add()" class="btn btn-white btn-default btn-round">
+          <button v-on:click="addLevel1()" class="btn btn-white btn-default btn-round">
               <i class="ace-icon fa fa-edit "></i>
-              新增
+              新增一级分类
           </button>
           <button v-on:click="all()" class="btn btn-white btn-default btn-round">
               <i class="ace-icon fa fa-refresh "></i>
@@ -84,9 +84,9 @@
     <div class="col-md-6">
         <p>
             <!--        <button v-on:click="list(1)" id="Loading-btn" type="button" class="btn btn-success" data-Loading-text="Loading..."><i class="ace-icon fa fa-refresh "></i><font class="Loading-font">刷新</font></button>-->
-            <button v-on:click="add()" class="btn btn-white btn-default btn-round">
+            <button v-on:click="addLevel2()" class="btn btn-white btn-default btn-round">
                 <i class="ace-icon fa fa-edit "></i>
-                新增
+                新增二级分类
             </button>
         </p>
         <!-- PAGE CONTENT BEGINS -->
@@ -170,9 +170,9 @@
                     <div class="modal-body">
                         <form class="form-horizontal">
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">父id</label>
+                                            <label class="col-sm-2 control-label">父分类</label>
                                             <div class="col-sm-10">
-                                                <input v-model="category.parent" class="form-control">
+                                                <p class="form-control-static">{{active.name || "无"}}</p>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -217,10 +217,32 @@
             _this.all(1);
         },
         methods:{
-            add(){
+            /**
+             * 点击【新增一级】
+             */
+            addLevel1() {
                 let _this = this;
-                _this.category={};
-                $("#form-modal").modal("show")
+                _this.active = {};
+                _this.level2 = [];
+                _this.category = {
+                    parent: "0"
+                };
+                $("#form-modal").modal("show");
+            },
+
+            /**
+             * 点击【新增二级】
+             */
+            addLevel2() {
+                let _this = this;
+                if (Tool.isEmpty(_this.active)) {
+                    Toast.warning("请先点击一级分类");
+                    return;
+                }
+                _this.category = {
+                    parent: _this.active.id
+                };
+                $(".modal").modal("show");
             },
 
             edit(category){
