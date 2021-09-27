@@ -37,6 +37,7 @@ let optionKVArray = (list, key) =>  {
     }
 };
 
+
 /**
  * 时长格式化
  * @param value 例如：36000
@@ -91,6 +92,7 @@ let formatFileSize = (value) => {
 
 export default {
     optionKV,
+
     formatSecond,
     formatFileSize
 }
