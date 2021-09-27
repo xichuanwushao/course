@@ -30,8 +30,11 @@ public class CategoryController {
     }
 
     @RequestMapping("all")
-    public List<CategoryResp> all(){
-        return categoryService.all();
+    public CommonResp all(){
+        CommonResp commonResp = new CommonResp();
+        List<CategoryResp> categoryRespList = categoryService.all();
+        commonResp.setContent(categoryRespList);
+        return commonResp;
     }
 
     @PostMapping("listPage")

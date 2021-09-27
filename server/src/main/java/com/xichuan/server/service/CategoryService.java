@@ -23,16 +23,9 @@ public class CategoryService {
     private CategoryMapper categoryMapper;
     public List<CategoryResp> all() {
         CategoryExample categoryExample = new CategoryExample();
-//        categoryExample.createCriteria().andIdEqualTo("1");
-//        categoryExample.setOrderByClause("id desc");
+        categoryExample.setOrderByClause("sort asc");
         List<Category> categoryList = categoryMapper.selectByExample(categoryExample);
-        List<CategoryResp> categoryRespList =new ArrayList<CategoryResp>() ;
-        for(int i = 0;i<categoryList.size();i++){
-            Category category = categoryList.get(i);
-            CategoryResp categoryResp = new CategoryResp();
-            BeanUtils.copyProperties(category,categoryResp);
-            categoryRespList.add(categoryResp);
-        }
+        List<CategoryResp> categoryRespList = CopyUtil.copyList(categoryList,CategoryResp.class);
         return categoryRespList;
     }
     public void listPage(PageReq pageReq) {

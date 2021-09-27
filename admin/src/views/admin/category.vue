@@ -6,13 +6,12 @@
             <i class="ace-icon fa fa-edit "></i>
             新增
         </button>
-        <button v-on:click="list(1)" class="btn btn-white btn-default btn-round">
+        <button v-on:click="all()" class="btn btn-white btn-default btn-round">
             <i class="ace-icon fa fa-refresh "></i>
             刷新
         </button>
      </p>
         <!-- PAGE CONTENT BEGINS -->
-        <pagination  ref="pagination" v-bind:list="list" v-bind:itemCount="3"></pagination>
         <table id="simple-table" class="table  table-bordered table-hover">
             <thead>
             <tr>
@@ -121,10 +120,8 @@
     </div>
 </template>
 <script>
-    import Pagination from "../../components/pagination";
     import Swal from 'sweetalert2'
     export default {
-        components: {Pagination},
         name: "category",
         data:function (){
             return {
@@ -135,8 +132,7 @@
         mounted:function () {
             // this.$parent.activeSidebar("business-category-sidebar");
             let _this = this;
-            _this.$refs.pagination.size = 5;
-            _this.list(1);
+            _this.all(1);
         },
         methods:{
             add(){
@@ -150,19 +146,16 @@
                 _this.category = $.extend({},category);//对象复制
                 $("#form-modal").modal("show")
             },
-            list(page){
+            all(){
                 let _this = this;
                 Loading.show();
-                _this.currentPage=page,
-                    _this.$ajax.post(process.env.VUE_APP_SERVER+"/business/category/listPage",{
-                        page:page,
-                        size:_this.$refs.pagination.size,
+                    _this.$ajax.post(process.env.VUE_APP_SERVER+"/business/category/all",{
                     }).then((response=>{
                         Loading.hide();
                         // console.log("查询章列表结果：",response);
                         let resp = response.data;
-                        _this.categorys = resp.content.list;
-                        _this.$refs.pagination.render(page, resp.content.total);
+                        _this.categorys = resp.content;
+                        //jian
                     }))
             },
             save(){
@@ -183,7 +176,7 @@
                     let resp = response.data;
                     if (resp.success){
                         $("#form-modal").modal("hide");
-                        _this.list(1);
+                        _this.all(1);
                         toast.success("保存成功")
                     }else{
                         toast.success(resp.message)
@@ -199,7 +192,7 @@
                         // console.log("删除分类列表结果：",response);
                         let resp = response.data;
                         if (resp.success){
-                            _this.list( _this.currentPage);
+                            _this.all( _this.currentPage);
                             toast.success("删除成功")
                         }
                     }))
