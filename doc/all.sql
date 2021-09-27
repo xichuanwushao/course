@@ -108,5 +108,35 @@ insert into course (id, name, summary, time, price, image, level, charge, status
 insert into course (id, name, summary, time, price, image, level, charge, status, enroll, sort, created_at, updated_at) VALUES ('10','反贪风暴','电影获得奥斯卡奖项,年度最佳纸片人',7200,19.8,'',0,'C','D',100,0,now(),now());
 insert into course (id, name, summary, time, price, image, level, charge, status, enroll, sort, created_at, updated_at) VALUES ('11','流浪地球','电影获得奥斯卡奖项,年度最佳纸片人',7200,19.8,'',0,'C','D',100,0,now(),now());
 insert into course (id, name, summary, time, price, image, level, charge, status, enroll, sort, created_at, updated_at) VALUES ('12','刺客信条','电影获得奥斯卡奖项,年度最佳纸片人',7200,19.8,'',0,'C','D',100,0,now(),now());
-update course c set `time` = (select sum(`time`) from `section` where course_id = #{courseId})
-where c.id = #{courseId}
+
+
+
+
+# 分类
+drop table if exists `category`;
+create table `category` (
+    `id` char(8) not null default '' comment 'id',
+    `parent` char(8)  not null default '' comment '父id',
+    `name` varchar(50) not null comment '名称',
+    `sort` int comment '顺序',
+    primary key (`id`)
+) engine=innodb default charset=utf8mb4 comment='分类';
+
+insert into `category` (id, parent, name, sort) values (100, 000, '前端开发', 100);
+insert into `category` (id, parent, name, sort) values (101, 100, 'Vue', 101);
+insert into `category` (id, parent, name, sort) values (102, 100, 'HTML & CSS', 102);
+insert into `category` (id, parent, name, sort) values (200, 000, 'Java', 200);
+insert into `category` (id, parent, name, sort) values (201, 200, '基础应用', 201);
+insert into `category` (id, parent, name, sort) values (202, 200, '框架应用', 202);
+insert into `category` (id, parent, name, sort) values (300, 000, 'Python', 300);
+insert into `category` (id, parent, name, sort) values (301, 300, '基础应用', 301);
+insert into `category` (id, parent, name, sort) values (302, 300, '进阶方向应用', 302);
+insert into `category` (id, parent, name, sort) values (400, 000, '数据库', 400);
+insert into `category` (id, parent, name, sort) values (401, 400, 'MySQL', 401);
+insert into `category` (id, parent, name, sort) values (500, 000, '其它', 500);
+insert into `category` (id, parent, name, sort) values (501, 500, '服务器', 501);
+insert into `category` (id, parent, name, sort) values (502, 500, '开发工具', 502);
+insert into `category` (id, parent, name, sort) values (503, 500, '热门服务端语言', 503);
+
+
+
