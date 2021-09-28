@@ -139,4 +139,11 @@ insert into `category` (id, parent, name, sort) values (502, 500, '开发工具'
 insert into `category` (id, parent, name, sort) values (503, 500, '热门服务端语言', 503);
 
 
-
+#课程分类
+drop table if exists `course_category`;
+create table `course_category` (
+    `id` char(50) not null default '' comment 'id',
+    `course_id` char(50) comment '课程|course.id',
+    `category_id` char(50) comment '分类|course.id',
+    primary key (`id`)
+) engine=innodb default charset=utf8mb4 comment='课程分类';
