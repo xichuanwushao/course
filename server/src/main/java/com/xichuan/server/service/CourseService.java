@@ -30,6 +30,9 @@ public class CourseService {
 
     @Resource
     private CourseMapperCust courseMapperCust;
+
+    @Resource
+    private CourseCategoryService courseCategoryService;
     public List<CourseResp> all() {
         CourseExample courseExample = new CourseExample();
 //        courseExample.createCriteria().andIdEqualTo("1");
@@ -63,6 +66,8 @@ public class CourseService {
         }else{
             this.update(course);
         }
+        //批量保存课程分类
+        courseCategoryService.saveBatch(courseReq.getId(),courseReq.getCategorys());
     }
     public void insert(Course course) {
         Date now = new Date();

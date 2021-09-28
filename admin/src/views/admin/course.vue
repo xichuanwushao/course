@@ -239,6 +239,7 @@
                 COURSE_CHARGE: COURSE_CHARGE,
                 COURSE_STATUS: COURSE_STATUS,
                 categorys:[],
+                tree: {},
             }
         },
         mounted:function () {
@@ -290,6 +291,13 @@
                 }
 
                 Loading.show();
+                let categorys = _this.tree.getChangeCheckedNodes();
+                _this.course.categorys = categorys;
+                if(Tool.isEmpty(categorys)){
+                    toast.warning("请选择分类！");
+                    return;
+                }
+                console.log(categorys);
                 _this.$ajax.post(process.env.VUE_APP_SERVER+"/business/course/save", _this.course).then((response=>{
                     Loading.hide();
                     // console.log("保存章列表结果：",response);
@@ -380,7 +388,7 @@
                 };
 
                 let zNodes = _this.categorys;
-                $.fn.zTree.init($("#tree"), setting, zNodes);
+                _this.tree = $.fn.zTree.init($("#tree"), setting, zNodes);
             },
         }
 

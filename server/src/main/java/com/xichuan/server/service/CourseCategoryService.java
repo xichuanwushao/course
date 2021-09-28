@@ -3,6 +3,7 @@ package com.xichuan.server.service;
 import cn.hutool.core.util.IdUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.xichuan.server.req.CategoryReq;
 import com.xichuan.server.req.CourseCategoryReq;
 import com.xichuan.server.req.PageReq;
 import com.xichuan.server.domain.CourseCategory;
@@ -10,6 +11,7 @@ import com.xichuan.server.domain.CourseCategoryExample;
 import com.xichuan.server.mapper.CourseCategoryMapper;
 import com.xichuan.server.resp.CourseCategoryResp;
 import com.xichuan.server.util.CopyUtil;
+import com.xichuan.server.util.UuidUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -65,4 +67,17 @@ public class CourseCategoryService {
         courseCategoryMapper.deleteByPrimaryKey( id);
     }
 
+    public void saveBatch(String courseId, List<CategoryReq> categoryReqList){
+        CourseCategoryExample example = new CourseCategoryExample();
+        example.createCriteria().andCourseIdEqualTo(courseId);
+        courseCategoryMapper.deleteByExample(example);
+        for(int num = 0 ; num < categoryReqList.size(); num++ ){
+            CategoryReq categoryReq = categoryReqList.get(num);
+            CourseCategory courseCategory = new CourseCategory();
+            courseCategory.setId(UuidUtil.getShortUuid());
+            courseCategory.setCourseId(courseId);
+            courseCategory.setCategoryId(categoryReq.getId());
+            insert(courseCategory);
+        }
+    }
 }
