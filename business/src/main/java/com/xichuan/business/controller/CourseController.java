@@ -3,10 +3,12 @@ package com.xichuan.business.controller;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.xichuan.server.domain.Course;
 import com.xichuan.server.exception.ValidatorException;
+import com.xichuan.server.req.CourseCategoryReq;
 import com.xichuan.server.req.CourseReq;
 import com.xichuan.server.req.PageReq;
 import com.xichuan.server.resp.CourseResp;
 import com.xichuan.server.resp.CommonResp;
+import com.xichuan.server.service.CourseCategoryService;
 import com.xichuan.server.service.CourseService;
 import com.xichuan.server.util.ValidatorUtil;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +24,9 @@ import java.util.List;
 public class CourseController {
     @Resource
     private CourseService courseService;
+
+    @Resource
+    private CourseCategoryService courseCategoryService;
 
     public static final String BUSINESS_NAME="课程";
     @RequestMapping("test")
@@ -62,6 +67,19 @@ public class CourseController {
     public CommonResp delete(@PathVariable String id){
         CommonResp commonResp = new CommonResp();
         courseService.delete(id);
+        return commonResp;
+    }
+
+
+    /**
+     * 查找课程下所有分类
+     * @param courseId
+     */
+    @PostMapping("/list-category/{courseId}")
+    public CommonResp listCategory(@PathVariable(value = "courseId") String courseId) {
+        CommonResp commonResp = new CommonResp();
+        List<CourseCategoryReq> categoryReqList = courseCategoryService.listByCourse(courseId);
+        commonResp.setContent(categoryReqList);
         return commonResp;
     }
 }
