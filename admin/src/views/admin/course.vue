@@ -266,6 +266,7 @@
                 COURSE_STATUS: COURSE_STATUS,
                 categorys:[],
                 tree: {},
+                saveContentInterval: {},
             }
         },
         mounted:function () {
@@ -462,6 +463,15 @@
                         if (resp.content) {
                             $("#content").summernote('code', resp.content.content);//读取到内容 再将内容显示到文本框
                         }
+                        // 定时自动保存
+                        _this.saveContentInterval = setInterval(function() {
+                            _this.saveContent();
+                        }, 5000);
+                        // 关闭内容框时 清空自动保存任务
+                        $("#course-content-modal").on('hidden.bs.modal', function(e){
+                            clearInterval(_this.saveContentInterval);
+                        })//调用modal方法时 增加backdrop:'static' 点击空白位置 模态框不会自动关闭
+
                     } else {
                         Toast.warning(resp.message);
                     }
