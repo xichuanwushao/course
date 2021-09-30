@@ -136,7 +136,8 @@
             }
         },
         mounted:function () {
-            // this.$parent.activeSidebar("business-chapter-sidebar");
+            //sidebar激活样式方法一
+            this.$parent.activeSidebar("business-course-sidebar");
             let _this = this;
             _this.$refs.pagination.size = 5;
             let course = SessionStorage.get("course")|| {};

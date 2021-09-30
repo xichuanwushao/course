@@ -174,6 +174,7 @@
         }
         },
         mounted:function () {
+            this.$parent.activeSidebar("business-course-sidebar");
             // this.$parent.activeSidebar("business-section-sidebar");
             let _this = this;
             _this.$refs.pagination.size = 5;

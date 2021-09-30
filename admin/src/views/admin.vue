@@ -496,28 +496,28 @@
                                 <b class="arrow"></b>
 
                             </li>
-                            <li class="" id="business-chapter-sidebar">
-                                <router-link to="/business/chapter" class="dropdown-toggle">
-                                    <i class="menu-icon fa fa-caret-right"></i>
+<!--                            <li class="" id="business-chapter-sidebar">-->
+<!--                                <router-link to="/business/chapter" class="dropdown-toggle">-->
+<!--                                    <i class="menu-icon fa fa-caret-right"></i>-->
 
-                                    大章管理
-                                    <b class="arrow fa fa-angle-down"></b>
-                                </router-link>
+<!--                                    大章管理-->
+<!--                                    <b class="arrow fa fa-angle-down"></b>-->
+<!--                                </router-link>-->
 
-                                <b class="arrow"></b>
+<!--                                <b class="arrow"></b>-->
 
-                            </li>
-                            <li class="" id="business-section-sidebar">
-                                <router-link to="/business/section" class="dropdown-toggle">
-                                    <i class="menu-icon fa fa-caret-right"></i>
+<!--                            </li>-->
+<!--                            <li class="" id="business-section-sidebar">-->
+<!--                                <router-link to="/business/section" class="dropdown-toggle">-->
+<!--                                    <i class="menu-icon fa fa-caret-right"></i>-->
 
-                                    小节管理
-                                    <b class="arrow fa fa-angle-down"></b>
-                                </router-link>
+<!--                                    小节管理-->
+<!--                                    <b class="arrow fa fa-angle-down"></b>-->
+<!--                                </router-link>-->
 
-                                <b class="arrow"></b>
+<!--                                <b class="arrow"></b>-->
 
-                            </li>
+<!--                            </li>-->
                             <li class="">
                                 <a href="typography.html">
                                     <i class="menu-icon fa fa-caret-right"></i>
