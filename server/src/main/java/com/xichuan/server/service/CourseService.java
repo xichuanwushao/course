@@ -9,6 +9,7 @@ import com.xichuan.server.req.PageReq;
 import com.xichuan.server.domain.Course;
 import com.xichuan.server.domain.CourseExample;
 import com.xichuan.server.mapper.CourseMapper;
+import com.xichuan.server.req.SortReq;
 import com.xichuan.server.resp.CourseResp;
 import com.xichuan.server.util.CopyUtil;
 import org.slf4j.Logger;
@@ -96,4 +97,21 @@ public class CourseService {
         courseMapperCust.updateTime(courseId);
     }
 
+    /***
+     * 排序
+     * @param sortReq
+     */
+    public void sort(SortReq sortReq) {
+        // 修改当前记录的排序值
+        courseMapperCust.updateSort(sortReq);
+        // 如果排序值变大
+        if(sortReq.getNewSort() > sortReq.getOldSort()){
+            courseMapperCust.moveSortsForward(sortReq);
+        }
+        // 如果排序值变小 把排序区间的值往后移加一
+        if(sortReq.getNewSort() < sortReq.getOldSort()){
+            courseMapperCust.moveSortsBackward(sortReq);
+        }
+
+    }
 }

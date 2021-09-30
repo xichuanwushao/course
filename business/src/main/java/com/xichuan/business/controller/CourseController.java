@@ -6,11 +6,14 @@ import com.xichuan.server.exception.ValidatorException;
 import com.xichuan.server.req.CourseCategoryReq;
 import com.xichuan.server.req.CourseReq;
 import com.xichuan.server.req.PageReq;
+import com.xichuan.server.req.SortReq;
 import com.xichuan.server.resp.CourseResp;
 import com.xichuan.server.resp.CommonResp;
 import com.xichuan.server.service.CourseCategoryService;
 import com.xichuan.server.service.CourseService;
 import com.xichuan.server.util.ValidatorUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -29,6 +32,9 @@ public class CourseController {
     private CourseCategoryService courseCategoryService;
 
     public static final String BUSINESS_NAME="课程";
+
+    private static final Logger logger = LoggerFactory.getLogger(CourseController.class);
+
     @RequestMapping("test")
     public String course(){
         return "success";
@@ -80,6 +86,14 @@ public class CourseController {
         CommonResp commonResp = new CommonResp();
         List<CourseCategoryReq> categoryReqList = courseCategoryService.listByCourse(courseId);
         commonResp.setContent(categoryReqList);
+        return commonResp;
+    }
+
+    @RequestMapping(value = "/sort")
+    public CommonResp sort(@RequestBody SortReq sortReq){
+        logger.info("更新排序");
+        CommonResp commonResp = new CommonResp();
+        courseService.sort(sortReq);
         return commonResp;
     }
 }
