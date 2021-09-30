@@ -237,6 +237,11 @@
                         <form class="form-horizontal">
                             <div class="form-group">
                                 <div class="col-sm-12">
+                                    {{saveContentLabel}}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
                                     <div id="content" ></div>
                                 </div>
                             </div>
@@ -267,6 +272,7 @@
                 categorys:[],
                 tree: {},
                 saveContentInterval: {},
+                saveContentLabel: "",
             }
         },
         mounted:function () {
@@ -454,6 +460,7 @@
                     height: 300
                 });
                 $("#content").summernote('code', '');  // 先清空历史文本
+                _this.saveContentLabel="";
                 Loading.show();
                 _this.$ajax.get(process.env.VUE_APP_SERVER + '/business/courseContent/find-content/' + id).then((response)=>{
                     Loading.hide();
@@ -490,7 +497,9 @@
                     Loading.hide();
                     let resp = response.data;
                     if (resp.success) {
-                        toast.success("内容保存成功");
+                        // toast.success("内容保存成功");
+                        let now = Tool.dateFormat("yyyy-MM-dd hh:mm:ss");
+                        _this.saveContentLabel="最后保存时间："+now;
                     } else {
                         toast.warning(resp.message);
                     }

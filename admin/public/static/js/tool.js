@@ -24,6 +24,7 @@ Tool = {
     return $.trim(str).length >= min && $.trim(str).length <= max;
   },
 
+
   /**
    * 时间格式化，date为空时取当前时间
    */
