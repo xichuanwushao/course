@@ -21,6 +21,8 @@ import java.util.List;
 public class CourseContentService {
     @Resource
     private CourseContentMapper courseContentMapper;
+
+
     public List<CourseContentResp> all() {
         CourseContentExample courseContentExample = new CourseContentExample();
 //        courseContentExample.createCriteria().andIdEqualTo("1");
@@ -46,23 +48,41 @@ public class CourseContentService {
         List<CourseContentResp> courseContentDtoList = CopyUtil.copyList(courseContentList, CourseContentResp.class);
         pageReq.setList(courseContentDtoList);
     }
-    public void save(CourseContentReq courseContentReq) {
-        CourseContent courseContent = CopyUtil.copy(courseContentReq, CourseContent.class);
-        if(StringUtils.isEmpty(courseContentReq.getId())){
-            this.insert(courseContent);
-        }else{
-            this.update(courseContent);
-        }
-    }
-    public void insert(CourseContent courseContent) {
-        courseContent.setId(IdUtil.simpleUUID());
-        courseContentMapper.insert(courseContent);
-    }
-    public void update(CourseContent courseContent) {
-        courseContentMapper.updateByPrimaryKeyWithBLOBs(courseContent);
-    }
+
+
     public void delete(String id) {
         courseContentMapper.deleteByPrimaryKey( id);
     }
 
+    /***
+     * 查找课程内容
+     * @param id
+     * @return
+     */
+    public CourseContentResp findContent(String id){
+        CourseContent content = courseContentMapper.selectByPrimaryKey(id);
+        if (content==null){
+            return null;
+        }
+        return CopyUtil.copy(content, CourseContentResp.class);
+    }
+
+    /***
+     * 保存课程内容包含新增和修改
+     * @param courseContentReq
+     */
+    public int save(CourseContentReq courseContentReq) {
+        CourseContent courseContent = CopyUtil.copy(courseContentReq, CourseContent.class);
+        int updateNum = this.update(courseContent);
+        if(updateNum==0){
+            updateNum = this.insert(courseContent);
+        }
+        return updateNum;
+    }
+    public int insert(CourseContent courseContent) {
+        return courseContentMapper.insert(courseContent);
+    }
+    public int update(CourseContent courseContent) {
+        return courseContentMapper.updateByPrimaryKeyWithBLOBs(courseContent);
+    }
 }

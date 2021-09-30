@@ -39,6 +39,9 @@
                             <button v-on:click="toChapter(course)" class="btn btn-white btn-xs btn-info btn-round">
                                 大章
                             </button>&nbsp;
+                            <button v-on:click="editContent(course)" class="btn btn-white btn-xs btn-info btn-round">
+                                内容
+                            </button>&nbsp;
                             <button v-on:click="edit(course)" class="btn btn-white btn-xs btn-info btn-round">
                                 编辑
                             </button>&nbsp;
@@ -223,6 +226,29 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
+        <div id="course-content-modal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">内容编辑</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <div id="content" ></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button v-on:click="saveContent()" type="button" class="btn btn-primary">保存</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
     </div>
 </template>
 <script>
@@ -401,7 +427,7 @@
             listCategory(courseId) {
                 let _this = this;
                 Loading.show();
-                _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/admin/course/list-category/' + courseId).then((res)=>{
+                _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/course/list-category/' + courseId).then((res)=>{
                     Loading.hide();
                     console.log("查找课程下所有分类结果：", res);
                     let response = res.data;
@@ -414,6 +440,51 @@
                         _this.tree.checkNode(node, true);
                     }
                 })
+            },
+            /**
+             * 打开内容编辑框
+             */
+            editContent(course) {
+                let _this = this;
+                let id = course.id;
+                _this.course = course;
+                $("#content").summernote({//初始化富文本框
+                    focus: true,
+                    height: 300
+                });
+                $("#content").summernote('code', '');  // 先清空历史文本
+                Loading.show();
+                _this.$ajax.get(process.env.VUE_APP_SERVER + '/business/courseContent/find-content/' + id).then((response)=>{
+                    Loading.hide();
+                    let resp = response.data;
+                    if (resp.success) {
+                        $("#course-content-modal").modal({backdrop:'static', keyboard:false});//调用modal方法时 增加backdrop:'static' 点击空白位置 模态框不会自动关闭
+                        if (resp.content) {
+                            $("#content").summernote('code', resp.content.content);//读取到内容 再将内容显示到文本框
+                        }
+                    } else {
+                        Toast.warning(resp.message);
+                    }
+                });
+            },
+            /**
+             * 保存内容
+             */
+            saveContent () {
+                let _this = this;
+                let content = $("#content").summernote("code");//将文本框里面的内容提取出来
+                _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/courseContent/save-content', {
+                    id: _this.course.id,
+                    content: content
+                }).then((response)=>{
+                    Loading.hide();
+                    let resp = response.data;
+                    if (resp.success) {
+                        toast.success("内容保存成功");
+                    } else {
+                        toast.warning(resp.message);
+                    }
+                });
             },
         }
 

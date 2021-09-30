@@ -59,4 +59,19 @@ public class CourseContentController {
         courseContentService.delete(id);
         return commonResp;
     }
+
+
+    @GetMapping("/find-content/{id}")
+    public CommonResp findContent(@PathVariable String id){
+        CommonResp commonResp = new CommonResp();
+        CourseContentResp courseContentResp = courseContentService.findContent(id);
+        commonResp.setContent(courseContentResp);
+        return commonResp;
+    }
+    @PostMapping("/save-content")
+    public CommonResp saveContent(@RequestBody CourseContentReq courseContentReq){
+        CommonResp commonResp = new CommonResp();
+        courseContentService.save(courseContentReq);
+        return commonResp;
+    }
 }
