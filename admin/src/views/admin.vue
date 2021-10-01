@@ -496,6 +496,17 @@
                                 <b class="arrow"></b>
 
                             </li>
+                            <li class="" id="business-teacher-sidebar">
+                                <router-link to="/business/teacher" class="dropdown-toggle">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+
+                                    讲师管理
+                                    <b class="arrow fa fa-angle-down"></b>
+                                </router-link>
+
+                                <b class="arrow"></b>
+
+                            </li>
 <!--                            <li class="" id="business-chapter-sidebar">-->
 <!--                                <router-link to="/business/chapter" class="dropdown-toggle">-->
 <!--                                    <i class="menu-icon fa fa-caret-right"></i>-->
