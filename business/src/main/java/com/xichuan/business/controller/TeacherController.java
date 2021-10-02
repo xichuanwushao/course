@@ -24,17 +24,20 @@ public class TeacherController {
     private TeacherService teacherService;
 
     public static final String BUSINESS_NAME="讲师";
-    @RequestMapping("test")
+    @RequestMapping("/test")
     public String teacher(){
         return "success";
     }
 
-    @RequestMapping("all")
-    public List<TeacherResp> all(){
-        return teacherService.all();
+    @RequestMapping("/all")
+    public CommonResp all(){
+        CommonResp commonResp = new CommonResp();
+        List<TeacherResp>  teacherRespList = teacherService.all();
+        commonResp.setContent(teacherRespList);
+        return commonResp;
     }
 
-    @PostMapping("listPage")
+    @PostMapping("/listPage")
     public CommonResp listPage(@RequestBody PageReq pageReq){
         CommonResp commonResp = new CommonResp();
         teacherService.listPage(pageReq);

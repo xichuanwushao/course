@@ -23,16 +23,8 @@ public class TeacherService {
     private TeacherMapper teacherMapper;
     public List<TeacherResp> all() {
         TeacherExample teacherExample = new TeacherExample();
-//        teacherExample.createCriteria().andIdEqualTo("1");
-//        teacherExample.setOrderByClause("id desc");
         List<Teacher> teacherList = teacherMapper.selectByExample(teacherExample);
-        List<TeacherResp> teacherRespList =new ArrayList<TeacherResp>() ;
-        for(int i = 0;i<teacherList.size();i++){
-            Teacher teacher = teacherList.get(i);
-            TeacherResp teacherResp = new TeacherResp();
-            BeanUtils.copyProperties(teacher,teacherResp);
-            teacherRespList.add(teacherResp);
-        }
+        List<TeacherResp> teacherRespList = CopyUtil.copyList(teacherList,TeacherResp.class);
         return teacherRespList;
     }
     public void listPage(PageReq pageReq) {

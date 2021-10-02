@@ -80,6 +80,8 @@ public class CourseReq {
      */
     private List<CategoryReq> categorys;
 
+    private String teacherId;
+
     public String getId() {
         return id;
     }
@@ -192,6 +194,14 @@ public class CourseReq {
         this.categorys = categorys;
     }
 
+    public String getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(String teacherId) {
+        this.teacherId = teacherId;
+    }
+
     @Override
     public String toString() {
         return "CourseReq{" +
@@ -209,6 +219,7 @@ public class CourseReq {
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 ", categorys=" + categorys +
+                ", teacherId='" + teacherId + '\'' +
                 '}';
     }
 }

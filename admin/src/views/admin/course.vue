@@ -161,6 +161,14 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-sm-2 control-label">讲师</label>
+                                <div class="col-sm-10">
+                                    <select v-model="course.teacherId" class="form-control">
+                                        <option v-for="o in teachers" v-bind:value="o.id">{{o.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-sm-2 control-label">概述</label>
                                 <div class="col-sm-10">
                                     <input v-model="course.summary" class="form-control">
@@ -310,7 +318,8 @@
                     id:"",
                     oldSort:0,
                     newSort:0,
-                }
+                },
+                teachers:[],
             }
         },
         mounted:function () {
@@ -318,6 +327,7 @@
             let _this = this;
             _this.$refs.pagination.size = 5;
             _this.allCategory();
+            _this.allTeachers();
             _this.list(1);
         },
         methods:{
@@ -575,6 +585,20 @@
                         toast.error("更新排序失败");
                     }
                 })
+            },
+            allTeachers(){
+                let _this = this;
+                Loading.show();
+                _this.$ajax.post(process.env.VUE_APP_SERVER+"/business/teacher/all",{
+                }).then((response=>{
+                    Loading.hide();
+                    // console.log("查询章列表结果：",response);
+                    let resp = response.data;
+                    console.log("查询allTeachers结果：",response.data);
+                    console.log("查询allTeachers结果：",resp.content);
+                    _this.teachers = resp.content;
+                    console.log("查询allTeachers结果：",_this.teachers);
+                }))
             },
         }
 

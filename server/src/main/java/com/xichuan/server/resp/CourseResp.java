@@ -30,6 +30,8 @@ public class CourseResp {
 
     private Date updatedAt;
 
+    private String teacherId;
+
     public String getId() {
         return id;
     }
@@ -134,26 +136,31 @@ public class CourseResp {
         this.updatedAt = updatedAt;
     }
 
+    public String getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(String teacherId) {
+        this.teacherId = teacherId;
+    }
+
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", name=").append(name);
-        sb.append(", summary=").append(summary);
-        sb.append(", time=").append(time);
-        sb.append(", price=").append(price);
-        sb.append(", image=").append(image);
-        sb.append(", level=").append(level);
-        sb.append(", charge=").append(charge);
-        sb.append(", status=").append(status);
-        sb.append(", enroll=").append(enroll);
-        sb.append(", sort=").append(sort);
-        sb.append(", createdAt=").append(createdAt);
-        sb.append(", updatedAt=").append(updatedAt);
-        sb.append("]");
-        return sb.toString();
+        return "CourseResp{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", summary='" + summary + '\'' +
+                ", time=" + time +
+                ", price=" + price +
+                ", image='" + image + '\'' +
+                ", level='" + level + '\'' +
+                ", charge='" + charge + '\'' +
+                ", status='" + status + '\'' +
+                ", enroll=" + enroll +
+                ", sort=" + sort +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", teacherId='" + teacherId + '\'' +
+                '}';
     }
 }
