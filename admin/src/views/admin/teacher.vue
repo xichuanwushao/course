@@ -13,109 +13,48 @@
      </p>
         <!-- PAGE CONTENT BEGINS -->
         <pagination  ref="pagination" v-bind:list="list" v-bind:itemCount="3"></pagination>
-        <div class="col-xs-12 col-sm-3 center">
-            <div>
+      <div class="row">
+          <div v-for="teacher in teachers" class="col-xs-12 col-sm-3 center">
+              <div>
                 <span class="profile-picture">
-                    <img id="avatar" class="editable img-responsive" alt="Alex's Avatar" src="assets/images/avatars/profile-pic.jpg" />
+                    <img v-show="!teacher.image" class="media-object" src="/static/image/teacher/profile-pic.jpg" />
+                    <img  v-show="teacher.image" class="media-object" v-bind:src="teacher.image" />
                 </span>
-                <div class="space-4"></div>
+                  <div class="space-4"></div>
+                  <div class="width-85 label label-info label-xlg arrowed-in arrowed-in-right">
+                      <div class="inline position-relative">
+                          <a href="#" class="user-title-label dropdown-toggle" data-toggle="dropdown">
+                              <i class="ace-icon fa fa-circle light-green"></i>&nbsp;
+                              <span class="white">{{teacher.position}}</span>
+                          </a>
+                      </div>
+                  </div>
+              </div>
+              <div class="space-6"></div>
+              <div class="text-center">
+                  <div class="text-center">
+                      <a href="#" class="btn btn-link">
+                          <i class="ace-icon fa fa-user"></i>
+                          {{teacher.name}}【{{teacher.nickname}}】
+                      </a>
+                  </div>
 
-                <div class="width-80 label label-info label-xlg arrowed-in arrowed-in-right">
-                    <div class="inline position-relative">
-                        <a href="#" class="user-title-label dropdown-toggle" data-toggle="dropdown">
-                            <i class="ace-icon fa fa-circle light-green"></i>
-                            &nbsp;
-                            <span class="white">Alex M. Doe</span>
-                        </a>
+                  <div class="space-6"></div>
 
-                        <ul class="align-left dropdown-menu dropdown-caret dropdown-lighter">
-                            <li class="dropdown-header"> Change Status </li>
+                  <div class="profile-social-links align-center">
+                      <button v-on:click="edit(teacher)" class="btn btn-xs btn-info">
+                          <i class="ace-icon fa fa-pencil bigger-120"></i>
+                      </button>
+                      <button v-on:click="del(teacher.id)" class="btn btn-xs btn-danger">
+                          <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                      </button>
+                  </div>
+              </div>
 
-                            <li>
-                                <a href="#">
-                                    <i class="ace-icon fa fa-circle green"></i>
-&nbsp;
-                                    <span class="green">Available</span>
-                                </a>
-                            </li>
+              <div class="hr hr12 dotted"></div>
 
-                            <li>
-                                <a href="#">
-                                    <i class="ace-icon fa fa-circle red"></i>
-&nbsp;
-                                    <span class="red">Busy</span>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="#">
-                                    <i class="ace-icon fa fa-circle grey"></i>
-&nbsp;
-                                    <span class="grey">Invisible</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="space-6"></div>
-
-            <div class="profile-contact-info">
-                <div class="profile-contact-links align-left">
-                    <a href="#" class="btn btn-link">
-                        <i class="ace-icon fa fa-plus-circle bigger-120 green"></i>
-                        Add as a friend
-                    </a>
-
-                    <a href="#" class="btn btn-link">
-                        <i class="ace-icon fa fa-envelope bigger-120 pink"></i>
-                        Send a message
-                    </a>
-
-                    <a href="#" class="btn btn-link">
-                        <i class="ace-icon fa fa-globe bigger-125 blue"></i>
-                        www.alexdoe.com
-                    </a>
-                </div>
-
-                <div class="space-6"></div>
-
-                <div class="profile-social-links align-center">
-                    <a href="#" class="tooltip-info" title="" data-original-title="Visit my Facebook">
-                        <i class="middle ace-icon fa fa-facebook-square fa-2x blue"></i>
-                    </a>
-
-                    <a href="#" class="tooltip-info" title="" data-original-title="Visit my Twitter">
-                        <i class="middle ace-icon fa fa-twitter-square fa-2x light-blue"></i>
-                    </a>
-
-                    <a href="#" class="tooltip-error" title="" data-original-title="Visit my Pinterest">
-                        <i class="middle ace-icon fa fa-pinterest-square fa-2x red"></i>
-                    </a>
-                </div>
-            </div>
-
-            <div class="hr hr12 dotted"></div>
-
-            <div class="clearfix">
-                <div class="grid2">
-                    <span class="bigger-175 blue">25</span>
-
-                    <br />
-                    Followers
-                </div>
-
-                <div class="grid2">
-                    <span class="bigger-175 blue">12</span>
-
-                    <br />
-                    Following
-                </div>
-            </div>
-
-            <div class="hr hr16 dotted"></div>
-        </div>
+          </div>
+      </div>
 
       <table id="simple-table" class="table  table-bordered table-hover">
             <thead>
@@ -201,42 +140,43 @@
                     </div>
                     <div class="modal-body">
                         <form class="form-horizontal">
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">姓名</label>
-                                            <div class="col-sm-10">
-                                                <input v-model="teacher.name" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">昵称</label>
-                                            <div class="col-sm-10">
-                                                <input v-model="teacher.nickname" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">头像</label>
-                                            <div class="col-sm-10">
-                                                <input v-model="teacher.image" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">职位</label>
-                                            <div class="col-sm-10">
-                                                <input v-model="teacher.position" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">座右铭</label>
-                                            <div class="col-sm-10">
-                                                <input v-model="teacher.motto" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">简介</label>
-                                            <div class="col-sm-10">
-                                                <input v-model="teacher.intro" class="form-control">
-                                            </div>
-                                        </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">姓名</label>
+                                <div class="col-sm-10">
+                                    <input v-model="teacher.name" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">昵称</label>
+                                <div class="col-sm-10">
+                                    <input v-model="teacher.nickname" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">头像</label>
+                                <div class="col-sm-10">
+                                    <input v-model="teacher.image" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">职位</label>
+                                <div class="col-sm-10">
+                                    <input v-model="teacher.position" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">座右铭</label>
+                                <div class="col-sm-10">
+                                    <input v-model="teacher.motto" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">简介</label>
+                                <div class="col-sm-10">
+<!--                                            <input v-model="teacher.intro" class="form-control">-->
+                                    <textarea v-model="teacher.intro" class="form-control" rows="5"></textarea>
+                                </div>
+                            </div>
                         </form>
                     </div>
                     <div class="modal-footer">
