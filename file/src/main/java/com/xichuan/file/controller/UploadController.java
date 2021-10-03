@@ -34,11 +34,11 @@ public class UploadController {
         //保存文件到本地
         String fileName = file.getOriginalFilename();
         String key = UuidUtil.getShortUuid();
-        String fullPath = "F:\\Data\\JAVA\\course\\"+key+"-"+fileName;
+        String fullPath = "F:\\Data\\JAVA\\course\\teacher\\"+key+"-"+fileName;
         File dest = new File(fullPath);
         file.transferTo(dest);
         logger.info(dest.getAbsolutePath());
-
+        commonResp.setContent("http://127.0.0.1:9000/file/f/teacher/"+key+"-"+fileName);
        return  commonResp;
     }
 
