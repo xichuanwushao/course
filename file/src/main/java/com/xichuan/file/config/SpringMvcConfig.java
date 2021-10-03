@@ -7,10 +7,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class SpringMvcConfig implements WebMvcConfigurer {
-
+    @Value("${file.path}")
+    private String FILE_PATH ;//= "F:\\Data\\JAVA\\course\\";
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/f/**").addResourceLocations("file:F:\\Data\\JAVA\\course\\" );
+        System.out.println("SpringMvcConfig FILE_PATH"+FILE_PATH);
+        System.out.println("SpringMvcConfig FILE_PATH"+FILE_PATH);
+        System.out.println("SpringMvcConfig FILE_PATH"+FILE_PATH);
+        registry.addResourceHandler("/f/**").addResourceLocations("file:"+FILE_PATH );
     }
 }

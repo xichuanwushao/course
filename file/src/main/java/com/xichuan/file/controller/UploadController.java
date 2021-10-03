@@ -7,6 +7,7 @@ import com.xichuan.server.service.TestService;
 import com.xichuan.server.util.UuidUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,10 +24,18 @@ import java.util.List;
 @RestController//@Controller 如果接口返回Json 用RestController
 public class UploadController {
     private static final Logger logger = LoggerFactory.getLogger(FileApplication.class);
-
+    @Value("${file.path}")
+    private String FILE_PATH ;//= "F:\\Data\\JAVA\\course\\";
+    @Value("${file.domain}")
+    private String FILE_DOMAIN ;//= "http://127.0.0.1:9000/file/";
     public static final String BUSINESS_NAME="文件";
     @PostMapping("/upload")
     public CommonResp test(@RequestParam MultipartFile file) throws IOException {
+
+        System.out.println("UploadController FILE_PATH"+FILE_PATH);
+        System.out.println("UploadController FILE_PATH"+FILE_PATH);
+        System.out.println("UploadController FILE_DOMAIN"+FILE_DOMAIN);
+        System.out.println("UploadController FILE_DOMAIN"+FILE_DOMAIN);
        CommonResp commonResp = new CommonResp();
         logger.info("上传文件开始:{}",file);
         logger.info(file.getOriginalFilename());
@@ -34,11 +43,11 @@ public class UploadController {
         //保存文件到本地
         String fileName = file.getOriginalFilename();
         String key = UuidUtil.getShortUuid();
-        String fullPath = "F:\\Data\\JAVA\\course\\teacher\\"+key+"-"+fileName;
+        String fullPath = FILE_PATH+"teacher\\"+key+"-"+fileName;
         File dest = new File(fullPath);
         file.transferTo(dest);
         logger.info(dest.getAbsolutePath());
-        commonResp.setContent("http://127.0.0.1:9000/file/f/teacher/"+key+"-"+fileName);
+        commonResp.setContent(FILE_DOMAIN+"f/teacher/"+key+"-"+fileName);
        return  commonResp;
     }
 
