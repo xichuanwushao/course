@@ -11,7 +11,7 @@
 <script>
   export default {
     name: 'file',
-    props: {
+    props: {//可配置的属性
         text:{
             default: "上传文件"
         },
@@ -20,6 +20,9 @@
         },
         suffixs:{
             default: []
+        },
+        use:{
+            default: ""
         },
         afterUpload: {
         type: Function,
@@ -59,6 +62,7 @@
 
             // key : "file"必须和后端controller参数同名
             formData.append('file',document.querySelector("#file-upload-input").files[0]);
+            formData.append('use',_this.use);
             Loading.show();
             _this.$ajax.post(process.env.VUE_APP_SERVER + '/file/upload',formData).then((response)=>{
                 Loading.hide();

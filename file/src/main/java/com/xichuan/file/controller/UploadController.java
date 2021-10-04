@@ -2,6 +2,7 @@ package com.xichuan.file.controller;
 
 import com.xichuan.file.config.FileApplication;
 import com.xichuan.server.domain.Test;
+import com.xichuan.server.enums.FileUseEnum;
 import com.xichuan.server.req.FileReq;
 import com.xichuan.server.resp.CommonResp;
 import com.xichuan.server.service.FileService;
@@ -36,7 +37,7 @@ public class UploadController {
     private FileService fileService;
 
     @PostMapping("/upload")
-    public CommonResp test(@RequestParam MultipartFile file) throws IOException {
+    public CommonResp test(@RequestParam MultipartFile file,String use) throws IOException {
 
         System.out.println("UploadController FILE_PATH"+FILE_PATH);
         System.out.println("UploadController FILE_PATH"+FILE_PATH);
@@ -47,10 +48,21 @@ public class UploadController {
         logger.info(file.getOriginalFilename());
         logger.info(String.valueOf(file.getSize()));
         //保存文件到本地
+        FileUseEnum fileUseEnum = FileUseEnum.getByCode(use);
         String fileName = file.getOriginalFilename();
         String suffix = fileName.substring(fileName.lastIndexOf(".")+1).toLowerCase();
         String key = UuidUtil.getShortUuid();
-        String path = "teacher\\"+key+"."+suffix;
+
+        //如果文件夹不存在则创建
+        String dir = fileUseEnum.name().toLowerCase();
+        File fullDir = new File(FILE_PATH + dir);
+        if (!fullDir.exists()) {
+            fullDir.mkdir();
+        }
+
+
+
+        String path = dir+File.separator+key+"."+suffix;
         String fullPath = FILE_PATH+path;
         File dest = new File(fullPath);
         file.transferTo(dest);
@@ -61,7 +73,7 @@ public class UploadController {
         fileReq.setName(fileName);
         fileReq.setSize(Math.toIntExact(file.getSize()));
         fileReq.setSuffix(suffix);
-        fileReq.setUse("");
+        fileReq.setUse(use);
         fileService.save(fileReq);
 
         commonResp.setContent(FILE_DOMAIN+ path);
