@@ -171,7 +171,7 @@ create table `teacher`(
 ) engine=innodb default charset=utf8mb4 comment='讲师';
 
 alter table `course` add column (`teacher_id` char(50) comment '讲师|teacher.id');
---文件
+-- 文件
 drop table if exists `file`;
 create table `file` (
     `id` char(50) not null default '' comment 'id',
