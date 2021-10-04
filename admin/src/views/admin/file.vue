@@ -2,10 +2,10 @@
   <div>
      <p>
         <!--        <button v-on:click="list(1)" id="Loading-btn" type="button" class="btn btn-success" data-Loading-text="Loading..."><i class="ace-icon fa fa-refresh "></i><font class="Loading-font">刷新</font></button>-->
-        <button v-on:click="add()" class="btn btn-white btn-default btn-round">
-            <i class="ace-icon fa fa-edit "></i>
-            新增
-        </button>
+<!--        <button v-on:click="add()" class="btn btn-white btn-default btn-round">-->
+<!--            <i class="ace-icon fa fa-edit "></i>-->
+<!--            新增-->
+<!--        </button>-->
         <button v-on:click="list(1)" class="btn btn-white btn-default btn-round">
             <i class="ace-icon fa fa-refresh "></i>
             刷新
@@ -24,7 +24,7 @@
             <th>用途</th>
             <th>创建时间</th>
             <th>修改时间</th>
-            <th>操作</th>
+<!--            <th>操作</th>-->
             <tr/>
         </thead>
 
@@ -38,120 +38,86 @@
             <td>{{FILE_USE | optionKV(file.use)}}</td>
             <td>{{file.createAt}}</td>
             <td>{{file.updateAt}}</td>
-        <td>
-            <div class="hidden-sm hidden-xs btn-group">
+<!--        <td>-->
+<!--            <div class="hidden-sm hidden-xs btn-group">-->
 
-                <button v-on:click="edit(file)" class="btn btn-xs btn-info">
-                    <i class="ace-icon fa fa-pencil bigger-120"></i>
-                </button>
+<!--                <button v-on:click="edit(file)" class="btn btn-xs btn-info">-->
+<!--                    <i class="ace-icon fa fa-pencil bigger-120"></i>-->
+<!--                </button>-->
 
-                <button v-on:click="del(file.id)" class="btn btn-xs btn-danger">
-                    <i class="ace-icon fa fa-trash-o bigger-120"></i>
-                </button>
+<!--                <button v-on:click="del(file.id)" class="btn btn-xs btn-danger">-->
+<!--                    <i class="ace-icon fa fa-trash-o bigger-120"></i>-->
+<!--                </button>-->
 
-            </div>
-
-            <div class="hidden-md hidden-lg">
-                <div class="inline pos-rel">
-                    <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
-                        <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
-                    </button>
-
-                    <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-                        <li>
-                            <a href="#" class="tooltip-info" data-rel="tooltip" title="View">
-                                                                    <span class="blue">
-                                                                        <i class="ace-icon fa fa-search-plus bigger-120"></i>
-                                                                    </span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="tooltip-success" data-rel="tooltip" title="Edit">
-                                                                    <span class="green">
-                                                                        <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
-                                                                    </span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
-                                                                    <span class="red">
-                                                                        <i class="ace-icon fa fa-trash-o bigger-120"></i>
-                                                                    </span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </td>
+<!--            </div>-->
+<!--        </td>-->
         </tr>
         </tbody>
         </table>
         <!-- PAGE CONTENT ENDS -->
 
-        <div id="form-modal" class="modal fade" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">表单</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form class="form-horizontal">
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">相对路径</label>
-                                            <div class="col-sm-10">
-                                                <input v-model="file.path" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">文件名</label>
-                                            <div class="col-sm-10">
-                                                <input v-model="file.name" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">后缀</label>
-                                            <div class="col-sm-10">
-                                                <input v-model="file.suffix" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">大小</label>
-                                            <div class="col-sm-10">
-                                                <input v-model="file.size" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">用途</label>
-                                            <div class="col-sm-10">
-                                                <select v-model="file.use" class="form-control">
-                                                    <option v-for="o in FILE_USE" v-bind:value="o.key">{{o.value}}</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">创建时间</label>
-                                            <div class="col-sm-10">
-                                                <input v-model="file.createAt" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">修改时间</label>
-                                            <div class="col-sm-10">
-                                                <input v-model="file.updateAt" class="form-control">
-                                            </div>
-                                        </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button v-on:click="save()" type="button" class="btn btn-primary">保存</button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
+<!--        <div id="form-modal" class="modal fade" tabindex="-1" role="dialog">-->
+<!--            <div class="modal-dialog" role="document">-->
+<!--                <div class="modal-content">-->
+<!--                    <div class="modal-header">-->
+<!--                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+<!--                        <h4 class="modal-title">表单</h4>-->
+<!--                    </div>-->
+<!--                    <div class="modal-body">-->
+<!--                        <form class="form-horizontal">-->
+<!--                                        <div class="form-group">-->
+<!--                                            <label class="col-sm-2 control-label">相对路径</label>-->
+<!--                                            <div class="col-sm-10">-->
+<!--                                                <input v-model="file.path" class="form-control">-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                        <div class="form-group">-->
+<!--                                            <label class="col-sm-2 control-label">文件名</label>-->
+<!--                                            <div class="col-sm-10">-->
+<!--                                                <input v-model="file.name" class="form-control">-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                        <div class="form-group">-->
+<!--                                            <label class="col-sm-2 control-label">后缀</label>-->
+<!--                                            <div class="col-sm-10">-->
+<!--                                                <input v-model="file.suffix" class="form-control">-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                        <div class="form-group">-->
+<!--                                            <label class="col-sm-2 control-label">大小</label>-->
+<!--                                            <div class="col-sm-10">-->
+<!--                                                <input v-model="file.size" class="form-control">-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                        <div class="form-group">-->
+<!--                                            <label class="col-sm-2 control-label">用途</label>-->
+<!--                                            <div class="col-sm-10">-->
+<!--                                                <select v-model="file.use" class="form-control">-->
+<!--                                                    <option v-for="o in FILE_USE" v-bind:value="o.key">{{o.value}}</option>-->
+<!--                                                </select>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                        <div class="form-group">-->
+<!--                                            <label class="col-sm-2 control-label">创建时间</label>-->
+<!--                                            <div class="col-sm-10">-->
+<!--                                                <input v-model="file.createAt" class="form-control">-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                        <div class="form-group">-->
+<!--                                            <label class="col-sm-2 control-label">修改时间</label>-->
+<!--                                            <div class="col-sm-10">-->
+<!--                                                <input v-model="file.updateAt" class="form-control">-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                        </form>-->
+<!--                    </div>-->
+<!--                    <div class="modal-footer">-->
+<!--                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>-->
+<!--                        <button v-on:click="save()" type="button" class="btn btn-primary">保存</button>-->
+<!--                    </div>-->
+<!--                </div>&lt;!&ndash; /.modal-content &ndash;&gt;-->
+<!--            </div>&lt;!&ndash; /.modal-dialog &ndash;&gt;-->
+<!--        </div>&lt;!&ndash; /.modal &ndash;&gt;-->
     </div>
 </template>
 <script>
