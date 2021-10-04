@@ -2,7 +2,9 @@ package com.xichuan.file.controller;
 
 import com.xichuan.file.config.FileApplication;
 import com.xichuan.server.domain.Test;
+import com.xichuan.server.req.FileReq;
 import com.xichuan.server.resp.CommonResp;
+import com.xichuan.server.service.FileService;
 import com.xichuan.server.service.TestService;
 import com.xichuan.server.util.UuidUtil;
 import org.slf4j.Logger;
@@ -29,6 +31,10 @@ public class UploadController {
     @Value("${file.domain}")
     private String FILE_DOMAIN ;//= "http://127.0.0.1:9000/file/";
     public static final String BUSINESS_NAME="文件";
+
+    @Resource
+    private FileService fileService;
+
     @PostMapping("/upload")
     public CommonResp test(@RequestParam MultipartFile file) throws IOException {
 
@@ -42,12 +48,23 @@ public class UploadController {
         logger.info(String.valueOf(file.getSize()));
         //保存文件到本地
         String fileName = file.getOriginalFilename();
+        String suffix = fileName.substring(fileName.lastIndexOf(".")+1).toLowerCase();
         String key = UuidUtil.getShortUuid();
-        String fullPath = FILE_PATH+"teacher\\"+key+"-"+fileName;
+        String path = "teacher\\"+key+"."+suffix;
+        String fullPath = FILE_PATH+path;
         File dest = new File(fullPath);
         file.transferTo(dest);
         logger.info(dest.getAbsolutePath());
-        commonResp.setContent(FILE_DOMAIN+"f/teacher/"+key+"-"+fileName);
+        logger.info("保存文件记录");
+        FileReq fileReq = new FileReq();
+        fileReq.setPath(path);
+        fileReq.setName(fileName);
+        fileReq.setSize(Math.toIntExact(file.getSize()));
+        fileReq.setSuffix(suffix);
+        fileReq.setUse("");
+        fileService.save(fileReq);
+
+        commonResp.setContent(FILE_DOMAIN+ path);
        return  commonResp;
     }
 
