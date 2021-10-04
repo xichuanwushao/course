@@ -168,7 +168,7 @@
             }
         },
         mounted:function () {
-            // this.$parent.activeSidebar("business-file-sidebar");
+            // this.$parent.activeSidebar("file-file-sidebar");
             let _this = this;
             _this.$refs.pagination.size = 5;
             _this.list(1);
@@ -189,7 +189,7 @@
                 let _this = this;
                 Loading.show();
                 _this.currentPage=page,
-                    _this.$ajax.post(process.env.VUE_APP_SERVER+"/business/file/listPage",{
+                    _this.$ajax.post(process.env.VUE_APP_SERVER+"/file/file/listPage",{
                         page:page,
                         size:_this.$refs.pagination.size,
                     }).then((response=>{
@@ -213,7 +213,7 @@
                 }
 
                 Loading.show();
-                _this.$ajax.post(process.env.VUE_APP_SERVER+"/business/file/save", _this.file).then((response=>{
+                _this.$ajax.post(process.env.VUE_APP_SERVER+"/file/file/save", _this.file).then((response=>{
                     Loading.hide();
                     // console.log("保存章列表结果：",response);
                     let resp = response.data;
@@ -230,7 +230,7 @@
                 let _this = this;
                 Confirm.show("删除章节不可恢复确认删除?",function (){
                     Loading.show();
-                    _this.$ajax.delete(process.env.VUE_APP_SERVER+"/business/file/delete/"+id, _this.file).then((response=>{
+                    _this.$ajax.delete(process.env.VUE_APP_SERVER+"/file/file/delete/"+id, _this.file).then((response=>{
                         Loading.hide();
                         // console.log("删除文件列表结果：",response);
                         let resp = response.data;
@@ -251,7 +251,7 @@
                 // }).then((result) => {
                 //     if (result.isConfirmed) {
                 //         Loading.show();
-                //         _this.$ajax.delete("http://127.0.0.1:9000/business/file/delete/"+id, _this.file).then((response=>{
+                //         _this.$ajax.delete("http://127.0.0.1:9000/file/file/delete/"+id, _this.file).then((response=>{
                 //             Loading.hide();
                 //             console.log("删除文件列表结果：",response);
                 //             let resp = response.data;
