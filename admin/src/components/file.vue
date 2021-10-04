@@ -53,6 +53,7 @@
             if (!validateSuffix) {
                 toast.warning("文件格式不正确！只支持上传：" + suffixs.join(","));
                 $("#" + _this.inputId + "-input").val("");
+                $("#"+_this.inputId+"-input").val("");//修复连续选择第二个文件的时候 第二个文件没有反应
                 return;
             }
 
@@ -66,7 +67,7 @@
                 // let image = resp.content;
 
                 _this.afterUpload(resp);
-
+                $("#"+_this.inputId+"-input").val("");//修复连续选择第二个文件的时候 第二个文件没有反应
                 // console.info("头像地址:",image);
                 // _this.teacher.image = image;
             });
@@ -77,29 +78,3 @@
     }
   }
 </script>
-
-<style scoped>
-  .pagination {
-    vertical-align: middle !important;
-    font-size: 16px;
-    margin-top: 0;
-    margin-bottom: 10px;
-  }
-
-  .pagination button {
-    margin-right: 5px;
-  }
-
-  .btn-primary.active {
-    background-color: #2f7bba !important;
-    border-color: #27689d !important;
-    color: white !important;
-    font-weight: 600;
-  }
-
-  /*.pagination select {*/
-  /*vertical-align: middle !important;*/
-  /*font-size: 16px;*/
-  /*margin-top: 0;*/
-  /*}*/
-</style>
