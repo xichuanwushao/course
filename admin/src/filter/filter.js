@@ -74,6 +74,7 @@ function PrefixInteger(num, length) {
     return (Array(length).join('0') + num).slice(-length);
 }
 
+
 /**
  * 格式化文件大小
  * @param value
