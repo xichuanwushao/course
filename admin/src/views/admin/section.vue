@@ -123,7 +123,16 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">视频</label>
                                 <div class="col-sm-10">
-                                    <input v-model="section.video" class="form-control">
+                                    <file v-bind:text="'上传头像'"
+                                          v-bind:after-upload="afterUpload"
+                                          v-bind:id="'image-upload'"
+                                          v-bind:use="FILE_USE.TEACHER.key"
+                                          v-bind:suffixs="['jpg','jpeg','png']" ></file>
+                                    <div v-show="teacher.image" class="row">
+                                        <div class="col-md-4">
+                                            <img v-bind:src="teacher.image" class="img-responsive" >
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -159,9 +168,10 @@
 </template>
 <script>
     import Pagination from "../../components/pagination";
+    import File from "../../components/file";
     import Swal from 'sweetalert2'
     export default {
-        components: {Pagination},
+        components: {Pagination,File},
         name: "business-section",
         data:function (){
             return{
@@ -169,6 +179,7 @@
             sections:[],
             currentPage:{},
             SECTION_CHARGE:SECTION_CHARGE,
+            FILE_USE:FILE_USE,
             course: {},
             chapter: {},
         }
@@ -279,6 +290,10 @@
                 //     }
                 // });
 
+            },afterUpload(resp){
+                let _this = this;
+                let video = resp.content.path;
+                _this.section.video = video;
             }
         }
 
