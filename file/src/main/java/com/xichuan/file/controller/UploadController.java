@@ -49,6 +49,7 @@ public class UploadController {
         //保存文件到本地
         FileUseEnum fileUseEnum = FileUseEnum.getByCode(use);
         String fileName = file.getOriginalFilename();
+        String fileNameNoSuffix = fileName.substring(0,fileName.lastIndexOf(".")).toLowerCase();
         String suffix = fileName.substring(fileName.lastIndexOf(".")+1).toLowerCase();
         String key = UuidUtil.getShortUuid();
 
@@ -61,7 +62,7 @@ public class UploadController {
 
 
 
-        String path = dir+File.separator+key+"."+suffix;
+        String path = dir+File.separator+fileNameNoSuffix+"_"+key+"."+suffix;
         String fullPath = FILE_PATH+path;
         File dest = new File(fullPath);
         file.transferTo(dest);
