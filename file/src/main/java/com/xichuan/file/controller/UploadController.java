@@ -43,7 +43,6 @@ public class UploadController {
         System.out.println("UploadController FILE_PATH"+FILE_PATH);
         System.out.println("UploadController FILE_DOMAIN"+FILE_DOMAIN);
         System.out.println("UploadController FILE_DOMAIN"+FILE_DOMAIN);
-       CommonResp commonResp = new CommonResp();
         logger.info("上传文件开始:{}",file);
         logger.info(file.getOriginalFilename());
         logger.info(String.valueOf(file.getSize()));
@@ -76,8 +75,10 @@ public class UploadController {
         fileReq.setUse(use);
         fileService.save(fileReq);
 
-        commonResp.setContent(FILE_DOMAIN+ path);
-       return  commonResp;
+        CommonResp commonResp = new CommonResp();
+        fileReq.setPath(FILE_DOMAIN + path);
+        commonResp.setContent(fileReq);
+        return  commonResp;
     }
 
 
