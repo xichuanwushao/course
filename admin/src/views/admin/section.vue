@@ -129,7 +129,7 @@
                                           v-bind:use="FILE_USE.COURSE.key"
                                           v-bind:suffixs="['jpg','jpeg','png','mp4']" ></file>
                                     <div v-show="section.video" class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-9">
                                             <video v-bind:src="section.video" controls="controls" ></video>
                                         </div>
                                     </div>
@@ -300,6 +300,11 @@
     }
 </script>
 <style>
+    video {
+        width: 100%;
+        height: auto;
+        margin-top: 10px;
+    }
     .btn{
         margin-top: 0;
         margin-right: 5px;
