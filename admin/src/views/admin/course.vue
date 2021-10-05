@@ -170,14 +170,15 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">封面</label>
                                 <div class="col-sm-10">
-                                    <file v-bind:text="'上传头像'"
+                                    <file v-bind:id="'image-upload'"
+                                          v-bind:text="'上传封面'"
+                                          v-bind:suffixs="['jpg','jpeg','png','webp']"
+                                          v-bind:use="FILE_USE.COURSE.key"
                                           v-bind:after-upload="afterUpload"
-                                          v-bind:id="'image-upload'"
-                                          v-bind:use="FILE_USE.TEACHER.key"
-                                          v-bind:suffixs="['jpg','jpeg','png']" ></file>
-                                    <div v-show="teacher.image" class="row">
-                                        <div class="col-md-4">
-                                            <img v-bind:src="teacher.image" class="img-responsive" >
+                                    ></file>
+                                    <div v-show="course.image" class="row">
+                                        <div class="col-md-6">
+                                            <img v-bind:src="course.image" class="img-responsive" >
                                         </div>
                                     </div>
                                 </div>
