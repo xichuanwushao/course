@@ -168,6 +168,21 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-sm-2 control-label">封面</label>
+                                <div class="col-sm-10">
+                                    <file v-bind:text="'上传头像'"
+                                          v-bind:after-upload="afterUpload"
+                                          v-bind:id="'image-upload'"
+                                          v-bind:use="FILE_USE.TEACHER.key"
+                                          v-bind:suffixs="['jpg','jpeg','png']" ></file>
+                                    <div v-show="teacher.image" class="row">
+                                        <div class="col-md-4">
+                                            <img v-bind:src="teacher.image" class="img-responsive" >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-sm-2 control-label">名称</label>
                                 <div class="col-sm-10">
                                     <input v-model="course.name" class="form-control">
@@ -197,12 +212,6 @@
                                 <label class="col-sm-2 control-label">价格(元)</label>
                                 <div class="col-sm-10">
                                     <input v-model="course.price" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">封面</label>
-                                <div class="col-sm-10">
-                                    <input v-model="course.image" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -312,9 +321,10 @@
 </template>
 <script>
     import Pagination from "../../components/pagination";
+    import File from "../../components/file";
     import Swal from 'sweetalert2'
     export default {
-        components: {Pagination},
+        components: {Pagination,File},
         name: "course",
         data:function (){
             return {
@@ -323,6 +333,7 @@
                 COURSE_LEVEL: COURSE_LEVEL,
                 COURSE_CHARGE: COURSE_CHARGE,
                 COURSE_STATUS: COURSE_STATUS,
+                FILE_USE:FILE_USE,
                 categorys:[],
                 tree: {},
                 saveContentInterval: {},
@@ -612,7 +623,11 @@
                     _this.teachers = resp.content;
                     console.log("查询allTeachers结果：",_this.teachers);
                 }))
-            },
+            },afterUpload(resp){
+            let _this = this;
+            let image = resp.content.path;
+            _this.course.image = image;
+        }
         }
 
     }
