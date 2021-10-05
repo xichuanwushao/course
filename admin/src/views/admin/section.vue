@@ -127,10 +127,10 @@
                                           v-bind:after-upload="afterUpload"
                                           v-bind:id="'video-upload'"
                                           v-bind:use="FILE_USE.COURSE.key"
-                                          v-bind:suffixs="['jpg','jpeg','png','mp4']" ></file>
+                                          v-bind:suffixs="['jpg','jpeg','png','mp4','avi']" ></file>
                                     <div v-show="section.video" class="row">
                                         <div class="col-md-9">
-                                            <video v-bind:src="section.video" controls="controls" ></video>
+                                            <video v-bind:src="section.video" controls="controls" id="videos" ></video>
                                         </div>
                                     </div>
                                 </div>
@@ -294,6 +294,18 @@
                 let _this = this;
                 let video = resp.content.path;
                 _this.section.video = video;
+                _this.getVideoTime();
+            },
+            /***
+             获取时长
+             */
+            getVideoTime(){
+                let _this = this;
+                let ele = document.getElementById("videos");
+                console.info("视频时长  "+ele.duration)
+                _this.section.time = parseInt(ele.duration,10);
+
+
             }
         }
 
