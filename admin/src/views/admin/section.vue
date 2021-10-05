@@ -123,14 +123,14 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">视频</label>
                                 <div class="col-sm-10">
-                                    <file v-bind:text="'上传头像'"
+                                    <file v-bind:text="'上传视频'"
                                           v-bind:after-upload="afterUpload"
-                                          v-bind:id="'image-upload'"
-                                          v-bind:use="FILE_USE.TEACHER.key"
-                                          v-bind:suffixs="['jpg','jpeg','png']" ></file>
-                                    <div v-show="teacher.image" class="row">
+                                          v-bind:id="'video-upload'"
+                                          v-bind:use="FILE_USE.COURSE.key"
+                                          v-bind:suffixs="['jpg','jpeg','png','mp4']" ></file>
+                                    <div v-show="section.video" class="row">
                                         <div class="col-md-4">
-                                            <img v-bind:src="teacher.image" class="img-responsive" >
+                                            <video v-bind:src="section.video" controls="controls" ></video>
                                         </div>
                                     </div>
                                 </div>
