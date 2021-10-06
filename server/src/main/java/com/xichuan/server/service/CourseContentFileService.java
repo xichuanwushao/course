@@ -19,8 +19,18 @@ import java.util.ArrayList;
 import java.util.List;
 @Service
 public class CourseContentFileService {
+
     @Resource
     private CourseContentFileMapper courseContentFileMapper;
+
+    public List<CourseContentFileResp> listNoPage(String courseId) {
+        CourseContentFileExample example = new CourseContentFileExample();
+        CourseContentFileExample.Criteria criteria = example.createCriteria();
+        criteria.andCourseIdEqualTo(courseId);
+        List<CourseContentFile> fileList = courseContentFileMapper.selectByExample(example);
+        List<CourseContentFileResp> fileRespList = CopyUtil.copyList(fileList, CourseContentFileResp.class);
+        return fileRespList;
+    }
     public List<CourseContentFileResp> all() {
         CourseContentFileExample courseContentFileExample = new CourseContentFileExample();
 //        courseContentFileExample.createCriteria().andIdEqualTo("1");

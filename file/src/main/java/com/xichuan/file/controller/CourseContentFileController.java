@@ -17,28 +17,41 @@ import java.util.List;
 //@Controller 如果接口返回页面用Controller
 
 
-@RequestMapping("courseContentFile")
+@RequestMapping("course-content-file")
 @RestController//@Controller 如果接口返回Json 用RestController
 public class CourseContentFileController {
     @Resource
     private CourseContentFileService courseContentFileService;
 
     public static final String BUSINESS_NAME="课程文件内容";
-    @RequestMapping("test")
+    @RequestMapping("/test")
     public String courseContentFile(){
         return "success";
     }
 
-    @RequestMapping("all")
+    @RequestMapping("/all")
     public List<CourseContentFileResp> all(){
         return courseContentFileService.all();
     }
 
-    @PostMapping("listPage")
+    @PostMapping("/listPage")
     public CommonResp listPage(@RequestBody PageReq pageReq){
         CommonResp commonResp = new CommonResp();
         courseContentFileService.listPage(pageReq);
         commonResp.setContent(pageReq);
+        return commonResp;
+    }
+
+    /***
+     * 列表查询
+     * @param pageReq
+     * @return
+     */
+    @GetMapping("/list/{courseId}")
+    public CommonResp listNoPage(@PathVariable String courseId){
+        CommonResp commonResp = new CommonResp();
+        List<CourseContentFileResp> contentFileResps = courseContentFileService.listNoPage(courseId);
+        commonResp.setContent(contentFileResps);
         return commonResp;
     }
     @PostMapping("/save")
