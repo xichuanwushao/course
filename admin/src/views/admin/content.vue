@@ -1,13 +1,11 @@
 <template>
     <div>
-        <div id="course-content-modal" class="modal fade" tabindex="-1" role="dialog" >
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content"   >
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">内容编辑</h4>
-                    </div>
-                    <div class="modal-body">
+        <h4 class="lighter">
+            <i class="ace-icon fa fa-hand-o-right icon-animated-hand-pointer blue"></i>
+            <router-link to="/business/course" class="pink"> {{course.name}} </router-link>
+        </h4>
+        <hr>
+
                         <file v-bind:input-id="'content-file-upload'"
                               v-bind:text="'上传文件'"
                               v-bind:suffixs="['jpg','jpeg','png','webp','mp4','avi']"
@@ -50,69 +48,66 @@
                                     <div id="content" ></div>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    {{saveContentLabel}}
+                                </div>
+                            </div>
                         </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button v-on:click="saveContent()" type="button" class="btn btn-primary">保存</button>
-                    </div>
+                    <p>
+                        <button type="button" class="btn btn-white btn-info btn-round" v-on:click="saveContent()">
+                            <i class="ace-icon fa fa-plus blue"></i>
+                            保存
+                        </button>&nbsp;
+                        <router-link to="/business/course" type="button" class="btn btn-white btn-default btn-round" data-dismiss="modal">
+                            <i class="ace-icon fa fa-times"></i>
+                            返回课程
+                        </router-link>
+                    </p>
                 </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
-    </div>
 </template>
 <script>
-    import Pagination from "../../components/pagination";
     import File from "../../components/file";
-    import Swal from 'sweetalert2'
     export default {
-        components: {Pagination,File},
-        name: "course",
+        components: {File},
+        name: "business-course-content",
         data:function (){
             return {
                 course: {},
-                courses: [],
-                COURSE_LEVEL: COURSE_LEVEL,
-                COURSE_CHARGE: COURSE_CHARGE,
-                COURSE_STATUS: COURSE_STATUS,
                 FILE_USE:FILE_USE,
-                categorys:[],
-                tree: {},
                 saveContentInterval: {},
                 saveContentLabel: "",
-                sort:{
-                    id:"",
-                    oldSort:0,
-                    newSort:0,
-                },
-                teachers:[],
                 files:[],
             }
         },
         mounted:function () {
             // this.$parent.activeSidebar("business-course-sidebar");
             let _this = this;
-            _this.$refs.pagination.size = 5;
-            _this.allCategory();
-            _this.allTeachers();
-            _this.list(1);
+            let course = SessionStorage.get(SESSION_KEY_COURSE) || {};
+            if (Tool.isEmpty(course)) {
+                _this.$router.push("/welcome");
+            }
+            _this.course = course;
+
+            _this.init();
+
+            // sidebar激活样式方法一
+            this.$parent.activeSidebar("business-course-sidebar");
+        },
+        destroyed: function() {
+            let _this = this;
+            console.log("组件销毁");
+            clearInterval(_this.saveContentInterval);
         },
         methods:{
-            add(){
-                let _this = this;
-                _this.course={
-                    sort: _this.$refs.pagination.total + 1
-                };
-                _this.tree.checkAllNodes(false);//让所有节点都不选中
-                $("#form-modal").modal("show");
-            },
+
     /**
      * 打开内容编辑框
      */
-    editContent(course) {
+    init() {
         let _this = this;
+        let course = _this.course;
         let id = course.id;
-        _this.course = course;
         $("#content").summernote({//初始化富文本框
             focus: true,
             height: 300
@@ -121,7 +116,7 @@
         _this.saveContentLabel="";
 
         //加载内容文件列表
-        //_this.listContentFiles();
+        _this.listContentFiles();
 
         Loading.show();
         _this.$ajax.get(process.env.VUE_APP_SERVER + '/business/courseContent/find-content/' + id).then((response)=>{
@@ -136,11 +131,6 @@
                 _this.saveContentInterval = setInterval(function() {
                     _this.saveContent();
                 }, 5000);
-                // 关闭内容框时 清空自动保存任务
-                $("#course-content-modal").on('hidden.bs.modal', function(e){
-                    clearInterval(_this.saveContentInterval);
-                })//调用modal方法时 增加backdrop:'static' 点击空白位置 模态框不会自动关闭
-
             } else {
                 toast.warning(resp.message);
             }
@@ -249,7 +239,7 @@
     delFile(f) {
         let _this = this;
         Confirm.show("删除课程后不可恢复，确认删除？", function () {
-            _this.$ajax.delete(process.env.VUE_APP_SERVER + '/file//course-content-file/delete/' + f.id).then((response)=>{
+            _this.$ajax.delete(process.env.VUE_APP_SERVER + '/file/course-content-file/delete/' + f.id).then((response)=>{
                 let resp = response.data;
                 if (resp.success) {
                     toast.success("删除文件成功");

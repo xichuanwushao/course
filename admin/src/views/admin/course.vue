@@ -52,6 +52,9 @@
                             <button v-on:click="toChapter(course)" class="btn btn-white btn-xs btn-info btn-round">
                                 大章
                             </button>&nbsp;
+                            <button v-on:click="toContent(course)" class="btn btn-white btn-xs btn-info btn-round">
+                                内容
+                            </button>&nbsp;
                             <button v-on:click="editContent(course)" class="btn btn-white btn-xs btn-info btn-round">
                                 内容
                             </button>&nbsp;
@@ -501,6 +504,14 @@
                 SessionStorage.set(SESSION_KEY_COURSE, course);
                 _this.$router.push("/business/chapter");//跳转到大章
             },
+            /**
+             * 点击【内容】
+             */
+            toContent(course) {
+                let _this = this;
+                SessionStorage.set(SESSION_KEY_COURSE, course);
+                _this.$router.push("/business/content");
+            },
             allCategory(){
                 let _this = this;
                 Loading.show();
@@ -698,7 +709,7 @@
             delFile(f) {
                 let _this = this;
                 Confirm.show("删除课程后不可恢复，确认删除？", function () {
-                    _this.$ajax.delete(process.env.VUE_APP_SERVER + '/file//course-content-file/delete/' + f.id).then((response)=>{
+                    _this.$ajax.delete(process.env.VUE_APP_SERVER + '/file/course-content-file/delete/' + f.id).then((response)=>{
                         let resp = response.data;
                         if (resp.success) {
                             toast.success("删除文件成功");
