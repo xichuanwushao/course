@@ -260,7 +260,7 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
-        <div id="course-content-modal" class="modal fade" tabindex="-1" role="dialog" >
+        <div id="course-content-modal" class="modal fade" tabindex="-1" role="dialog" style="overflow: auto;">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content"   >
                     <div class="modal-header">
