@@ -125,7 +125,7 @@
                                 <div class="col-sm-10">
                                     <file v-bind:text="'上传视频'"
                                           v-bind:after-upload="afterUpload"
-                                          v-bind:id="'video-upload'"
+                                          v-bind:input-id="'video-upload'"
                                           v-bind:use="FILE_USE.COURSE.key"
                                           v-bind:suffixs="['jpg','jpeg','png','mp4','avi']" ></file>
                                     <div v-show="section.video" class="row">

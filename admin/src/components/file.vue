@@ -56,12 +56,12 @@
             if (!validateSuffix) {
                 toast.warning("文件格式不正确！只支持上传：" + suffixs.join(","));
                 $("#" + _this.inputId + "-input").val("");
-                $("#"+_this.inputId+"-input").val("");//修复连续选择第二个文件的时候 第二个文件没有反应
+                $("#" + _this.inputId + "-input").val("");//修复连续选择第二个文件的时候 第二个文件没有反应
                 return;
             }
 
             // key : "file"必须和后端controller参数同名
-            formData.append('file',document.querySelector("#file-upload-input").files[0]);
+            formData.append('file',document.querySelector("#" + _this.inputId + "-input").files[0]);
             formData.append('use',_this.use);
             Loading.show();
             _this.$ajax.post(process.env.VUE_APP_SERVER + '/file/upload',formData).then((response)=>{
@@ -71,13 +71,14 @@
                 // let image = resp.content;
 
                 _this.afterUpload(resp);
-                $("#"+_this.inputId+"-input").val("");//修复连续选择第二个文件的时候 第二个文件没有反应
+                $("#" + _this.inputId + "-input").val("");//修复连续选择第二个文件的时候 第二个文件没有反应
                 // console.info("头像地址:",image);
                 // _this.teacher.image = image;
             });
         },
         selectFile(){
-            $("#file-upload-input").trigger("click");
+            let _this = this;
+            $("#" + _this.inputId + "-input").trigger("click");//不应该写固定
         }
     }
   }
