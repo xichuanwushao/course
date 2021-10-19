@@ -1,26 +1,22 @@
 package com.xichuan.file.controller;
 
 import com.xichuan.file.config.FileApplication;
-import com.xichuan.server.domain.Test;
 import com.xichuan.server.enums.FileUseEnum;
 import com.xichuan.server.req.FileReq;
 import com.xichuan.server.resp.CommonResp;
 import com.xichuan.server.service.FileService;
-import com.xichuan.server.service.TestService;
 import com.xichuan.server.util.UuidUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import sun.java2d.loops.FillPath;
 
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.List;
 
 //@Controller 如果接口返回页面用Controller
 @RestController//@Controller 如果接口返回Json 用RestController
@@ -36,23 +32,28 @@ public class UploadController {
     private FileService fileService;
 
     @PostMapping("/upload")
-    public CommonResp test(@RequestParam MultipartFile file,String use) throws IOException {
+    public CommonResp test(@RequestParam MultipartFile shard,
+                           String use,
+                           String name,
+                           String suffix,
+                           Integer size,
+                           Integer shardIndex,
+                           Integer shardSize,
+                           Integer shardTotal) throws IOException {
 
         System.out.println("UploadController FILE_PATH"+FILE_PATH);
         System.out.println("UploadController FILE_PATH"+FILE_PATH);
         System.out.println("UploadController FILE_DOMAIN"+FILE_DOMAIN);
         System.out.println("UploadController FILE_DOMAIN"+FILE_DOMAIN);
-        logger.info("上传文件开始:{}",file);
-        logger.info(file.getOriginalFilename());
-        logger.info(String.valueOf(file.getSize()));
+        logger.info("上传文件开始:{}", shard);
+        logger.info(shard.getOriginalFilename());
+        logger.info(String.valueOf(shard.getSize()));
         //保存文件到本地
         FileUseEnum fileUseEnum = FileUseEnum.getByCode(use);
-        String fileName = file.getOriginalFilename();
-        if(fileName.lastIndexOf(".")==-1){
-            fileName = fileName +".blob";
+        if(name.lastIndexOf(".")==-1){
+            name = name +".blob";
         }
-        String fileNameNoSuffix = fileName.substring(0,fileName.lastIndexOf(".")).toLowerCase();
-        String suffix = fileName.substring(fileName.lastIndexOf(".")+1).toLowerCase();
+        String fileNameNoSuffix = name.substring(0,name.lastIndexOf(".")).toLowerCase();
         String key = UuidUtil.getShortUuid();
 
         //如果文件夹不存在则创建
@@ -67,15 +68,19 @@ public class UploadController {
         String path = dir+File.separator+fileNameNoSuffix+"_"+key+"."+suffix;
         String fullPath = FILE_PATH+path;
         File dest = new File(fullPath);
-        file.transferTo(dest);
+        shard.transferTo(dest);
         logger.info(dest.getAbsolutePath());
         logger.info("保存文件记录");
         FileReq fileReq = new FileReq();
         fileReq.setPath(path);
-        fileReq.setName(fileName);
-        fileReq.setSize(Math.toIntExact(file.getSize()));
+        fileReq.setName(name);
+        fileReq.setSize(size);
         fileReq.setSuffix(suffix);
         fileReq.setUse(use);
+        fileReq.setShardIndex(shardIndex);
+        fileReq.setShardSize(shardSize);
+        fileReq.setShardTotal(shardTotal);
+        fileReq.setKey(key);
         fileService.save(fileReq);
 
         CommonResp commonResp = new CommonResp();
