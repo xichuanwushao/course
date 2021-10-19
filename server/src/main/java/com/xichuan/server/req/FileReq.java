@@ -56,6 +56,10 @@ public class FileReq {
     private Integer shardTotal;
 
     private String key;
+    /***
+     * base64
+     */
+    private String shard;
 
     public String getId() {
         return id;
@@ -153,6 +157,14 @@ public class FileReq {
         this.key = key;
     }
 
+    public String getShard() {
+        return shard;
+    }
+
+    public void setShard(String shard) {
+        this.shard = shard;
+    }
+
     @Override
     public String toString() {
         return "FileReq{" +
@@ -168,6 +180,7 @@ public class FileReq {
                 ", shardSize=" + shardSize +
                 ", shardTotal=" + shardTotal +
                 ", key='" + key + '\'' +
+                ", shard='" + shard + '\'' +
                 '}';
     }
 }

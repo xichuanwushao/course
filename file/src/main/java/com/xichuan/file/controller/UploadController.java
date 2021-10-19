@@ -5,6 +5,7 @@ import com.xichuan.server.enums.FileUseEnum;
 import com.xichuan.server.req.FileReq;
 import com.xichuan.server.resp.CommonResp;
 import com.xichuan.server.service.FileService;
+import com.xichuan.server.util.Base64ToMultipartFile;
 import com.xichuan.server.util.UuidUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,24 +32,29 @@ public class UploadController {
     @Resource
     private FileService fileService;
 
+//    @PostMapping("/upload")
+//    public CommonResp test(@RequestParam MultipartFile shard,
+//                           String use,
+//                           String name,
+//                           String suffix,
+//                           Integer size,
+//                           Integer shardIndex,
+//                           Integer shardSize,
+//                           Integer shardTotal,
+//                           String key) throws IOException {
     @PostMapping("/upload")
-    public CommonResp test(@RequestParam MultipartFile shard,
-                           String use,
-                           String name,
-                           String suffix,
-                           Integer size,
-                           Integer shardIndex,
-                           Integer shardSize,
-                           Integer shardTotal,
-                           String key) throws IOException {
+    public CommonResp test(@RequestBody FileReq fileReq ) throws IOException {
+        System.out.println("UploadController FILE_PATH"+FILE_PATH);
+        System.out.println("UploadController FILE_PATH"+FILE_PATH);
+        System.out.println("UploadController FILE_DOMAIN"+FILE_DOMAIN);
+        System.out.println("UploadController FILE_DOMAIN"+FILE_DOMAIN);
 
-        System.out.println("UploadController FILE_PATH"+FILE_PATH);
-        System.out.println("UploadController FILE_PATH"+FILE_PATH);
-        System.out.println("UploadController FILE_DOMAIN"+FILE_DOMAIN);
-        System.out.println("UploadController FILE_DOMAIN"+FILE_DOMAIN);
-        logger.info("上传文件开始:{}", shard);
-        logger.info(shard.getOriginalFilename());
-        logger.info(String.valueOf(shard.getSize()));
+        String use = fileReq.getUse();
+        String key = fileReq.getKey();
+        String suffix = fileReq.getSuffix();
+        String shardBase64 = fileReq.getShard();
+        MultipartFile shard = Base64ToMultipartFile.base64ToMultipart(shardBase64);
+        String name = fileReq.getName();
         //保存文件到本地
         FileUseEnum fileUseEnum = FileUseEnum.getByCode(use);
         if(name.lastIndexOf(".")==-1){
@@ -72,16 +78,7 @@ public class UploadController {
         shard.transferTo(dest);
         logger.info(dest.getAbsolutePath());
         logger.info("保存文件记录");
-        FileReq fileReq = new FileReq();
         fileReq.setPath(path);
-        fileReq.setName(name);
-        fileReq.setSize(size);
-        fileReq.setSuffix(suffix);
-        fileReq.setUse(use);
-        fileReq.setShardIndex(shardIndex);
-        fileReq.setShardSize(shardSize);
-        fileReq.setShardTotal(shardTotal);
-        fileReq.setKey(key);
         fileService.save(fileReq);
 
         CommonResp commonResp = new CommonResp();
