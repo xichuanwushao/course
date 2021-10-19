@@ -39,7 +39,8 @@ public class UploadController {
                            Integer size,
                            Integer shardIndex,
                            Integer shardSize,
-                           Integer shardTotal) throws IOException {
+                           Integer shardTotal,
+                           String key) throws IOException {
 
         System.out.println("UploadController FILE_PATH"+FILE_PATH);
         System.out.println("UploadController FILE_PATH"+FILE_PATH);
@@ -54,7 +55,7 @@ public class UploadController {
             name = name +".blob";
         }
         String fileNameNoSuffix = name.substring(0,name.lastIndexOf(".")).toLowerCase();
-        String key = UuidUtil.getShortUuid();
+//        String key = UuidUtil.getShortUuid();
 
         //如果文件夹不存在则创建
         String dir = fileUseEnum.name().toLowerCase();

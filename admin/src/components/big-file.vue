@@ -40,6 +40,13 @@
 
                 let file = _this.$refs.gaga.files[0];
 
+                console.log("file  "+file);
+
+
+                let key = hex_md5(file);
+                let key10 = parseInt(key,16);
+                let key62 = Tool._10to62(key10);
+                console.log("key key10 key62  ",key ,key10, key62);
                 // 判断文件格式
                 let suffixs = _this.suffixs;
                 let fileName = file.name;
@@ -76,6 +83,7 @@
                 formData.append('name', file.name);
                 formData.append('suffix', suffix);
                 formData.append('size', size);
+                formData.append('key', key62);
 
 
                 // formData.append('file', fileShard);
