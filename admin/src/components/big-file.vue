@@ -59,8 +59,8 @@
                 }
 
 
-                let shardSize = 5 * 1024 * 1024; //以1MB为1个分片
-                let shardIndex = 0; //分片索引
+                let shardSize = 3 * 1024 * 1024; //以1MB为1个分片
+                let shardIndex = 1; //分片索引
                 let start = shardIndex * shardSize; //当前分片起始位置
                 let end = Math.min(file.size,start+shardSize); //当前分片结束位置
                 let fileShard = file.slice(start,end);//从文件中截取当前的分片数据

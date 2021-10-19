@@ -11,15 +11,14 @@ import com.xichuan.server.util.UuidUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import sun.java2d.loops.FillPath;
 
 import javax.annotation.Resource;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -84,6 +83,44 @@ public class UploadController {
         commonResp.setContent(fileReq);
         return  commonResp;
     }
+    @GetMapping("/merge")
+    public void merge() throws Exception {
+        logger.info("合并分片开始");
+//        String path = fileDto.getPath(); //http://127.0.0.1:9000/file/f/course\6sfSqfOwzmik4A4icMYuUe.mp4
+//        path = path.replace(FILE_DOMAIN, ""); //course\6sfSqfOwzmik4A4icMYuUe.mp4
+//        Integer shardTotal = fileDto.getShardTotal();
+        File newFile = new File(FILE_PATH + "/course/123.mp4");
+        FileOutputStream outputStream = new FileOutputStream(newFile, true);//文件追加写入
+        FileInputStream fileInputStream = null;//分片文件
+        byte[] byt = new byte[10 * 1024 * 1024];
+        int len;
+
+        try {
+            // 读取第i个分片
+            fileInputStream = new FileInputStream(new File(FILE_PATH + "/course/blob_HywsnOPh.blob")); //  course\6sfSqfOwzmik4A4icMYuUe.mp4.1
+            while ((len = fileInputStream.read(byt)) != -1) {
+                outputStream.write(byt, 0, len);
+            }
+            // 读取第i个分片
+            fileInputStream = new FileInputStream(new File(FILE_PATH + "/course/blob_kI9glt3O.blob")); //  course\6sfSqfOwzmik4A4icMYuUe.mp4.1
+            while ((len = fileInputStream.read(byt)) != -1) {
+                outputStream.write(byt, 0, len);
+            }
+        } catch (IOException e) {
+            logger.error("分片合并异常", e);
+        } finally {
+            try {
+                if (fileInputStream != null) {
+                    fileInputStream.close();
+                }
+                outputStream.close();
+                logger.info("IO流关闭");
+            } catch (Exception e) {
+                logger.error("IO流关闭", e);
+            }
+        }
+        logger.info("合并分片结束");
 
 
+    }
 }
