@@ -12,6 +12,7 @@ import com.xichuan.server.resp.FileResp;
 import com.xichuan.server.util.CopyUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
@@ -49,10 +50,12 @@ public class FileService {
     }
     public void save(FileReq fileReq) {
         File file = CopyUtil.copy(fileReq, File.class);
-        if(StringUtils.isEmpty(fileReq.getId())){
+        File fileDb = selectByKey(fileReq.getKey());
+        if(fileDb==null){
             this.insert(file);
         }else{
-            this.update(file);
+            fileDb.setShardIndex(fileReq.getShardIndex());
+            this.update(fileDb);
         }
     }
     public void insert(File file) {
@@ -65,6 +68,17 @@ public class FileService {
     }
     public void delete(String id) {
         fileMapper.deleteByPrimaryKey( id);
+    }
+
+    public File selectByKey(String key){
+        FileExample example = new FileExample();
+        example.createCriteria().andKeyEqualTo(key);
+        List<File> fileList = fileMapper.selectByExample(example);
+        if(CollectionUtils.isEmpty(fileList)){
+            return null;
+        }else {
+            return fileList.get(0);
+        }
     }
 
 }
