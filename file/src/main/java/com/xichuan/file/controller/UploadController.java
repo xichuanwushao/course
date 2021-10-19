@@ -49,6 +49,9 @@ public class UploadController {
         //保存文件到本地
         FileUseEnum fileUseEnum = FileUseEnum.getByCode(use);
         String fileName = file.getOriginalFilename();
+        if(fileName.lastIndexOf(".")==-1){
+            fileName = fileName +".blob";
+        }
         String fileNameNoSuffix = fileName.substring(0,fileName.lastIndexOf(".")).toLowerCase();
         String suffix = fileName.substring(fileName.lastIndexOf(".")+1).toLowerCase();
         String key = UuidUtil.getShortUuid();

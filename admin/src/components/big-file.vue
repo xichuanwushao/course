@@ -1,19 +1,19 @@
 <template>
     <div>
-        <button type="button" v-on:click="selectFile()" className="btn btn-white btn-default btn-round">
-            <i className="ace-icon fa fa-upload "></i>
+        <button type="button" v-on:click="selectFile()" class="btn btn-white btn-default btn-round">
+            <i class="ace-icon fa fa-upload "></i>
             {{text}}
         </button>
-        <input className="hidden" type="file" ref="gaga" v-on:change="uploadFile()" v-bind:id="inputId+'-input'">
+        <input class="hidden" type="file" ref="gaga" v-on:change="uploadFile()" v-bind:id="inputId+'-input'">
     </div>
 </template>
 
 <script>
-    export default {
-        name: 'file',
+      export default {
+        name: 'big-file',
         props: {//可配置的属性
             text: {
-                default: "上传文件"
+                default: "上传大文件"
             },
             inputId: {
                 default: "file-upload"
@@ -58,9 +58,19 @@
                     return;
                 }
 
+
+                let shardSize = 5 * 1024 * 1024; //以1MB为1个分片
+                let shardIndex = 0; //分片索引
+                let start = shardIndex * shardSize; //当前分片起始位置
+                let end = Math.min(file.size,start+shardSize); //当前分片结束位置
+                let fileShard = file.slice(start,end);//从文件中截取当前的分片数据
+
+
+                formData.append('file', fileShard);
+
                 // key : "file"必须和后端controller参数同名
-                formData.append('file', document.querySelector("#" + _this.inputId + "-input").files[0]);
-                formData.append('use', _this.use);
+                // formData.append('file',document.querySelector("#" + _this.inputId + "-input").files[0]);
+                formData.append('use',_this.use);
                 Loading.show();
                 _this.$ajax.post(process.env.VUE_APP_SERVER + '/file/upload', formData).then((response) => {
                     Loading.hide();
