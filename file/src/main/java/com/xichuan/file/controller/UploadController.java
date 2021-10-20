@@ -14,10 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 
 //@Controller 如果接口返回页面用Controller
 @RestController//@Controller 如果接口返回Json 用RestController
@@ -74,8 +71,10 @@ public class UploadController {
 
 //        String path = dir+File.separator+fileNameNoSuffix+"_"+key+"."+suffix;
         String path = new StringBuilder(dir).append(File.separator).append(fileNameNoSuffix)
-                .append("_").append(key).append(".").append(suffix).append(".").append(fileReq.getShardIndex()).toString();
-        String fullPath = FILE_PATH+path;
+                .append("_").append(key).append(".").append(suffix).toString();
+        String localpath = new StringBuilder(path).append(".").append(fileReq.getShardIndex()).toString();
+
+        String fullPath = FILE_PATH+localpath;
         File dest = new File(fullPath);
         shard.transferTo(dest);
         logger.info(dest.getAbsolutePath());
@@ -86,16 +85,64 @@ public class UploadController {
         CommonResp commonResp = new CommonResp();
         fileReq.setPath(FILE_DOMAIN + path);
         commonResp.setContent(fileReq);
+        if(fileReq.getShardIndex() == fileReq.getShardTotal()){
+            this.merge(fileReq);
+        }
         return  commonResp;
     }
+    public void merge( FileReq fileReq ) {
+        logger.info("合并分片开始");
+        String path = fileReq.getPath().replace(FILE_DOMAIN,"");
+        Integer shardTotal = fileReq.getShardTotal();
+        File newFile = new File(FILE_PATH + path);
+        FileOutputStream outputStream = null;//文件追加写入
+        try {
+            outputStream = new FileOutputStream(newFile, true);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        FileInputStream fileInputStream = null;//分片文件
+        byte[] byt = new byte[10 * 1024 * 1024];
+        int len;
+
+        try {
+            for( int i = 1 ; i <= shardTotal ; i++ ){
+                // 读取第i个分片
+                fileInputStream = new FileInputStream(new File(FILE_PATH + path+"."+i)); //  course\6sfSqfOwzmik4A4icMYuUe.mp4.1
+                while ((len = fileInputStream.read(byt)) != -1) {
+                    outputStream.write(byt, 0, len);
+                }
+            }
+        } catch (IOException e) {
+            logger.error("分片合并异常", e);
+        } finally {
+            try {
+                if (fileInputStream != null) {
+                    fileInputStream.close();
+                }
+                outputStream.close();
+                logger.info("IO流关闭");
+            } catch (Exception e) {
+                logger.error("IO流关闭", e);
+            }
+        }
+        logger.info("合并分片结束");
+
+
+    }
     @GetMapping("/merge")
-    public void merge() throws Exception {
+    public void mergetest() {
         logger.info("合并分片开始");
 //        String path = fileDto.getPath(); //http://127.0.0.1:9000/file/f/course\6sfSqfOwzmik4A4icMYuUe.mp4
 //        path = path.replace(FILE_DOMAIN, ""); //course\6sfSqfOwzmik4A4icMYuUe.mp4
 //        Integer shardTotal = fileDto.getShardTotal();
         File newFile = new File(FILE_PATH + "/course/123.mp4");
-        FileOutputStream outputStream = new FileOutputStream(newFile, true);//文件追加写入
+        FileOutputStream outputStream = null;//文件追加写入
+        try {
+            outputStream = new FileOutputStream(newFile, true);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         FileInputStream fileInputStream = null;//分片文件
         byte[] byt = new byte[10 * 1024 * 1024];
         int len;
