@@ -86,7 +86,7 @@ public class UploadController {
         CommonResp commonResp = new CommonResp();
         fileReq.setPath(FILE_DOMAIN + path);
         commonResp.setContent(fileReq);
-        if(fileReq.getShardIndex() == fileReq.getShardTotal()){
+        if(fileReq.getShardIndex().equals( fileReq.getShardTotal()) ){
             this.merge(fileReq);
         }
         return  commonResp;
@@ -130,7 +130,11 @@ public class UploadController {
         logger.info("合并分片结束");
 
         System.gc();
-
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         // 删除分片
         logger.info("删除分片开始");
         for (int i = 0; i < shardTotal; i++) {
@@ -192,6 +196,9 @@ public class UploadController {
         logger.info("检查上传分片开始：{}",key);
         CommonResp commonResp = new CommonResp();
         FileResp fileResp = fileService.findByKey(key);
+        if(fileResp !=null){
+            fileResp.setPath(FILE_DOMAIN+fileResp.getPath());
+        }
         commonResp.setContent(fileResp);
         return commonResp;
     }

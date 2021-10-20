@@ -20,7 +20,7 @@
                   console.log("file  "+file);
 
 
-                  let key = hex_md5(file);
+                  let key = hex_md5(file.name + file.size + file.type);
                   let key10 = parseInt(key,16);
                   let key62 = Tool._10to62(key10);
                   console.log("key key10 key62  ",key ,key10, key62);
@@ -74,6 +74,11 @@
                               param.shardIndex = 1;
                               console.log("没有找到文件记录 从分片1开始上传");
                               _this.upload(param);
+                          }else if(obj.shardIndex == obj.shardTotal){
+                              //已上传分片 = 分片总数 说明已经全部上传完 不需要再上传
+                              toast.success("文件极速秒传成功！");
+                              _this.afterUpload(resp);
+                              $("#" + _this.inputId + "-input").val("");//修复连续选择第二个文件的时候 第二个文件没有反应
                           }else{
                               param.shardIndex = obj.shardIndex + 1;
                               console.log("找到文件记录 从分片"+param.shardIndex+"开始上传");
@@ -94,6 +99,7 @@
                   //将图片转为base64进行传输
                   let fileReader = new FileReader();
                   let fileShard = _this.getFileShard(shardIndex, shardSize);
+                  Progress.show(parseInt((shardIndex - 1) * 100 / shardTotal));
                   fileReader.onload = function (e) {
                       let base64 = e.target.result;
                       param.shard = base64;
@@ -101,12 +107,13 @@
 
                       // console.log("base64:" ,base64);
 
-                      Loading.show();
+                      //Loading.show();
                       //if(param.shardIndex==3){return;}
                       _this.$ajax.post(process.env.VUE_APP_SERVER + '/file/upload', param).then((response) => {
-                          Loading.hide();
+                          //Loading.hide();
                           let resp = response.data;
                           console.log("上传文件成功: ", resp);
+                          Progress.show(parseInt((shardIndex ) * 100 / shardTotal));
                           // let image = resp.content;
                           if(shardIndex <shardTotal ){
                             //上传下一个分片
@@ -118,6 +125,7 @@
                               $("#" + _this.inputId + "-input").val("");//修复连续选择第二个文件的时候 第二个文件没有反应
                               // console.info("头像地址:",image);
                               // _this.teacher.image = image;
+                              Progress.hide();
                           }
                       });
                   };
