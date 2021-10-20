@@ -4,6 +4,7 @@ import com.xichuan.file.config.FileApplication;
 import com.xichuan.server.enums.FileUseEnum;
 import com.xichuan.server.req.FileReq;
 import com.xichuan.server.resp.CommonResp;
+import com.xichuan.server.resp.FileResp;
 import com.xichuan.server.service.FileService;
 import com.xichuan.server.util.Base64ToMultipartFile;
 import com.xichuan.server.util.UuidUtil;
@@ -185,5 +186,13 @@ public class UploadController {
         logger.info("合并分片结束");
 
 
+    }
+    @GetMapping("/check/{key}")
+    public CommonResp check(@PathVariable String key){
+        logger.info("检查上传分片开始：{}",key);
+        CommonResp commonResp = new CommonResp();
+        FileResp fileResp = fileService.findByKey(key);
+        commonResp.setContent(fileResp);
+        return commonResp;
     }
 }

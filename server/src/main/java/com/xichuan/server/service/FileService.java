@@ -81,4 +81,12 @@ public class FileService {
         }
     }
 
+    /***
+     * 根据文件标识查询数据库记录
+     * @param key
+     * @return
+     */
+    public FileResp findByKey(String key) {
+        return CopyUtil.copy(selectByKey(key),FileResp.class);
+    }
 }
