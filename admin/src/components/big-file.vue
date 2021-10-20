@@ -11,7 +11,7 @@
 <script>
       export default {
           methods: {
-              uploadFile() {
+               uploadFile() {
                   let _this = this;
                   let formData = new window.FormData();
 
@@ -43,75 +43,65 @@
                   }
 
 
-                  let shardSize = 2 * 1024 * 1024; //以1MB为1个分片
-                  let shardIndex = 3; //分片索引 表示第一个分片
-                  let start = (shardIndex -1) * shardSize; //当前分片起始位置
-                  let end = Math.min(file.size,start+shardSize); //当前分片结束位置
-                  let fileShard = file.slice(start,end);//从文件中截取当前的分片数据
+                  let shardSize = 4 * 1024 * 1024; //以1MB为1个分片
+                  let shardIndex = 1; //分片索引 表示第一个分片
 
                   let size = file.size;
                   let shardTotal = Math.ceil(size/shardSize);
-
-                  // formData.append('shard', fileShard);
-                  // formData.append('shardIndex', shardIndex);
-                  // formData.append('shardSize', shardSize);
-                  // formData.append('shardTotal', shardTotal);
-                  // formData.append('use', _this.use);
-                  // formData.append('name', file.name);
-                  // formData.append('suffix', suffix);
-                  // formData.append('size', size);
-                  // formData.append('key', key62);
-
-
-                  // formData.append('file', fileShard);
-
-                  // key : "file"必须和后端controller参数同名
-                  // formData.append('file',document.querySelector("#" + _this.inputId + "-input").files[0]);
-                  // formData.append('use',_this.use);
-                  // Loading.show();
-                  // _this.$ajax.post(process.env.VUE_APP_SERVER + '/file/upload', formData).then((response) => {
-                  //     Loading.hide();
-                  //     let resp = response.data;
-                  //     console.log("上传文件成功: ", resp);
-                  //     // let image = resp.content;
-                  //
-                  //     _this.afterUpload(resp);
-                  //     $("#" + _this.inputId + "-input").val("");//修复连续选择第二个文件的时候 第二个文件没有反应
-                  //     // console.info("头像地址:",image);
-                  //     // _this.teacher.image = image;
-                  // });
+                  let param  = {
+                      'shardIndex':shardIndex,
+                      'shardSize':shardSize,
+                      'shardTotal':shardTotal,
+                      'use':_this.use,
+                      'name':file.name,
+                      'suffix':suffix,
+                      'size':file.size,
+                      'key':key62,
+                  };
+                  _this.upload(param);
+              },
+              upload: function (param) {
+                  let _this = this;
+                  let shardIndex = param.shardIndex;
+                  let shardTotal = param.shardTotal;
+                  let shardSize = param.shardSize;
                   //将图片转为base64进行传输
                   let fileReader = new FileReader();
+                  let fileShard = _this.getFileShard(shardIndex, shardSize);
                   fileReader.onload = function (e) {
                       let base64 = e.target.result;
+                      param.shard = base64;
+
+
                       // console.log("base64:" ,base64);
 
-                      let param  = {
-                          'shard':base64,
-                          'shardIndex':shardIndex,
-                          'shardSize':shardSize,
-                          'shardTotal':shardTotal,
-                          'use':_this.use,
-                          'name':file.name,
-                          'suffix':suffix,
-                          'size':file.size,
-                          'key':key62,
-                      };
-                      Loading.show();
                       Loading.show();
                       _this.$ajax.post(process.env.VUE_APP_SERVER + '/file/upload', param).then((response) => {
                           Loading.hide();
                           let resp = response.data;
                           console.log("上传文件成功: ", resp);
                           // let image = resp.content;
-
-                          _this.afterUpload(resp);
+                          if(shardIndex <shardTotal ){
+                            //上传下一个分片
+                              param.shardIndex = param.shardIndex + 1;
+                              _this.upload(param);
+                          }else{
+                              _this.afterUpload(resp);
+                          }
                           $("#" + _this.inputId + "-input").val("");//修复连续选择第二个文件的时候 第二个文件没有反应
                           // console.info("头像地址:",image);
                           // _this.teacher.image = image;
                       });
-                      };
+                  };
                   fileReader.readAsDataURL(fileShard);
+              },
+              getFileShard: function (shardIndex, shardSize) {
+                  let _this = this;
+                  let file = _this.$refs.gaga.files[0];
+                  let start = (shardIndex - 1) * shardSize; //当前分片起始位置
+                  let end = Math.min(file.size, start + shardSize); //当前分片结束位置
+                  let fileShard = file.slice(start, end);//从文件中截取当前的分片数据
+                  return fileShard;
               },
               selectFile() {
                   let _this = this;
@@ -143,3 +133,31 @@
         }
     }
 </script>
+<!--// formData.append('shard', fileShard);-->
+<!--// formData.append('shardIndex', shardIndex);-->
+<!--// formData.append('shardSize', shardSize);-->
+<!--// formData.append('shardTotal', shardTotal);-->
+<!--// formData.append('use', _this.use);-->
+<!--// formData.append('name', file.name);-->
+<!--// formData.append('suffix', suffix);-->
+<!--// formData.append('size', size);-->
+<!--// formData.append('key', key62);-->
+
+
+<!--// formData.append('file', fileShard);-->
+
+<!--// key : "file"必须和后端controller参数同名-->
+<!--// formData.append('file',document.querySelector("#" + _this.inputId + "-input").files[0]);-->
+<!--// formData.append('use',_this.use);-->
+<!--// Loading.show();-->
+<!--// _this.$ajax.post(process.env.VUE_APP_SERVER + '/file/upload', formData).then((response) => {-->
+<!--//     Loading.hide();-->
+<!--//     let resp = response.data;-->
+<!--//     console.log("上传文件成功: ", resp);-->
+<!--//     // let image = resp.content;-->
+<!--//-->
+<!--//     _this.afterUpload(resp);-->
+<!--//     $("#" + _this.inputId + "-input").val("");//修复连续选择第二个文件的时候 第二个文件没有反应-->
+<!--//     // console.info("头像地址:",image);-->
+<!--//     // _this.teacher.image = image;-->
+<!--// });-->
