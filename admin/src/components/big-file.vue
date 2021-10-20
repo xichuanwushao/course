@@ -43,7 +43,7 @@
                   }
 
 
-                  let shardSize = 4 * 1024 * 1024; //以1MB为1个分片
+                  let shardSize = 2 * 1024 * 1024; //以1MB为1个分片
                   let shardIndex = 1; //分片索引 表示第一个分片
 
                   let size = file.size;
@@ -87,10 +87,10 @@
                               _this.upload(param);
                           }else{
                               _this.afterUpload(resp);
+                              $("#" + _this.inputId + "-input").val("");//修复连续选择第二个文件的时候 第二个文件没有反应
+                              // console.info("头像地址:",image);
+                              // _this.teacher.image = image;
                           }
-                          $("#" + _this.inputId + "-input").val("");//修复连续选择第二个文件的时候 第二个文件没有反应
-                          // console.info("头像地址:",image);
-                          // _this.teacher.image = image;
                       });
                   };
                   fileReader.readAsDataURL(fileShard);

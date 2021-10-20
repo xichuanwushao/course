@@ -128,9 +128,20 @@ public class UploadController {
         }
         logger.info("合并分片结束");
 
+        System.gc();
+
+        // 删除分片
+        logger.info("删除分片开始");
+        for (int i = 0; i < shardTotal; i++) {
+            String filePath = FILE_PATH + path + "." + (i + 1);
+            File file = new File(filePath);
+            boolean result = file.delete();
+            logger.info("删除{}，{}", filePath, result ? "成功" : "失败");
+        }
+        logger.info("删除分片结束");
 
     }
-    @GetMapping("/merge")
+    @GetMapping("/mergetest")
     public void mergetest() {
         logger.info("合并分片开始");
 //        String path = fileDto.getPath(); //http://127.0.0.1:9000/file/f/course\6sfSqfOwzmik4A4icMYuUe.mp4
