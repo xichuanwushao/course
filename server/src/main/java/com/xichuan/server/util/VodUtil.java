@@ -3,6 +3,8 @@ package com.xichuan.server.util;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.aliyun.oss.OSSClient;
+import com.aliyun.oss.model.AppendObjectRequest;
+import com.aliyun.oss.model.ObjectMetadata;
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.http.FormatType;
@@ -105,15 +107,15 @@ public class VodUtil {
         String objectName = uploadAddress.getString("FileName");
         File file = new File(localFile);
         // 单文件上传
-         ossClient.putObject(bucketName, objectName, file);
+        //ossClient.putObject(bucketName, objectName, file);
 
-        /* 视频点播不支持追加上传
+        /* 视频点播不支持追加上传*/
         // 追加上传
         ObjectMetadata meta = new ObjectMetadata();
         meta.setContentType("text/plain");
         AppendObjectRequest request = new AppendObjectRequest(bucketName, objectName, file, meta);
         request.setPosition(0L);
-        ossClient.appendObject(request);*/
+        ossClient.appendObject(request);
     }
 
     /**
