@@ -78,6 +78,10 @@ VALUES ('10','反贪风暴','1','0','','500','F','1',null,null);
 INSERT INTO `section` (id, title, course_id, chapter_id, video, time, charge, sort, created_at, updated_at)
 VALUES ('11','流浪地球','1','0','','500','F','1',null,null);
 
+ALTER TABLE `section` ADD COLUMN (
+    `vod` CHAR (32) COMMENT 'VOD|阿里云VOD'
+);
+
 drop table if exists course;
 create table course (
     id char(50) not null default '' comment 'id',
