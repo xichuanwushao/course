@@ -155,11 +155,11 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">头像</label>
                                 <div class="col-sm-10">
-                                    <file v-bind:text="'上传头像'"
+                                    <ossali-file v-bind:text="'上传头像'"
                                     v-bind:after-upload="afterUpload"
                                     v-bind:input-id="'image-upload'"
                                     v-bind:use="FILE_USE.TEACHER.key"
-                                    v-bind:suffixs="['jpg','jpeg','png']" ></file>
+                                    v-bind:suffixs="['jpg','jpeg','png']" ></ossali-file>
                                     <div v-show="teacher.image" class="row">
                                         <div class="col-md-4">
                                             <img v-bind:src="teacher.image" class="img-responsive" >
@@ -200,9 +200,10 @@
 <script>
     import Pagination from "../../components/pagination";
     import File from "../../components/file";
+    import OssaliFile from "../../components/ossali-file";
     import Swal from 'sweetalert2'
     export default {
-        components: {Pagination,File},
+        components: {Pagination,File,OssaliFile},
         name: "teacher",
         data:function (){
             return {

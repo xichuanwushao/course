@@ -109,7 +109,7 @@
 
                       //Loading.show();
                       //if(param.shardIndex==3){return;}
-                      _this.$ajax.post(process.env.VUE_APP_SERVER + '/file/upload', param).then((response) => {
+                      _this.$ajax.post(process.env.VUE_APP_SERVER + '/file/oss-append', param).then((response) => {
                           //Loading.hide();
                           let resp = response.data;
                           console.log("上传文件成功: ", resp);
@@ -144,7 +144,7 @@
                   $("#" + _this.inputId + "-input").trigger("click");//不应该写固定
               }
           },
-          name: 'big-file',
+          name: 'ossali-big-file',
           props: {//可配置的属性
             text: {
                 default: "上传大文件"
