@@ -148,7 +148,7 @@
 
             edit(file){
                 let _this = this;
-                _this.file = $.extend({},file);//对象复制
+                _this.file = $.extend({},files);//对象复制
                 $("#form-modal").modal("show")
             },
             list(page){

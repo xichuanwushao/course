@@ -202,4 +202,53 @@ public class UploadController {
         commonResp.setContent(fileResp);
         return commonResp;
     }
+    @PostMapping("/upload-image")
+    public CommonResp test(@RequestParam MultipartFile file,String use) throws IOException {
+
+        System.out.println("UploadController FILE_PATH"+FILE_PATH);
+        System.out.println("UploadController FILE_PATH"+FILE_PATH);
+        System.out.println("UploadController FILE_DOMAIN"+FILE_DOMAIN);
+        System.out.println("UploadController FILE_DOMAIN"+FILE_DOMAIN);
+        logger.info("上传文件开始:{}",file);
+        logger.info(file.getOriginalFilename());
+        logger.info(String.valueOf(file.getSize()));
+        //保存文件到本地
+        FileUseEnum fileUseEnum = FileUseEnum.getByCode(use);
+        String fileName = file.getOriginalFilename();
+        if(fileName.lastIndexOf(".")==-1){
+            fileName = fileName +".blob";
+        }
+        String fileNameNoSuffix = fileName.substring(0,fileName.lastIndexOf(".")).toLowerCase();
+        String suffix = fileName.substring(fileName.lastIndexOf(".")+1).toLowerCase();
+        String key = UuidUtil.getShortUuid();
+
+        //如果文件夹不存在则创建
+        String dir = fileUseEnum.name().toLowerCase();
+        File fullDir = new File(FILE_PATH + dir);
+        if (!fullDir.exists()) {
+            fullDir.mkdir();
+        }
+
+
+
+        String path = dir+File.separator+fileNameNoSuffix+"_"+key+"."+suffix;
+        String fullPath = FILE_PATH+path;
+        File dest = new File(fullPath);
+        file.transferTo(dest);
+        logger.info(dest.getAbsolutePath());
+        logger.info("保存文件记录");
+        FileReq fileReq = new FileReq();
+        fileReq.setPath(path);
+        fileReq.setName(fileName);
+        fileReq.setSize(Math.toIntExact(file.getSize()));
+        fileReq.setSuffix(suffix);
+        fileReq.setUse(use);
+        fileReq.setKey(key);
+        fileService.save(fileReq);
+
+        CommonResp commonResp = new CommonResp();
+        fileReq.setPath(FILE_DOMAIN + path);
+        commonResp.setContent(fileReq);
+        return  commonResp;
+    }
 }

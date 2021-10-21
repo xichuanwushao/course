@@ -8,7 +8,7 @@ import Chapter from "./views/admin/chapter.vue"
 import Section from "./views/admin/section.vue"
 import Category from "./views/admin/category.vue"
 import Teacher from "./views/admin/teacher.vue"
-import File from "./views/admin/file.vue"
+import File from "./views/admin/files.vue"
 import Content from "./views/admin/content.vue"
 
 
