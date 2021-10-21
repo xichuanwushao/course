@@ -17,6 +17,7 @@ public class VodUtil {
 
     private static String accessKeyID = "LTAI5tL5AiB6VUxnWd4RUi16";
     private static String accessKeySecrets = "m3jzAHGjkSvYdw4LOmJEezUmzsSYbR";
+    private static String templateGroupId = "2315ab75fd760664132e7bbaa9ff5d36";
 
 
 /**
@@ -46,9 +47,9 @@ public class VodUtil {
         request.setTitle(fileName);
         //request.setDescription("this is desc");
         //request.setTags("tag1,tag2");
-//        request.setCoverURL("http://vod.aliyun.com/test_cover_url.jpg");
-        request.setCateId(1000115308L);
-//        request.setTemplateGroupId("JZ1gMf59mh?APCZz4$}G&tibykepLPMC");
+        request.setCoverURL("https://xichuan-course.oss-cn-beijing.aliyuncs.com/test.mp4");
+        request.setCateId(1000346933L);
+        request.setTemplateGroupId(templateGroupId);
         //request.setWorkflowId("");
         //request.setStorageLocation("");
         //request.setAppId("app-1000000");
