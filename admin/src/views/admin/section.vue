@@ -123,11 +123,11 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">视频</label>
                                 <div class="col-sm-10">
-                                    <ossali-big-file v-bind:text="'上传大视频'"
+                                    <vod v-bind:text="'上传大视频vod'"
                                           v-bind:after-upload="afterUpload"
                                           v-bind:input-id="'video-upload'"
                                           v-bind:use="FILE_USE.COURSE.key"
-                                          v-bind:suffixs="['jpg','jpeg','png','mp4','avi']" ></ossali-big-file>
+                                          v-bind:suffixs="['jpg','jpeg','png','mp4','avi']" ></vod>
                                     <div v-show="section.video" class="row">
                                         <div class="col-md-9">
                                             <video v-bind:src="section.video" controls="controls" id="videos" ></video>
@@ -182,10 +182,11 @@
     import Pagination from "../../components/pagination";
     import File from "../../components/file";
     import BigFile from "../../components/big-file";
+    import Vod from "../../components/vod";
     import OssaliBigFile from "../../components/ossali-big-file";
     import Swal from 'sweetalert2'
     export default {
-        components: {Pagination,File,BigFile,OssaliBigFile},
+        components: {Pagination,File,BigFile,OssaliBigFile,Vod},
         name: "business-section",
         data:function (){
             return{
@@ -315,14 +316,13 @@
              */
             getVideoTime(){
                 let _this = this;
-                let ele = document.getElementById("videos");
-                console.info("视频时长  "+ele.duration)
-                _this.section.time = parseInt(ele.duration,10);
-
-
-            }
+                setTimeout(function () {
+                    let ele = document.getElementById("videos");
+                    console.info("视频时长  "+ele.duration)
+                    _this.section.time = parseInt(ele.duration,10);
+                },100);
+            },
         }
-
     }
 </script>
 <style>

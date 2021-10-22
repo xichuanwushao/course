@@ -43,7 +43,7 @@
                   }
 
 
-                  let shardSize = 1 * 1024 * 1024; //以1MB为1个分片
+                  let shardSize = _this.shardSize; //以1MB为1个分片
                   let shardIndex = 1; //分片索引 表示第一个分片
 
                   let size = file.size;
@@ -109,7 +109,7 @@
 
                       //Loading.show();
                       //if(param.shardIndex==3){return;}
-                      _this.$ajax.post(process.env.VUE_APP_SERVER + '/file/oss-append', param).then((response) => {
+                      _this.$ajax.post(process.env.VUE_APP_SERVER + '/file/'+_this.url, param).then((response) => {
                           //Loading.hide();
                           let resp = response.data;
                           console.log("上传文件成功: ", resp);
@@ -158,6 +158,12 @@
             use: {
                 default: ""
             },
+              shardSize: {
+                default:  1 * 1024 * 1024,
+            },
+              url:{
+                default:"oss-append",
+              },
             afterUpload: {
                 type: Function,
                 default: null
