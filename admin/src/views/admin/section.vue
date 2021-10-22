@@ -130,7 +130,8 @@
                                           v-bind:suffixs="['jpg','jpeg','png','mp4','avi']" ></vod>
                                     <div v-show="section.video" class="row">
                                         <div class="col-md-9">
-                                            <video v-bind:src="section.video" controls="controls" id="videos" ></video>
+                                            <player ref="player" ></player>
+                                            <video v-bind:src="section.video" controls="controls" id="videos"  class="hidden" ></video>
                                         </div>
                                     </div>
                                 </div>
@@ -184,9 +185,10 @@
     import BigFile from "../../components/big-file";
     import Vod from "../../components/vod";
     import OssaliBigFile from "../../components/ossali-big-file";
+    import Player from "../../components/player";
     import Swal from 'sweetalert2'
     export default {
-        components: {Pagination,File,BigFile,OssaliBigFile,Vod},
+        components: {Player,Pagination,File,BigFile,OssaliBigFile,Vod},
         name: "business-section",
         data:function (){
             return{
@@ -313,19 +315,20 @@
                 _this.section.video = video;
                 _this.section.vod = vod;
                 _this.getVideoTime();
+                _this.$refs.player.playUrl(video);
             },
             /***
              获取时长
              */
             getVideoTime(){
                 let _this = this;
+                console.info(_this.section.time);
                 setTimeout(function () {
                     let ele = document.getElementById("videos");
                     console.info("视频时长  "+ele.duration)
                     console.info(ele);
                     _this.section.time = parseInt(ele.duration,10);
                 },1000);
-                    console.info(_this.section.time);
 
             },
         }
