@@ -1,5 +1,9 @@
 package com.xichuan.file.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.aliyuncs.DefaultAcsClient;
+import com.aliyuncs.exceptions.ClientException;
+import com.aliyuncs.vod.model.v20170321.GetMezzanineInfoResponse;
 import com.xichuan.file.config.FileApplication;
 import com.xichuan.server.enums.FileUseEnum;
 import com.xichuan.server.req.FileReq;
@@ -8,6 +12,8 @@ import com.xichuan.server.resp.FileResp;
 import com.xichuan.server.service.FileService;
 import com.xichuan.server.util.Base64ToMultipartFile;
 import com.xichuan.server.util.UuidUtil;
+import com.xichuan.server.util.VodUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,7 +32,11 @@ public class UploadController {
     @Value("${file.domain}")
     private String FILE_DOMAIN ;//= "http://127.0.0.1:9000/file/";
     public static final String BUSINESS_NAME="文件";
+    @Value("${vod.accessKeyId}")
+    private String accessKeyId;
 
+    @Value("${vod.accessKeySecret}")
+    private String accessKeySecret;
     @Resource
     private FileService fileService;
 
@@ -201,6 +211,32 @@ public class UploadController {
         }
         commonResp.setContent(fileResp);
         return commonResp;
+    }
+
+    @GetMapping("/checkvod/{key}")
+    public CommonResp checkvod(@PathVariable String key){
+        logger.info("检查上传分片开始：{}", key);
+        CommonResp responseDto = new CommonResp();
+        FileResp fileResp = fileService.findByKey(key);
+        if (fileResp != null) {
+            if (StringUtils.isEmpty(fileResp.getVod())) {
+                fileResp.setPath(FILE_DOMAIN + fileResp.getPath());
+            } else {
+                DefaultAcsClient vodClient = null;
+                GetMezzanineInfoResponse response = null;
+                try {
+                    vodClient = VodUtil.initVodClient(accessKeyId, accessKeySecret);
+                    response = VodUtil.getMezzanineInfo(vodClient, fileResp.getVod());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                System.out.println("获取视频信息, response : " + JSON.toJSONString(response));
+                String fileUrl = response.getMezzanine().getFileURL();
+                fileResp.setPath(fileUrl);
+            }
+        }
+        responseDto.setContent(fileResp);
+        return responseDto;
     }
     @PostMapping("/upload-image")
     public CommonResp test(@RequestParam MultipartFile file,String use) throws IOException {

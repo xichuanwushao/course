@@ -66,7 +66,7 @@
                */
               check(param){
                   let _this = this;
-                  _this.$ajax.get(process.env.VUE_APP_SERVER+'/file/check/'+param.key).then((response)=>{
+                  _this.$ajax.get(process.env.VUE_APP_SERVER+'/file/checkvod/'+param.key).then((response)=>{
                       let resp = response.data;
                       if(resp.success){
                           let obj = resp.content;
