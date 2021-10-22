@@ -11,17 +11,12 @@ import com.aliyuncs.http.FormatType;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.vod.model.v20170321.*;
 import org.apache.commons.codec.binary.Base64;
-
 import java.io.File;
 import java.io.InputStream;
-
 public class VodUtil {
-
     private static String accessKeyID = "LTAI5tL5AiB6VUxnWd4RUi16";
     private static String accessKeySecrets = "m3jzAHGjkSvYdw4LOmJEezUmzsSYbR";
     private static String templateGroupId = "2315ab75fd760664132e7bbaa9ff5d36";
-
-
 /**
  * 使用AK初始化VOD客户端
  * @param accessKeyId
@@ -36,7 +31,6 @@ public class VodUtil {
         DefaultAcsClient client = new DefaultAcsClient(profile);
         return client;
     }
-
     /**
      * 获取视频上传地址和凭证
      * @param vodClient
@@ -49,7 +43,7 @@ public class VodUtil {
         request.setTitle(fileName);
         //request.setDescription("this is desc");
         //request.setTags("tag1,tag2");
-        request.setCoverURL("https://xichuan-course.oss-cn-beijing.aliyuncs.com/test.mp4");
+//        request.setCoverURL("https://xichuan-course.oss-cn-beijing.aliyuncs.com/test.mp4");
         request.setCateId(1000346933L);
         request.setTemplateGroupId(templateGroupId);
         //request.setWorkflowId("");
@@ -85,6 +79,7 @@ public class VodUtil {
         String bucketName = uploadAddress.getString("Bucket");
         String objectName = uploadAddress.getString("FileName");
         // 单文件上传
+
         ossClient.putObject(bucketName, objectName, inputStream);
 
         /* 视频点播不支持追加上传
@@ -133,6 +128,9 @@ public class VodUtil {
         request.setSysConnectTimeout(1000);
         return vodClient.getAcsResponse(request);
     }
+
+
+
 
     /**
      * 获取源文件信息

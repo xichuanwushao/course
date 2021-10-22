@@ -245,6 +245,7 @@
             save(){
                 let _this = this;
                 // 保存校验 TODO
+                _this.section.video = "";
                 if (1 != 1
                     || !Validator.require(_this.section.title, "标题")
                     || !Validator.length(_this.section.title, "标题", 1, 50)
@@ -308,7 +309,9 @@
             },afterUpload(resp){
                 let _this = this;
                 let video = resp.content.path;
+                let vod = resp.content.vod;
                 _this.section.video = video;
+                _this.section.vod = vod;
                 _this.getVideoTime();
             },
             /***
@@ -319,8 +322,11 @@
                 setTimeout(function () {
                     let ele = document.getElementById("videos");
                     console.info("视频时长  "+ele.duration)
+                    console.info(ele);
                     _this.section.time = parseInt(ele.duration,10);
-                },100);
+                },1000);
+                    console.info(_this.section.time);
+
             },
         }
     }
