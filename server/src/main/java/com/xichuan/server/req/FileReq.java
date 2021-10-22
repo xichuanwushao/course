@@ -61,6 +61,9 @@ public class FileReq {
      */
     private String shard;
 
+    //视频点播
+    private String vod;
+
     public String getId() {
         return id;
     }
@@ -165,6 +168,14 @@ public class FileReq {
         this.shard = shard;
     }
 
+    public String getVod() {
+        return vod;
+    }
+
+    public void setVod(String vod) {
+        this.vod = vod;
+    }
+
     @Override
     public String toString() {
         return "FileReq{" +
@@ -181,6 +192,7 @@ public class FileReq {
                 ", shardTotal=" + shardTotal +
                 ", key='" + key + '\'' +
                 ", shard='" + shard + '\'' +
+                ", vod='" + vod + '\'' +
                 '}';
     }
 }

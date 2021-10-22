@@ -28,6 +28,17 @@ public class FileResp {
 
     private String key;
 
+    //视频点播
+    private String vod;
+
+    public String getVod() {
+        return vod;
+    }
+
+    public void setVod(String vod) {
+        this.vod = vod;
+    }
+
     public String getId() {
         return id;
     }
@@ -139,6 +150,7 @@ public class FileResp {
                 ", shardSize=" + shardSize +
                 ", shardTotal=" + shardTotal +
                 ", key='" + key + '\'' +
+                ", vod='" + vod + '\'' +
                 '}';
     }
 }

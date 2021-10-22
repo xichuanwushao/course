@@ -78,8 +78,8 @@ VALUES ('10','反贪风暴','1','0','','500','F','1',null,null);
 INSERT INTO `section` (id, title, course_id, chapter_id, video, time, charge, sort, created_at, updated_at)
 VALUES ('11','流浪地球','1','0','','500','F','1',null,null);
 
-ALTER TABLE `section` ADD COLUMN (
-    `vod` CHAR (32) COMMENT 'VOD|阿里云VOD'
+alter table `section` add column (
+    `vod` char (32) comment 'vod|阿里云vod'
 );
 
 drop table if exists course;
@@ -196,6 +196,11 @@ alter table `file` add column (`shard_size` int comment '分片大小|B');
 alter table `file` add column (`shard_total` int comment '分片总数');
 alter table `file` add column (`key` varchar(32) comment '文件标识');
 alter table `file` add unique key key_unique (`key`);
+
+alter table `file` add column (
+    `vod` char (32) comment 'vod|阿里云vod'
+);
+
 -- 课程内容文件
 drop table if exists `course_content_file` ;
 create table `course_content_file` (
