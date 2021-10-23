@@ -1,6 +1,6 @@
-package com.xichuan.server.resp;
+package com.xichuan.server.domain;
 
-public class userResp {
+public class User {
     private String id;
 
     private String loginName;

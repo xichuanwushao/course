@@ -1,26 +1,12 @@
-package com.xichuan.server.req;
+package com.xichuan.server.resp;
 
-
-public class userReq {
-
-    /**
-     * id
-     */
+public class UserResp {
     private String id;
 
-    /**
-     * 登录名
-     */
     private String loginName;
 
-    /**
-     * 昵称
-     */
     private String name;
 
-    /**
-     * 密码
-     */
     private String password;
 
     public String getId() {
@@ -55,7 +41,6 @@ public class userReq {
         this.password = password;
     }
 
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -69,5 +54,4 @@ public class userReq {
         sb.append("]");
         return sb.toString();
     }
-
 }

@@ -3,14 +3,14 @@ package com.xichuan.server.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class userExample {
+public class UserExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public userExample() {
+    public UserExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 

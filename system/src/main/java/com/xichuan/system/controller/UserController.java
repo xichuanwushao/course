@@ -1,13 +1,13 @@
 package com.xichuan.system.controller;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.xichuan.server.domain.user;
+import com.xichuan.server.domain.User;
 import com.xichuan.server.exception.ValidatorException;
-import com.xichuan.server.req.userReq;
+import com.xichuan.server.req.UserReq;
 import com.xichuan.server.req.PageReq;
-import com.xichuan.server.resp.userResp;
+import com.xichuan.server.resp.UserResp;
 import com.xichuan.server.resp.CommonResp;
-import com.xichuan.server.service.userService;
+import com.xichuan.server.service.UserService;
 import com.xichuan.server.util.ValidatorUtil;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,9 +19,9 @@ import java.util.List;
 
 @RequestMapping("user")
 @RestController//@Controller 如果接口返回Json 用RestController
-public class userController {
+public class UserController {
     @Resource
-    private userService userService;
+    private UserService userService;
 
     public static final String BUSINESS_NAME="用户";
     @RequestMapping("test")
@@ -30,7 +30,7 @@ public class userController {
     }
 
     @RequestMapping("all")
-    public List<userResp> all(){
+    public List<UserResp> all(){
         return userService.all();
     }
 
@@ -42,7 +42,7 @@ public class userController {
         return commonResp;
     }
     @PostMapping("/save")
-    public CommonResp save(@RequestBody userReq userReq){
+    public CommonResp save(@RequestBody UserReq userReq){
         // TODO 保存校验
         // 保存校验
         ValidatorUtil.require(userReq.getLoginName(), "登录名");
