@@ -50,7 +50,7 @@ public class SectionController {
         // 保存校验
         ValidatorUtil.require(sectionReq.getTitle(), "标题");
         ValidatorUtil.length(sectionReq.getTitle(), "标题", 1, 50);
-        ValidatorUtil.length(sectionReq.getVideo(), "视频", 1, 200);
+//        ValidatorUtil.length(sectionReq.getVideo(), "视频", 1, 200);
         CommonResp commonResp = new CommonResp();
         sectionService.save(sectionReq);
         commonResp.setContent(sectionReq);

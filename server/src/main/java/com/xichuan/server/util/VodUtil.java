@@ -146,6 +146,7 @@ public class VodUtil {
         return client.getAcsResponse(request);
     }
 
+
     /**
      * 获取播放凭证函数
      * @param client

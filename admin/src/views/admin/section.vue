@@ -25,7 +25,8 @@
             <tr>
                 <th>ID</th>
                 <th>标题</th>
-                <th>视频</th>
+<!--                <th>视频</th>-->
+                <th>VOD</th>
                 <th>时长</th>
                 <th>收费</th>
                 <th>顺序</th>
@@ -37,12 +38,17 @@
         <tr v-for="section in sections">
             <td>{{section.id}}</td>
             <td>{{section.title}}</td>
-            <td>{{section.video}}</td>
+<!--            <td>{{section.video}}</td>-->
+            <td>{{section.vod}}</td>
             <td>{{section.time  | formatSecond}}</td>
             <td>{{SECTION_CHARGE | optionKV(section.charge)}}</td>
             <td>{{section.sort}}</td>
         <td>
             <div class="hidden-sm hidden-xs btn-group">
+
+                <button v-on:click="play(section)" class="btn btn-xs btn-info">
+                    <i class="ace-icon fa fa-video-camera bigger-120"></i>
+                </button>
 
                 <button v-on:click="edit(section)" class="btn btn-xs btn-info">
                     <i class="ace-icon fa fa-pencil bigger-120"></i>
@@ -130,7 +136,7 @@
                                           v-bind:suffixs="['jpg','jpeg','png','mp4','avi']" ></vod>
                                     <div v-show="section.video" class="row">
                                         <div class="col-md-9">
-                                            <player ref="player" ></player>
+                                            <player  v-bind:player-id="'form-player-div'" ref="player" ></player>
                                             <video v-bind:src="section.video" controls="controls" id="videos"  class="hidden" ></video>
                                         </div>
                                     </div>
@@ -177,6 +183,7 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
+        <modal-player ref="modalPlayer"></modal-player>
     </div>
 </template>
 <script>
@@ -186,9 +193,10 @@
     import Vod from "../../components/vod";
     import OssaliBigFile from "../../components/ossali-big-file";
     import Player from "../../components/player";
+    import ModalPlayer from "../../components/modal-player";
     import Swal from 'sweetalert2'
     export default {
-        components: {Player,Pagination,File,BigFile,OssaliBigFile,Vod},
+        components: {ModalPlayer,Player,Pagination,File,BigFile,OssaliBigFile,Vod},
         name: "business-section",
         data:function (){
             return{
@@ -247,11 +255,11 @@
             save(){
                 let _this = this;
                 // 保存校验 TODO
-                _this.section.video = "";
+               // _this.section.video = "";
                 if (1 != 1
                     || !Validator.require(_this.section.title, "标题")
                     || !Validator.length(_this.section.title, "标题", 1, 50)
-                    || !Validator.length(_this.section.video, "视频", 1, 200)
+                    // || !Validator.length(_this.section.video, "视频", 1, 200)
                 ) {
                     return;
                 }
@@ -331,6 +339,14 @@
                 },1000);
 
             },
+            /**
+             * 播放视频
+             * @param section
+             */
+            play(section) {
+                let _this = this;
+                _this.$refs.modalPlayer.playVod(section.vod);
+            }
         }
     }
 </script>
