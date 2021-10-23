@@ -5,7 +5,9 @@ import Admin from "./views/admin.vue"
 import Welcome from "./views/admin/welcome.vue"
 import Course from "./views/admin/course.vue"
 import Chapter from "./views/admin/chapter.vue"
-import Section from "./views/admin/section.vue"
+import SectionLocal from "./views/admin/section-local.vue"
+import SectionOss from "./views/admin/section-oss.vue"
+import SectionVod from "./views/admin/section-vod.vue"
 import Category from "./views/admin/category.vue"
 import Teacher from "./views/admin/teacher.vue"
 import File from "./views/admin/files.vue"
@@ -40,9 +42,17 @@ export default new Router({
             name: "business/chapter",
             component: Chapter,
         },{
-            path: "business/section",
-            name: "business/section",
-            component: Section,
+            path: "business/section-local",
+            name: "business/section-local",
+            component: SectionLocal,
+        },{
+            path: "business/section-vod",
+            name: "business/section-vod",
+            component: SectionVod,
+        },{
+            path: "business/section-oss",
+            name: "business/section-oss",
+            component: SectionOss,
         },{
             path: "business/category",
             name: "business/category",

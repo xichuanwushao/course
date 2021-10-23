@@ -8,15 +8,15 @@
         </h4>
         <hr>
         <p>
-        <!--        <button v-on:click="list(1)" id="Loading-btn" type="button" class="btn btn-success" data-Loading-text="Loading..."><i class="ace-icon fa fa-refresh "></i><font class="Loading-font">刷新</font></button>-->
-        <button v-on:click="add()" class="btn btn-white btn-default btn-round">
-            <i class="ace-icon fa fa-edit "></i>
-            新增
-        </button>
-        <button v-on:click="list(1)" class="btn btn-white btn-default btn-round">
-            <i class="ace-icon fa fa-refresh "></i>
-            刷新
-        </button>
+            <!--        <button v-on:click="list(1)" id="Loading-btn" type="button" class="btn btn-success" data-Loading-text="Loading..."><i class="ace-icon fa fa-refresh "></i><font class="Loading-font">刷新</font></button>-->
+            <button v-on:click="add()" class="btn btn-white btn-default btn-round">
+                <i class="ace-icon fa fa-edit "></i>
+                新增
+            </button>
+            <button v-on:click="list(1)" class="btn btn-white btn-default btn-round">
+                <i class="ace-icon fa fa-refresh "></i>
+                刷新
+            </button>
         </p>
         <!-- PAGE CONTENT BEGINS -->
         <pagination  ref="pagination" v-bind:list="list" v-bind:itemCount="3"></pagination>
@@ -25,77 +25,71 @@
             <tr>
                 <th>ID</th>
                 <th>标题</th>
-<!--                <th>视频</th>-->
-                <th>VOD</th>
+                <th>视频</th>
                 <th>时长</th>
                 <th>收费</th>
                 <th>顺序</th>
                 <th>操作</th>
             <tr/>
-        </thead>
+            </thead>
 
-        <tbody>
-        <tr v-for="section in sections">
-            <td>{{section.id}}</td>
-            <td>{{section.title}}</td>
-<!--            <td>{{section.video}}</td>-->
-            <td>{{section.vod}}</td>
-            <td>{{section.time  | formatSecond}}</td>
-            <td>{{SECTION_CHARGE | optionKV(section.charge)}}</td>
-            <td>{{section.sort}}</td>
-        <td>
-            <div class="hidden-sm hidden-xs btn-group">
+            <tbody>
+            <tr v-for="section in sections">
+                <td>{{section.id}}</td>
+                <td>{{section.title}}</td>
+                <td>{{section.video}}</td>
+                <td>{{section.time  | formatSecond}}</td>
+                <td>{{SECTION_CHARGE | optionKV(section.charge)}}</td>
+                <td>{{section.sort}}</td>
+                <td>
+                    <div class="hidden-sm hidden-xs btn-group">
 
-                <button v-on:click="play(section)" class="btn btn-xs btn-info">
-                    <i class="ace-icon fa fa-video-camera bigger-120"></i>
-                </button>
+                        <button v-on:click="edit(section)" class="btn btn-xs btn-info">
+                            <i class="ace-icon fa fa-pencil bigger-120"></i>
+                        </button>
 
-                <button v-on:click="edit(section)" class="btn btn-xs btn-info">
-                    <i class="ace-icon fa fa-pencil bigger-120"></i>
-                </button>
+                        <button v-on:click="del(section.id)" class="btn btn-xs btn-danger">
+                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                        </button>
 
-                <button v-on:click="del(section.id)" class="btn btn-xs btn-danger">
-                    <i class="ace-icon fa fa-trash-o bigger-120"></i>
-                </button>
+                    </div>
 
-            </div>
+                    <div class="hidden-md hidden-lg">
+                        <div class="inline pos-rel">
+                            <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                            </button>
 
-            <div class="hidden-md hidden-lg">
-                <div class="inline pos-rel">
-                    <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
-                        <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
-                    </button>
-
-                    <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-                        <li>
-                            <a href="#" class="tooltip-info" data-rel="tooltip" title="View">
+                            <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                <li>
+                                    <a href="#" class="tooltip-info" data-rel="tooltip" title="View">
                                                                     <span class="blue">
                                                                         <i class="ace-icon fa fa-search-plus bigger-120"></i>
                                                                     </span>
-                            </a>
-                        </li>
+                                    </a>
+                                </li>
 
-                        <li>
-                            <a href="#" class="tooltip-success" data-rel="tooltip" title="Edit">
+                                <li>
+                                    <a href="#" class="tooltip-success" data-rel="tooltip" title="Edit">
                                                                     <span class="green">
                                                                         <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
                                                                     </span>
-                            </a>
-                        </li>
+                                    </a>
+                                </li>
 
-                        <li>
-                            <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
+                                <li>
+                                    <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
                                                                     <span class="red">
                                                                         <i class="ace-icon fa fa-trash-o bigger-120"></i>
                                                                     </span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </td>
-        </tr>
-        </tbody>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
         </table>
         <!-- PAGE CONTENT ENDS -->
 
@@ -129,15 +123,14 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">视频</label>
                                 <div class="col-sm-10">
-                                    <vod v-bind:text="'上传大视频vod'"
-                                          v-bind:after-upload="afterUpload"
-                                          v-bind:input-id="'video-upload'"
-                                          v-bind:use="FILE_USE.COURSE.key"
-                                          v-bind:suffixs="['jpg','jpeg','png','mp4','avi']" ></vod>
+                                    <big-file v-bind:text="'上传大视频'"
+                                              v-bind:after-upload="afterUpload"
+                                              v-bind:input-id="'video-upload'"
+                                              v-bind:use="FILE_USE.COURSE.key"
+                                              v-bind:suffixs="['jpg','jpeg','png','mp4','avi']" ></big-file>
                                     <div v-show="section.video" class="row">
                                         <div class="col-md-9">
-                                            <player  v-bind:player-id="'form-player-div'" ref="player" ></player>
-                                            <video v-bind:src="section.video" controls="controls" id="videos"  class="hidden" ></video>
+                                            <video v-bind:src="section.video" controls="controls" id="videos" ></video>
                                         </div>
                                     </div>
                                 </div>
@@ -146,18 +139,6 @@
                                 <label class="col-sm-2 control-label">时长</label>
                                 <div class="col-sm-10">
                                     <input v-model="section.time" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">视频</label>
-                                <div class="col-sm-10">
-                                    <input v-model="section.video" class="form-control" disabled>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">VOD</label>
-                                <div class="col-sm-10">
-                                    <input v-model="section.vod" class="form-control" disabled>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -183,31 +164,26 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
-        <modal-player ref="modalPlayer"></modal-player>
     </div>
 </template>
 <script>
     import Pagination from "../../components/pagination";
     import File from "../../components/file";
     import BigFile from "../../components/big-file";
-    import Vod from "../../components/vod";
-    import OssaliBigFile from "../../components/ossali-big-file";
-    import Player from "../../components/player";
-    import ModalPlayer from "../../components/modal-player";
     import Swal from 'sweetalert2'
     export default {
-        components: {ModalPlayer,Player,Pagination,File,BigFile,OssaliBigFile,Vod},
+        components: {Pagination,File,BigFile},
         name: "business-section",
         data:function (){
             return{
-            section:{},
-            sections:[],
-            currentPage:{},
-            SECTION_CHARGE:SECTION_CHARGE,
-            FILE_USE:FILE_USE,
-            course: {},
-            chapter: {},
-        }
+                section:{},
+                sections:[],
+                currentPage:{},
+                SECTION_CHARGE:SECTION_CHARGE,
+                FILE_USE:FILE_USE,
+                course: {},
+                chapter: {},
+            }
         },
         mounted:function () {
             this.$parent.activeSidebar("business-course-sidebar");
@@ -255,11 +231,10 @@
             save(){
                 let _this = this;
                 // 保存校验 TODO
-               // _this.section.video = "";
                 if (1 != 1
                     || !Validator.require(_this.section.title, "标题")
                     || !Validator.length(_this.section.title, "标题", 1, 50)
-                    // || !Validator.length(_this.section.video, "视频", 1, 200)
+                    || !Validator.length(_this.section.video, "视频", 1, 200)
                 ) {
                     return;
                 }
@@ -319,11 +294,8 @@
             },afterUpload(resp){
                 let _this = this;
                 let video = resp.content.path;
-                let vod = resp.content.vod;
                 _this.section.video = video;
-                _this.section.vod = vod;
                 _this.getVideoTime();
-                _this.$refs.player.playUrl(video);
             },
             /***
              获取时长
@@ -339,15 +311,8 @@
                 },1000);
 
             },
-            /**
-             * 播放视频
-             * @param section
-             */
-            play(section) {
-                let _this = this;
-                _this.$refs.modalPlayer.playVod(section.vod);
-            }
         }
+
     }
 </script>
 <style>

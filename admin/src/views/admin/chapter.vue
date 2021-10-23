@@ -241,7 +241,7 @@
             toSection(chapter) {
                 let _this = this;
                 SessionStorage.set(SESSION_KEY_CHAPTER, chapter);
-                _this.$router.push("/business/section");
+                _this.$router.push("/business/section-local");
             }
         }
 
