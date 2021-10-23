@@ -11,6 +11,7 @@ import SectionVod from "./views/admin/section-vod.vue"
 import Category from "./views/admin/category.vue"
 import Teacher from "./views/admin/teacher.vue"
 import File from "./views/admin/files.vue"
+import User from "./views/admin/user.vue"
 import Content from "./views/admin/content.vue"
 
 
@@ -69,6 +70,10 @@ export default new Router({
             path: "business/content",
             name: "business/content",
             component: Content,
+        },{
+            path: "system/user",
+            name: "system/user",
+            component: User,
         }]
     }
     ]
