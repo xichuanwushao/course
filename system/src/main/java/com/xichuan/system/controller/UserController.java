@@ -2,6 +2,7 @@ package com.xichuan.system.controller;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.xichuan.server.domain.User;
+import com.xichuan.server.domain.UserExample;
 import com.xichuan.server.exception.ValidatorException;
 import com.xichuan.server.req.UserReq;
 import com.xichuan.server.req.PageReq;
@@ -62,4 +63,5 @@ public class UserController {
         userService.delete(id);
         return commonResp;
     }
+
 }

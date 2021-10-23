@@ -3,6 +3,8 @@ package com.xichuan.server.service;
 import cn.hutool.core.util.IdUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.xichuan.server.exception.BusinessException;
+import com.xichuan.server.exception.BusinessExceptionCode;
 import com.xichuan.server.req.UserReq;
 import com.xichuan.server.req.PageReq;
 import com.xichuan.server.domain.User;
@@ -12,6 +14,7 @@ import com.xichuan.server.resp.UserResp;
 import com.xichuan.server.util.CopyUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
@@ -56,6 +59,10 @@ public class UserService {
     }
     public void insert(User user) {
         user.setId(IdUtil.simpleUUID());
+        User userDb = this.selectByLoginName(user.getLoginName());
+        if(userDb != null ){
+            throw new BusinessException(BusinessExceptionCode.USER_LOGIN_NAME_EXIST);
+        }
         userMapper.insert(user);
     }
     public void update(User user) {
@@ -65,4 +72,19 @@ public class UserService {
         userMapper.deleteByPrimaryKey( id);
     }
 
+    /***
+     * 根据用户名查询用户信息
+     * @param loginName
+     * @return
+     */
+    public User selectByLoginName(String loginName){
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andLoginNameEqualTo(loginName);
+        List<User> userList = userMapper.selectByExample(userExample);
+        if (CollectionUtils.isEmpty(userList)){
+            return null;
+        }else {
+            return userList.get(0);
+        }
+    }
 }

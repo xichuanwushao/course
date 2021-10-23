@@ -94,7 +94,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">登录名</label>
                                             <div class="col-sm-10">
-                                                <input v-model="user.loginName" class="form-control">
+                                                <input v-model="user.loginName" class="form-control" v-bind:disabled="user.id">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -187,7 +187,7 @@
                         _this.list(1);
                         toast.success("保存成功")
                     }else{
-                        toast.success(resp.message)
+                        toast.error(resp.message)
                     }
                 }))
             },
