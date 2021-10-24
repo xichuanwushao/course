@@ -10,6 +10,7 @@ import com.xichuan.server.resp.UserResp;
 import com.xichuan.server.resp.CommonResp;
 import com.xichuan.server.service.UserService;
 import com.xichuan.server.util.ValidatorUtil;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -46,6 +47,9 @@ public class UserController {
     public CommonResp save(@RequestBody UserReq userReq){
         // TODO 保存校验
         // 保存校验
+
+        userReq.setPassword(DigestUtils.md5DigestAsHex(userReq.getPassword().getBytes()));
+
         ValidatorUtil.require(userReq.getLoginName(), "登录名");
         ValidatorUtil.length(userReq.getLoginName(), "登录名", 1, 50);
         ValidatorUtil.length(userReq.getName(), "昵称", 1, 50);
