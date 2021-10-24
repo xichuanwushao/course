@@ -639,7 +639,7 @@
             $("body").removeClass("login-layout light-login");
             $("body").attr("class", "no-skin");
             _this.activeSidebar(_this.$route.name.replace("/", "-") + "-sidebar");
-            _this.loginUser = SessionStorage.get("USER");
+            _this.loginUser = Tool.getLoginUser();
         },
         watch: {
             $route: {

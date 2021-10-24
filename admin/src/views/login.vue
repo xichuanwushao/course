@@ -108,8 +108,8 @@
                     // console.log("保存章列表结果：",response);
                     let resp = response.data;
                     if (resp.success){
-                        console.info(resp.content);
-                        SessionStorage.set("USER",resp.content);
+                        console.info("登录成功 ,{}",resp.content);
+                        Tool.setLoginUser(resp.content);
                         _this.$router.push("/welcome")
                     }else{
                         toast.warning(resp.message)
