@@ -66,7 +66,8 @@ public class UserService {
         userMapper.insert(user);
     }
     public void update(User user) {
-        userMapper.updateByPrimaryKey(user);
+        user.setPassword(null);
+        userMapper.updateByPrimaryKeySelective(user);
     }
     public void delete(String id) {
         userMapper.deleteByPrimaryKey( id);
@@ -86,5 +87,16 @@ public class UserService {
         }else {
             return userList.get(0);
         }
+    }
+    /***
+     * 重置密码
+     * @param userReq
+     * @return
+     */
+    public void savePassword(UserReq userReq){
+        User user = new User();
+        user.setId(userReq.getId());
+        user.setPassword(userReq.getPassword());
+        userMapper.updateByPrimaryKeySelective(user);
     }
 }

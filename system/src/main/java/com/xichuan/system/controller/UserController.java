@@ -67,5 +67,12 @@ public class UserController {
         userService.delete(id);
         return commonResp;
     }
-
+    @PostMapping("/save-password")
+    public CommonResp savePassword(@RequestBody UserReq userReq){
+        userReq.setPassword(DigestUtils.md5DigestAsHex(userReq.getPassword().getBytes()));
+        CommonResp commonResp = new CommonResp();
+        userService.savePassword(userReq);
+        commonResp.setContent(userReq);
+        return commonResp;
+    }
 }
