@@ -368,7 +368,7 @@
                         <b class="arrow"></b>
                     </li>
 
-                    <li class="active open"><!--active open-->
+                    <li class=""><!--active open-->
                         <a href="#" class="dropdown-toggle">
                             <i class="menu-icon fa fa-desktop"></i>
                             <span class="menu-text">
@@ -381,7 +381,7 @@
                         <b class="arrow"></b>
 
                         <ul class="submenu">
-                            <li class="active" id="system-user-sidebar">
+                            <li class="" id="system-user-sidebar">
                                 <router-link to="/system/user" class="dropdown-toggle">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     用户管理
