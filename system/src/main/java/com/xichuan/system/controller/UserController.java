@@ -6,10 +6,14 @@ import com.xichuan.server.domain.UserExample;
 import com.xichuan.server.exception.ValidatorException;
 import com.xichuan.server.req.UserReq;
 import com.xichuan.server.req.PageReq;
+import com.xichuan.server.resp.LoginUserResp;
 import com.xichuan.server.resp.UserResp;
 import com.xichuan.server.resp.CommonResp;
 import com.xichuan.server.service.UserService;
 import com.xichuan.server.util.ValidatorUtil;
+import com.xichuan.system.config.SystemApplication;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -67,12 +71,22 @@ public class UserController {
         userService.delete(id);
         return commonResp;
     }
+
     @PostMapping("/save-password")
     public CommonResp savePassword(@RequestBody UserReq userReq){
         userReq.setPassword(DigestUtils.md5DigestAsHex(userReq.getPassword().getBytes()));
         CommonResp commonResp = new CommonResp();
         userService.savePassword(userReq);
         commonResp.setContent(userReq);
+        return commonResp;
+    }
+
+    @PostMapping("/login")
+    public CommonResp login(@RequestBody UserReq userReq){
+        userReq.setPassword(DigestUtils.md5DigestAsHex(userReq.getPassword().getBytes()));
+        CommonResp commonResp = new CommonResp();
+        LoginUserResp loginUserResp = userService.login(userReq);
+        commonResp.setContent(loginUserResp);
         return commonResp;
     }
 }

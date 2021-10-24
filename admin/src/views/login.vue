@@ -30,14 +30,14 @@
                                             <fieldset>
                                                 <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="text" class="form-control" placeholder="用户名"/>
+															<input v-model="user.loginName" type="text" class="form-control" placeholder="用户名"/>
 															<i class="ace-icon fa fa-user"></i>
 														</span>
                                                 </label>
 
                                                 <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="password" class="form-control"
+															<input v-model="user.password" type="password" class="form-control"
                                                                    placeholder="密码"/>
 															<i class="ace-icon fa fa-lock"></i>
 														</span>
@@ -82,14 +82,40 @@
 <script>
     export default {
         name: "login",
+        data:function (){
+            return {
+                user: {},
+            }
+        },
         mounted:function () {
             $("body").removeClass("no-skin");
             $("body").attr("class", "login-layout light-login");
         },
         methods:{
             login(){
-                this.$router.push("/welcome")
-            }
+                let _this = this;
+                if (1 != 1
+                    || !Validator.require(_this.user.loginName, "登录名")
+                    || !Validator.length(_this.user.loginName, "登录名", 1, 50)
+                    || !Validator.require(_this.user.password, "密码")
+                ) {
+                    return;
+                }
+                _this.user.password = hex_md5(_this.user.password + KEY);
+                Loading.show();
+                _this.$ajax.post(process.env.VUE_APP_SERVER+"/system/user/login", _this.user).then((response=>{
+                    Loading.hide();
+                    // console.log("保存章列表结果：",response);
+                    let resp = response.data;
+                    if (resp.success){
+                        console.info(resp.content);
+                        _this.$router.push("/welcome")
+                    }else{
+                        toast.warning(resp.message)
+                    }
+                }))
+            },
+
         }
 
     }

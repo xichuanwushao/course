@@ -270,6 +270,11 @@
             },
             savePassword(){
                 let _this = this;
+                if (1 != 1
+                    || !Validator.require(_this.user.password, "密码")
+                ) {
+                    return;
+                }
                 _this.user.password = hex_md5(_this.user.password + KEY);
                 Loading.show();
                 _this.$ajax.post(process.env.VUE_APP_SERVER+"/system/user/save-password", _this.user).then((response=>{

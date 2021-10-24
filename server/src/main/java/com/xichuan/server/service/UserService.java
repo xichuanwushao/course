@@ -10,8 +10,11 @@ import com.xichuan.server.req.PageReq;
 import com.xichuan.server.domain.User;
 import com.xichuan.server.domain.UserExample;
 import com.xichuan.server.mapper.UserMapper;
+import com.xichuan.server.resp.LoginUserResp;
 import com.xichuan.server.resp.UserResp;
 import com.xichuan.server.util.CopyUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -24,6 +27,9 @@ import java.util.List;
 public class UserService {
     @Resource
     private UserMapper userMapper;
+
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+
     public List<UserResp> all() {
         UserExample userExample = new UserExample();
 //        userExample.createCriteria().andIdEqualTo("1");
@@ -97,6 +103,34 @@ public class UserService {
         User user = new User();
         user.setId(userReq.getId());
         user.setPassword(userReq.getPassword());
+        //cd23f8c494e2339e5cc679ba60bfc409是空字符串
+        if("cd23f8c494e2339e5cc679ba60bfc409".equals(userReq.getPassword())){
+            throw new BusinessException(BusinessExceptionCode.USER_PASSWORD_NOT_EXIST);
+        }
         userMapper.updateByPrimaryKeySelective(user);
+    }
+
+    /***
+     * 登录
+     * @param userReq
+     * @return
+     */
+    public LoginUserResp login(UserReq userReq){
+        User dbUser = selectByLoginName(userReq.getLoginName());
+        if(dbUser == null){
+            //用户名不存在
+            logger.info("用户名不存在:{}",userReq.getLoginName());
+            throw new BusinessException(BusinessExceptionCode.LOGIN_USER_ERROR);
+        }else{
+            if(dbUser.getPassword().equals(userReq.getPassword())){
+                //登录成功
+                return CopyUtil.copy(dbUser,LoginUserResp.class);
+            }else {
+                //密码不对
+                logger.info("密码不对,输入密码:{},数据库密码:{}",userReq.getPassword(),dbUser.getPassword());
+                throw new BusinessException(BusinessExceptionCode.LOGIN_USER_ERROR);
+
+            }
+        }
     }
 }
