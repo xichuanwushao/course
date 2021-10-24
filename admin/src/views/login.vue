@@ -109,6 +109,7 @@
                     let resp = response.data;
                     if (resp.success){
                         console.info(resp.content);
+                        SessionStorage.set("USER",resp.content);
                         _this.$router.push("/welcome")
                     }else{
                         toast.warning(resp.message)
