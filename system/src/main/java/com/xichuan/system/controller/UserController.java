@@ -1,6 +1,7 @@
 package com.xichuan.system.controller;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.xichuan.server.core.Constants;
 import com.xichuan.server.domain.User;
 import com.xichuan.server.domain.UserExample;
 import com.xichuan.server.exception.ValidatorException;
@@ -18,6 +19,7 @@ import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 //@Controller 如果接口返回页面用Controller
@@ -80,13 +82,26 @@ public class UserController {
         commonResp.setContent(userReq);
         return commonResp;
     }
-
+;
     @PostMapping("/login")
-    public CommonResp login(@RequestBody UserReq userReq){
+    public CommonResp login(@RequestBody UserReq userReq, HttpServletRequest request){
         userReq.setPassword(DigestUtils.md5DigestAsHex(userReq.getPassword().getBytes()));
         CommonResp commonResp = new CommonResp();
         LoginUserResp loginUserResp = userService.login(userReq);
+        request.getSession().setAttribute(Constants.LOGIN_USER,loginUserResp);
         commonResp.setContent(loginUserResp);
+        return commonResp;
+    }
+
+    /***
+     * 退出登录
+     * @param request
+     * @return
+     */
+    @GetMapping("/logout")
+    public CommonResp login(HttpServletRequest request){
+        CommonResp commonResp = new CommonResp();
+        request.getSession().removeAttribute(Constants.LOGIN_USER);
         return commonResp;
     }
 }
