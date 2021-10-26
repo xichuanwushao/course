@@ -25,24 +25,24 @@ import java.util.List;
 //@Controller 如果接口返回页面用Controller
 
 
-@RequestMapping("user")
+@RequestMapping("/user")
 @RestController//@Controller 如果接口返回Json 用RestController
 public class UserController {
     @Resource
     private UserService userService;
 
     public static final String BUSINESS_NAME="用户";
-    @RequestMapping("test")
+    @RequestMapping("/test")
     public String user(){
         return "success";
     }
 
-    @RequestMapping("all")
+    @RequestMapping("/all")
     public List<UserResp> all(){
         return userService.all();
     }
 
-    @PostMapping("listPage")
+    @PostMapping("/listPage")
     public CommonResp listPage(@RequestBody PageReq pageReq){
         CommonResp commonResp = new CommonResp();
         userService.listPage(pageReq);
