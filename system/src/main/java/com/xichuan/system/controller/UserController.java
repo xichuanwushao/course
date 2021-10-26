@@ -13,6 +13,7 @@ import com.xichuan.server.resp.CommonResp;
 import com.xichuan.server.service.UserService;
 import com.xichuan.server.util.ValidatorUtil;
 import com.xichuan.system.config.SystemApplication;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.DigestUtils;
@@ -32,6 +33,10 @@ public class UserController {
     private UserService userService;
 
     public static final String BUSINESS_NAME="用户";
+
+    private static final Logger logger = LoggerFactory.getLogger(SystemApplication.class);
+
+
     @RequestMapping("/test")
     public String user(){
         return "success";
@@ -85,8 +90,31 @@ public class UserController {
 ;
     @PostMapping("/login")
     public CommonResp login(@RequestBody UserReq userReq, HttpServletRequest request){
+        logger.info("用户登录开始");
         userReq.setPassword(DigestUtils.md5DigestAsHex(userReq.getPassword().getBytes()));
         CommonResp commonResp = new CommonResp();
+
+        // 根据验证码token去获取缓存中的验证码，和用户输入的验证码是否一致
+         String imageCode = (String) request.getSession().getAttribute(userReq.getImageCodeToken());
+        logger.info("从SessionID：{}", request.getSession().getId());
+        logger.info("从Session中Token：{}", userReq.getImageCodeToken());
+        logger.info("从Session中获取到的验证码：{}", imageCode);
+        if (StringUtils.isEmpty(imageCode)) {
+            commonResp.setSuccess(false);
+            commonResp.setMessage("验证码已过期");
+            logger.info("用户登录失败，验证码已过期");
+            return commonResp;
+        }
+        if (!imageCode.toLowerCase().equals(userReq.getImageCode().toLowerCase())) {
+            commonResp.setSuccess(false);
+            commonResp.setMessage("验证码不对");
+            logger.info("用户登录失败，验证码不对");
+            return commonResp;
+        } else {
+            // 验证通过后，移除验证码
+            request.getSession().removeAttribute(userReq.getImageCodeToken());
+        }
+
         LoginUserResp loginUserResp = userService.login(userReq);
         request.getSession().setAttribute(Constants.LOGIN_USER,loginUserResp);
         commonResp.setContent(loginUserResp);

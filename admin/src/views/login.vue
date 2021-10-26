@@ -99,6 +99,7 @@
             return {
                 user: {},
                 remember:true, // 默认勾选记住我
+                imageCodeToken: "",
             }
         },
         mounted:function () {
@@ -134,6 +135,9 @@
                 ) {
                     return;
                 }
+                _this.user.imageCodeToken = _this.imageCodeToken;
+
+
                 Loading.show();
                 _this.$ajax.post(process.env.VUE_APP_SERVER+"/system/user/login", _this.user).then((response=>{
                     Loading.hide();
@@ -162,6 +166,8 @@
                         _this.$router.push("/welcome")
                     }else{
                         toast.warning(resp.message)
+                        _this.user.password = "";
+                        _this.loadImageCode();
                     }
                 }))
             },

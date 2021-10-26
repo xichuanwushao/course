@@ -1,6 +1,9 @@
 package com.xichuan.system.controller;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
+import com.xichuan.system.config.SystemApplication;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +22,7 @@ import java.io.ByteArrayOutputStream;
 @RequestMapping("/kaptcha")
 public class KaptchaController {
     public static final String BUSINESS_NAME = "图片验证码";
-
+    private static final Logger logger = LoggerFactory.getLogger(SystemApplication.class);
     @Qualifier("getDefaultKaptcha")
     @Autowired
     DefaultKaptcha defaultKaptcha;
@@ -33,7 +36,7 @@ public class KaptchaController {
 
             // 将生成的验证码放入会话缓存中，后续验证的时候用到
              request.getSession().setAttribute(imageCodeToken, createText);
-
+            logger.info("从SessionID：{}", request.getSession().getId());
             // 使用验证码字符串生成验证码图片
             BufferedImage challenge = defaultKaptcha.createImage(createText);
             ImageIO.write(challenge, "jpg", jpegOutputStream);
