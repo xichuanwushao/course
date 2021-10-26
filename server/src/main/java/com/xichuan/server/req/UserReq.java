@@ -35,6 +35,13 @@ public class UserReq {
     private String imageCodeToken;
 
 
+    /***
+     * 登录标识
+     * @return
+     */
+    private String token;
+
+
     public String getImageCode() {
         return imageCode;
     }
@@ -83,6 +90,13 @@ public class UserReq {
         this.password = password;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     @Override
     public String toString() {
@@ -93,6 +107,7 @@ public class UserReq {
                 ", password='" + password + '\'' +
                 ", imageCode='" + imageCode + '\'' +
                 ", imageCodeToken='" + imageCodeToken + '\'' +
+                ", token='" + token + '\'' +
                 '}';
     }
 }

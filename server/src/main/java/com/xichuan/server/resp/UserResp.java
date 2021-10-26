@@ -18,6 +18,12 @@ public class UserResp {
      */
     private String imageCodeToken;
 
+    /***
+     * 登录标识
+     * @return
+     */
+    private String token;
+
 
     public String getId() {
         return id;
@@ -67,6 +73,13 @@ public class UserResp {
         this.imageCodeToken = imageCodeToken;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     @Override
     public String toString() {
@@ -77,6 +90,7 @@ public class UserResp {
                 ", password='" + password + '\'' +
                 ", imageCode='" + imageCode + '\'' +
                 ", imageCodeToken='" + imageCodeToken + '\'' +
+                ", token='" + token + '\'' +
                 '}';
     }
 }

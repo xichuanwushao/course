@@ -177,6 +177,7 @@
             loadImageCode: function () {
                 let _this = this;
                 _this.imageCodeToken = Tool.uuid(8);
+                console.info("_this.imageCodeToken:{}",_this.imageCodeToken);
                 $('#image-code').attr('src', process.env.VUE_APP_SERVER + '/system/kaptcha/image-code/' + _this.imageCodeToken);
             },
         }

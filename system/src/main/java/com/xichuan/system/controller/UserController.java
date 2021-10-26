@@ -1,9 +1,12 @@
 package com.xichuan.system.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.xichuan.server.core.Constants;
 import com.xichuan.server.domain.User;
 import com.xichuan.server.domain.UserExample;
+import com.xichuan.server.exception.BusinessException;
+import com.xichuan.server.exception.BusinessExceptionCode;
 import com.xichuan.server.exception.ValidatorException;
 import com.xichuan.server.req.UserReq;
 import com.xichuan.server.req.PageReq;
@@ -11,6 +14,7 @@ import com.xichuan.server.resp.LoginUserResp;
 import com.xichuan.server.resp.UserResp;
 import com.xichuan.server.resp.CommonResp;
 import com.xichuan.server.service.UserService;
+import com.xichuan.server.util.UuidUtil;
 import com.xichuan.server.util.ValidatorUtil;
 import com.xichuan.system.config.SystemApplication;
 import org.apache.commons.lang3.StringUtils;
@@ -23,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 //@Controller 如果接口返回页面用Controller
 
@@ -99,7 +104,9 @@ public class UserController {
         // 根据验证码token去获取缓存中的验证码，和用户输入的验证码是否一致
 //         String imageCode = (String) request.getSession().getAttribute(userReq.getImageCodeToken());
         String imageCode = (String) redisTemplate.opsForValue().get(userReq.getImageCodeToken());
-
+        if(imageCode==null){
+            throw new BusinessException(BusinessExceptionCode.LOGIN_IMAGECODE_ERROR);
+        }
 //        logger.info("从SessionID：{}", request.getSession().getId());
         logger.info("从Session中Token：{}", userReq.getImageCodeToken());
         logger.info("从Session中获取到的验证码：{}", imageCode);
@@ -116,11 +123,16 @@ public class UserController {
             return commonResp;
         } else {
             // 验证通过后，移除验证码
-            request.getSession().removeAttribute(userReq.getImageCodeToken());
+//            request.getSession().removeAttribute(userReq.getImageCodeToken());
+            redisTemplate.delete(userReq.getImageCodeToken());
         }
 
         LoginUserResp loginUserResp = userService.login(userReq);
+        String token = UuidUtil.getShortUuid();
+        loginUserResp.setToken(token);
         request.getSession().setAttribute(Constants.LOGIN_USER,loginUserResp);
+        redisTemplate.opsForValue().set(token, JSON.toJSONString(loginUserResp),3600, TimeUnit.SECONDS);
+
         commonResp.setContent(loginUserResp);
         return commonResp;
     }
@@ -163,10 +175,25 @@ public class UserController {
      * @param request
      * @return
      */
-    @GetMapping("/logout")
-    public CommonResp login(HttpServletRequest request){
+    @GetMapping("/logout-session")
+    public CommonResp logout(HttpServletRequest request){
         CommonResp commonResp = new CommonResp();
         request.getSession().removeAttribute(Constants.LOGIN_USER);
         return commonResp;
     }
+
+    /***
+     * 退出登录redis
+     * @param token
+     * @return
+     */
+    @GetMapping("/logout/{token}")
+    public CommonResp logout(@PathVariable String token){
+        CommonResp commonResp = new CommonResp();
+//        request.getSession().removeAttribute(Constants.LOGIN_USER);
+        redisTemplate.delete(token);
+        logger.info("从redis中删除token:{}",token);
+        return commonResp;
+    }
+
 }
