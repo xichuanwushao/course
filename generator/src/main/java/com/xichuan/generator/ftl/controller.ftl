@@ -17,24 +17,24 @@ import java.util.List;
 //@Controller 如果接口返回页面用Controller
 
 
-@RequestMapping("${domain}")
+@RequestMapping("/${domain}")
 @RestController//@Controller 如果接口返回Json 用RestController
 public class ${Domain}Controller {
     @Resource
     private ${Domain}Service ${domain}Service;
 
     public static final String BUSINESS_NAME="${tableNameCn}";
-    @RequestMapping("test")
+    @RequestMapping("/test")
     public String ${domain}(){
         return "success";
     }
 
-    @RequestMapping("all")
+    @RequestMapping("/all")
     public List<${Domain}Resp> all(){
         return ${domain}Service.all();
     }
 
-    @PostMapping("listPage")
+    @PostMapping("/listPage")
     public CommonResp listPage(@RequestBody PageReq pageReq){
         CommonResp commonResp = new CommonResp();
         ${domain}Service.listPage(pageReq);
