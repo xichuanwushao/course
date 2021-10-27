@@ -385,7 +385,6 @@
                                 <router-link to="/system/user" class="dropdown-toggle">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     用户管理
-                                    <b class="arrow fa fa-angle-down"></b>
                                 </router-link>
 
                                 <b class="arrow"></b>
@@ -447,11 +446,11 @@
 <!--                                </ul>-->
                             </li>
 
-                            <li class="">
-                                <a href="typography.html">
+                            <li class="" id="system-resource-sidebar">
+                                <router-link to="/system/resource" class="dropdown-toggle">
                                     <i class="menu-icon fa fa-caret-right"></i>
-                                    权限管理
-                                </a>
+                                    资源管理
+                                </router-link>
 
                                 <b class="arrow"></b>
                             </li>
