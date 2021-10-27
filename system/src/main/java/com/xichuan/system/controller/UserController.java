@@ -104,7 +104,7 @@ public class UserController {
         // 根据验证码token去获取缓存中的验证码，和用户输入的验证码是否一致
 //         String imageCode = (String) request.getSession().getAttribute(userReq.getImageCodeToken());
         String imageCode = (String) redisTemplate.opsForValue().get(userReq.getImageCodeToken());
-        if(imageCode==null){
+        if(StringUtils.isEmpty(userReq.getImageCode())){
             throw new BusinessException(BusinessExceptionCode.LOGIN_IMAGECODE_ERROR);
         }
 //        logger.info("从SessionID：{}", request.getSession().getId());
