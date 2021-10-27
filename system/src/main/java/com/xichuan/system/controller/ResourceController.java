@@ -53,7 +53,15 @@ public class ResourceController {
         commonResp.setContent(resourceReq);
         return commonResp;
     }
-
+    @PostMapping("/save-json")
+    public CommonResp saveJson(@RequestBody String jsonStr){
+        // TODO 保存校验
+        // 保存校验
+        ValidatorUtil.require(jsonStr, "资源");
+        CommonResp commonResp = new CommonResp();
+        resourceService.saveJson(jsonStr);
+        return commonResp;
+    }
     @DeleteMapping("/delete/{id}")
     public CommonResp delete(@PathVariable String id){
         CommonResp commonResp = new CommonResp();

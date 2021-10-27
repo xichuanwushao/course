@@ -1,5 +1,9 @@
 package com.xichuan.server.resp;
 
+import com.xichuan.server.req.ResourceReq;
+
+import java.util.List;
+
 public class ResourceResp {
     private String id;
 
@@ -10,7 +14,16 @@ public class ResourceResp {
     private String request;
 
     private String parent;
+    private List<ResourceReq> children;
 
+
+    public List<ResourceReq> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<ResourceReq> children) {
+        this.children = children;
+    }
     public String getId() {
         return id;
     }
