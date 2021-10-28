@@ -9,6 +9,9 @@ import com.xichuan.server.resp.RoleResp;
 import com.xichuan.server.resp.CommonResp;
 import com.xichuan.server.service.RoleService;
 import com.xichuan.server.util.ValidatorUtil;
+import com.xichuan.system.config.SystemApplication;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -22,6 +25,7 @@ import java.util.List;
 public class RoleController {
     @Resource
     private RoleService roleService;
+    private static final Logger logger = LoggerFactory.getLogger(SystemApplication.class);
 
     public static final String BUSINESS_NAME="角色";
     @RequestMapping("/test")
@@ -61,5 +65,18 @@ public class RoleController {
         CommonResp commonResp = new CommonResp();
         roleService.delete(id);
         return commonResp;
+    }
+
+    /**
+     * 保存资源
+     * @param roleReq
+     */
+    @PostMapping("/save-resource")
+    public CommonResp saveResource(@RequestBody RoleReq roleReq) {
+        logger.info("保存角色资源关联开始");
+        CommonResp<RoleReq> responseDto = new CommonResp<>();
+        roleService.saveResource(roleReq);
+        responseDto.setContent(roleReq);
+        return responseDto;
     }
 }

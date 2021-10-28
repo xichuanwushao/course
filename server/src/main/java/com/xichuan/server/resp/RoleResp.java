@@ -1,12 +1,14 @@
 package com.xichuan.server.resp;
 
+import java.util.List;
+
 public class RoleResp {
     private String id;
 
     private String name;
 
     private String desc;
-
+    private List<String> resourceIds;
     public String getId() {
         return id;
     }
@@ -31,16 +33,21 @@ public class RoleResp {
         this.desc = desc;
     }
 
+    public List<String> getResourceIds() {
+        return resourceIds;
+    }
+
+    public void setResourceIds(List<String> resourceIds) {
+        this.resourceIds = resourceIds;
+    }
+
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", name=").append(name);
-        sb.append(", desc=").append(desc);
-        sb.append("]");
-        return sb.toString();
+        return "RoleResp{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", desc='" + desc + '\'' +
+                ", resourceIds=" + resourceIds +
+                '}';
     }
 }

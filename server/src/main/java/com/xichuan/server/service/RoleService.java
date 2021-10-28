@@ -3,6 +3,9 @@ package com.xichuan.server.service;
 import cn.hutool.core.util.IdUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.xichuan.server.domain.RoleResource;
+import com.xichuan.server.domain.RoleResourceExample;
+import com.xichuan.server.mapper.RoleResourceMapper;
 import com.xichuan.server.req.RoleReq;
 import com.xichuan.server.req.PageReq;
 import com.xichuan.server.domain.Role;
@@ -10,6 +13,7 @@ import com.xichuan.server.domain.RoleExample;
 import com.xichuan.server.mapper.RoleMapper;
 import com.xichuan.server.resp.RoleResp;
 import com.xichuan.server.util.CopyUtil;
+import com.xichuan.server.util.UuidUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -21,6 +25,10 @@ import java.util.List;
 public class RoleService {
     @Resource
     private RoleMapper roleMapper;
+
+    @Resource
+    private RoleResourceMapper roleResourceMapper;
+
     public List<RoleResp> all() {
         RoleExample roleExample = new RoleExample();
 //        roleExample.createCriteria().andIdEqualTo("1");
@@ -64,5 +72,24 @@ public class RoleService {
     public void delete(String id) {
         roleMapper.deleteByPrimaryKey( id);
     }
+    /**
+     * 按角色保存资源
+     */
+    public void saveResource(RoleReq roleReq) {
+        String roleId = roleReq.getId();
+        List<String> resourceIds = roleReq.getResourceIds();
+        // 清空库中所有的当前角色下的记录
+        RoleResourceExample example = new RoleResourceExample();
+        example.createCriteria().andRoleIdEqualTo(roleId);
+        roleResourceMapper.deleteByExample(example);
 
+        // 保存角色资源
+        for (int i = 0; i < resourceIds.size(); i++) {
+            RoleResource roleResource = new RoleResource();
+            roleResource.setId(UuidUtil.getShortUuid());
+            roleResource.setRoleId(roleId);
+            roleResource.setResourceId(resourceIds.get(i));
+            roleResourceMapper.insert(roleResource);
+        }
+    }
 }
