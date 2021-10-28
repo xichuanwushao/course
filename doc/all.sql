@@ -275,3 +275,13 @@ insert into `role_resource` values ('00000005','00000000','0102');
 insert into `role_resource` values ('00000006','00000000','010201');
 insert into `role_resource` values ('00000007','00000000','0103');
 insert into `role_resource` values ('00000008','00000000','010301');
+
+drop table if exists `role_user` ;
+create table `role_user` (
+     `id` char(50) not null default '' comment 'id',
+     `role_id` char(50) not null comment '角色|id',
+     `user_id` char(50) not null comment '用户|id',
+     primary key (`id`)
+) engine=innodb default charset=utf8mb4 comment='角色用户关联';
+
+insert into `role_user` values ('00000000','00000000','5d5449384bd44668903834a24594fce5');
