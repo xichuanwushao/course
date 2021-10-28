@@ -10,6 +10,7 @@ import com.xichuan.server.req.PageReq;
 import com.xichuan.server.domain.User;
 import com.xichuan.server.domain.UserExample;
 import com.xichuan.server.mapper.UserMapper;
+import com.xichuan.server.resp.CommonResp;
 import com.xichuan.server.resp.LoginUserResp;
 import com.xichuan.server.resp.UserResp;
 import com.xichuan.server.util.CopyUtil;
@@ -19,6 +20,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;

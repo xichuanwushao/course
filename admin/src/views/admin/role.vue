@@ -30,6 +30,10 @@
             <td>{{role.desc}}</td>
         <td>
             <div class="hidden-sm hidden-xs btn-group">
+                <button v-on:click="editUser(role)" class="btn btn-xs btn-info">
+                    <i class="ace-icon fa fa-user bigger-120"></i>
+                </button>
+
                 <button v-on:click="editResource(role)" class="btn btn-xs btn-info">
                     <i class="ace-icon fa fa-list bigger-120"></i>
                 </button>
@@ -113,7 +117,7 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
-      <div id="resource-modal" class="modal fade" tabindex="-1" role="dialog">
+        <div id="resource-modal" class="modal fade" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -135,6 +139,53 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
+        <div id="user-modal" class="modal fade" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title">角色用户关联配置</h4>
+                  </div>
+                  <div class="modal-body">
+                      <div class="row">
+                          <div class="col-md-6">
+                              <table id="user-table" class="table table-hover">
+                                  <tbody>
+                                  <tr v-for="user in users">
+                                      <td>{{user.loginName}}</td>
+                                      <td class="text-right">
+                                          <a v-on:click="addUser(user)" href="javascript:;" class="">
+                                              <i class="ace-icon fa fa-arrow-circle-right blue"></i>
+                                          </a>
+                                      </td>
+                                  </tr>
+                                  </tbody>
+                              </table>
+                          </div>
+                          <div class="col-md-6">
+                              <table id="role-user-table" class="table table-hover">
+                                  <tbody>
+                                  <tr v-for="user in roleUsers">
+                                      <td>{{user.loginName}}</td>
+                                      <td class="text-right">
+                                          <a v-on:click="deleteUser(user)" href="javascript:;" class="">
+                                              <i class="ace-icon fa fa-trash blue"></i>
+                                          </a>
+                                      </td>
+                                  </tr>
+                                  </tbody>
+                              </table>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                      <button v-on:click="save()" type="button" class="btn btn-primary">保存</button>
+                  </div>
+              </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+
   </div>
 </template>
 <script>
@@ -149,6 +200,8 @@
                 roles: [],
                 resources: [],
                 zTree: {},
+                users: [],
+                roleUsers: []
             }
         },
         mounted:function () {
@@ -339,6 +392,33 @@
                         _this.zTree.checkNode(node, true);
                     }
                 });
+            },
+            /**
+             * 点击【用户】
+             */
+            editUser(role) {
+                let _this = this;
+                _this.role = $.extend({}, role);
+                _this.listUser();
+                $("#user-modal").modal("show");
+            },
+
+            /**
+             * 查询所有用户
+             */
+            listUser() {
+                let _this = this;
+                _this.$ajax.post(process.env.VUE_APP_SERVER + '/system/user/listPage', {
+                    page: 1,
+                    size: 9999
+                }).then((response)=>{
+                    let resp = response.data;
+                    if (resp.success) {
+                        _this.users = resp.content.list;
+                    } else {
+                        toast.warning(resp.message);
+                    }
+                })
             },
 
         }
