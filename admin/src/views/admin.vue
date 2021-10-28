@@ -449,7 +449,7 @@
                             <li class="" id="system-resource-sidebar">
                                 <router-link to="/system/resource" class="dropdown-toggle">
                                     <i class="menu-icon fa fa-caret-right"></i>
-                                    资源管理
+                                    权限管理
                                 </router-link>
 
                                 <b class="arrow"></b>

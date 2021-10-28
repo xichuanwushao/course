@@ -68,4 +68,15 @@ public class ResourceController {
         resourceService.delete(id);
         return commonResp;
     }
+
+    /**
+     * 资源树查询
+     */
+    @GetMapping("/load-tree")
+    public CommonResp loadTree() {
+        CommonResp responseDto = new CommonResp();
+        List<ResourceReq> resourceDtoList = resourceService.loadTree();
+        responseDto.setContent(resourceDtoList);
+        return responseDto;
+    }
 }

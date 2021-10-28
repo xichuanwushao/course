@@ -56,16 +56,19 @@ public class ResourceService {
         List<ResourceResp> resourceDtoList = CopyUtil.copyList(resourceList, ResourceResp.class);
         pageReq.setList(resourceDtoList);
     }
+
+
     public void save(ResourceReq resourceReq) {
         Resource resource = CopyUtil.copy(resourceReq, Resource.class);
-        if(StringUtils.isEmpty(resourceReq.getId())){
+        Resource  old = resourceMapper.selectByPrimaryKey(resourceReq.getId());
+        if(StringUtils.isEmpty(old)){
             this.insert(resource);
         }else{
             this.update(resource);
         }
     }
     public void insert(Resource resource) {
-        resource.setId(IdUtil.simpleUUID());
+//        resource.setId(IdUtil.simpleUUID());
         resourceMapper.insert(resource);
     }
 
@@ -113,5 +116,41 @@ public class ResourceService {
                 add(list, d);
             }
         }
+    }
+
+    /**
+     * 按约定将列表转成树
+     * 要求：ID要正序排列
+     * @return
+     */
+    public List<ResourceReq> loadTree() {
+        ResourceExample example = new ResourceExample();
+        example.setOrderByClause("id asc");
+        List<Resource> resourceList = resourceMapper.selectByExample(example);
+        List<ResourceReq> resourceDtoList = CopyUtil.copyList(resourceList, ResourceReq.class);
+        for (int i = resourceDtoList.size() - 1; i >= 0; i--) {
+            // 当前要移动的记录
+            ResourceReq child = resourceDtoList.get(i);
+
+            // 如果当前节点没有父节点，则不用往下了
+            if (StringUtils.isEmpty(child.getParent())) {
+                continue;
+            }
+            // 查找父节点
+            for (int j = i - 1; j >= 0; j--) {
+                ResourceReq parent = resourceDtoList.get(j);
+                if (child.getParent().equals(parent.getId())) {
+                    if (CollectionUtils.isEmpty(parent.getChildren())) {
+                        parent.setChildren(new ArrayList<>());
+                    }
+                    // 添加到最前面，否则会变成倒序，因为循环是从后往前循环的
+                    parent.getChildren().add(0, child);
+
+                    // 子节点找到父节点后，删除列表中的子节点
+                    resourceDtoList.remove(child);
+                }
+            }
+        }
+        return resourceDtoList;
     }
 }

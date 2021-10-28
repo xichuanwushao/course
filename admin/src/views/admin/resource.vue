@@ -1,10 +1,14 @@
 <template xmlns:v-on="http://www.w3.org/1999/xhtml">
   <div>
         <!--        <button v-on:click="list(1)" id="Loading-btn" type="button" class="btn btn-success" data-Loading-text="Loading..."><i class="ace-icon fa fa-refresh "></i><font class="Loading-font">刷新</font></button>-->
-        <button v-on:click="list(1)" class="btn btn-white btn-default btn-round">
+        <button v-on:click="list(1);listj()" class="btn btn-white btn-default btn-round">
             <i class="ace-icon fa fa-refresh "></i>
             刷新
         </button>
+      <button v-on:click="add()" class="btn btn-white btn-default btn-round">
+          <i class="ace-icon fa fa-edit "></i>
+          新增
+      </button>
       <div class="row">
           <div class="col-md-6">
               <textarea id="resource-textarea" class="form-control" v-model="resourceStr" name="resource" rows="10"></textarea>
@@ -15,6 +19,7 @@
               </button>
           </div>
           <div class="col-md-6">
+
               <ul id="tree" class="ztree"></ul>
           </div>
       </div>
@@ -104,6 +109,12 @@
                     <div class="modal-body">
                         <form class="form-horizontal">
                                         <div class="form-group">
+                                            <label class="col-sm-2 control-label">id</label>
+                                            <div class="col-sm-10">
+                                                <input v-model="resource.id" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
                                             <label class="col-sm-2 control-label">名称</label>
                                             <div class="col-sm-10">
                                                 <input v-model="resource.name" class="form-control">
@@ -148,7 +159,9 @@
             return {
                 resource: {},
                 resources: [],
+                resources2: [],
                 resourceStr: "",
+                tree: {},
             }
         },
         mounted:function () {
@@ -156,6 +169,8 @@
             let _this = this;
             _this.$refs.pagination.size = 5;
             _this.list(1);
+            _this.listj();
+
         },
         methods:{
             add(){
@@ -184,7 +199,36 @@
                         _this.$refs.pagination.render(page, resp.content.total);
                     }))
             },
-
+            listj(){
+                let _this = this;
+                Loading.show();
+                    _this.$ajax.get(process.env.VUE_APP_SERVER+"/system/resource/load-tree").then((response=>{
+                        Loading.hide();
+                        // console.log("查询章列表结果：",response);
+                        let resp = response.data;
+                        _this.resources2 = resp.content;
+                       _this.initTree();
+                    }))
+            },
+            initTree() {
+                let _this = this;
+                let setting = {
+                    check: {
+                        enable: false
+                    },
+                    data: {
+                        simpleData: {
+                            enable: true,
+                            idKey: "id",
+                            pIdKey: "parent",
+                            rootPId: "",
+                        }
+                    }
+                };
+                _this.tree = $.fn.zTree.init($("#tree"), setting, _this.resources2);
+                //初始化的时候展开所以节点
+                _this.tree.expandAll(true);
+            },
             savej(){
                 let _this = this;
                 // 保存校验 TODO
@@ -203,9 +247,10 @@
                     if (resp.success){
                         $("#form-modal").modal("hide");
                         _this.list(1);
+                        _this.listj();
                         toast.success("保存成功")
                     }else{
-                        toast.success(resp.message)
+                        toast.warning(resp.message)
                           }
                     })
                 },
@@ -213,6 +258,7 @@
                 let _this = this;
                 // 保存校验 TODO
                 if (1 != 1
+                    || !Validator.require(_this.resource.id, "id")
                     || !Validator.require(_this.resource.name, "名称")
                     || !Validator.length(_this.resource.name, "名称", 1, 100)
                     || !Validator.length(_this.resource.page, "页面", 1, 50)
@@ -229,6 +275,7 @@
                     if (resp.success){
                         $("#form-modal").modal("hide");
                         _this.list(1);
+                        _this.listj();
                         toast.success("保存成功")
                     }else{
                         toast.success(resp.message)
@@ -245,6 +292,7 @@
                         let resp = response.data;
                         if (resp.success){
                             _this.list( _this.currentPage);
+                            _this.listj();
                             toast.success("删除成功")
                         }
                     }))
