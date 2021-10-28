@@ -22,6 +22,16 @@ public class RoleReq {
 
     private List<String> resourceIds;
 
+    private List<String> userIds;
+
+    public List<String> getUserIds() {
+        return userIds;
+    }
+
+    public void setUserIds(List<String> userIds) {
+        this.userIds = userIds;
+    }
+
     public List<String> getResourceIds() {
         return resourceIds;
     }
@@ -54,7 +64,6 @@ public class RoleReq {
         this.desc = desc;
     }
 
-
     @Override
     public String toString() {
         return "RoleReq{" +
@@ -62,6 +71,7 @@ public class RoleReq {
                 ", name='" + name + '\'' +
                 ", desc='" + desc + '\'' +
                 ", resourceIds=" + resourceIds +
+                ", userIds=" + userIds +
                 '}';
     }
 }

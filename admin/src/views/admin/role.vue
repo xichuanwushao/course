@@ -154,7 +154,7 @@
                                   <tr v-for="user in users">
                                       <td>{{user.loginName}}</td>
                                       <td class="text-right">
-                                          <a v-on:click="addUser(user)" href="javascript:;" class="">
+                                          <a  v-on:click = "addUser(user)" href="javascript:;" class="">
                                               <i class="ace-icon fa fa-arrow-circle-right blue"></i>
                                           </a>
                                       </td>
@@ -168,7 +168,7 @@
                                   <tr v-for="user in roleUsers">
                                       <td>{{user.loginName}}</td>
                                       <td class="text-right">
-                                          <a v-on:click="deleteUser(user)" href="javascript:;" class="">
+                                          <a  v-on:click = "deleteUser(user)" href="javascript:;" class="">
                                               <i class="ace-icon fa fa-trash blue"></i>
                                           </a>
                                       </td>
@@ -179,8 +179,14 @@
                       </div>
                   </div>
                   <div class="modal-footer">
-                      <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                      <button v-on:click="save()" type="button" class="btn btn-primary">保存</button>
+                      <button type="button" class="btn btn-white btn-default btn-round" data-dismiss="modal">
+                          <i class="ace-icon fa fa-times"></i>
+                          关闭
+                      </button>
+                      <button type="button" class="btn btn-white btn-info btn-round" v-on:click="saveUser()">
+                          <i class="ace-icon fa fa-plus blue"></i>
+                          保存
+                      </button>
                   </div>
               </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
@@ -415,10 +421,81 @@
                     let resp = response.data;
                     if (resp.success) {
                         _this.users = resp.content.list;
+                        _this.listRoleUser()
                     } else {
                         toast.warning(resp.message);
                     }
                 })
+            },
+
+            /**
+             * 角色中增加用户
+             */
+            addUser(user) {
+                let _this = this;
+
+                // 如果当前要添加的用户在右边列表中已经有了，则不用再添加
+                let users = _this.roleUsers;
+                for (let i = 0; i < users.length; i++) {
+                    if (user === users[i]) {
+                        return;
+                    }
+                }
+
+                _this.roleUsers.push(user);
+            },
+
+            /**
+             * 角色中删除用户
+             */
+            deleteUser(user) {
+                let _this = this;
+                Tool.removeObj(_this.roleUsers, user);
+            },
+            /**
+             * 角色用户模态框点击【保存】
+             */
+            saveUser() {
+                let _this = this;
+                let users = _this.roleUsers;
+
+                // 保存时，只需要保存用户id，所以使用id数组进行参数传递
+                let userIds = [];
+                for (let i = 0; i < users.length; i++) {
+                    userIds.push(users[i].id);
+                }
+                _this.$ajax.post(process.env.VUE_APP_SERVER + '/system/role/save-user', {
+                    id: _this.role.id,
+                    userIds: userIds
+                }).then((response)=>{
+                    console.log("保存角色用户结果：", response);
+                    let resp = response.data;
+                    if (resp.success) {
+                        toast.success("保存成功!");
+                    } else {
+                        toast.warning(resp.message);
+                    }
+                })
+            },
+            /**
+             * 加载角色用户
+             */
+            listRoleUser() {
+                let _this = this;
+                _this.roleUsers = [];
+                _this.$ajax.get(process.env.VUE_APP_SERVER + '/system/role/list-user/' + _this.role.id).then((res)=>{
+                    let response = res.data;
+                    let userIds = response.content;
+
+                    // 根据加载到用户ID，到【所有用户数组：users】中查找用户对象，用于列表显示
+                    for (let i = 0; i < userIds.length; i++) {
+                        for (let j = 0; j < _this.users.length; j++) {
+                            if (userIds[i] === _this.users[j].id) {
+                                _this.roleUsers.push(_this.users[j]);
+                            }
+                        }
+                    }
+                });
             },
 
         }

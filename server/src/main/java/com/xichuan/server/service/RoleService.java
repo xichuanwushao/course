@@ -3,13 +3,11 @@ package com.xichuan.server.service;
 import cn.hutool.core.util.IdUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.xichuan.server.domain.RoleResource;
-import com.xichuan.server.domain.RoleResourceExample;
+import com.xichuan.server.domain.*;
 import com.xichuan.server.mapper.RoleResourceMapper;
+import com.xichuan.server.mapper.RoleUserMapper;
 import com.xichuan.server.req.RoleReq;
 import com.xichuan.server.req.PageReq;
-import com.xichuan.server.domain.Role;
-import com.xichuan.server.domain.RoleExample;
 import com.xichuan.server.mapper.RoleMapper;
 import com.xichuan.server.resp.RoleResp;
 import com.xichuan.server.util.CopyUtil;
@@ -28,6 +26,9 @@ public class RoleService {
 
     @Resource
     private RoleResourceMapper roleResourceMapper;
+
+    @Resource
+    private RoleUserMapper roleUserMapper;
 
     public List<RoleResp> all() {
         RoleExample roleExample = new RoleExample();
@@ -107,5 +108,43 @@ public class RoleService {
             resourceIdList.add(roleResourceList.get(i).getResourceId());
         }
         return resourceIdList;
+    }
+
+
+    /**
+     * 按角色保存用户
+     */
+    public void saveUser(RoleReq roleReq) {
+        String roleId = roleReq.getId();
+        List<String> userIdList = roleReq.getUserIds();
+        // 清空库中所有的当前角色下的记录
+        RoleUserExample example = new RoleUserExample();
+        example.createCriteria().andRoleIdEqualTo(roleId);
+        roleUserMapper.deleteByExample(example);
+
+        // 保存角色用户
+        for (int i = 0; i < userIdList.size(); i++) {
+            RoleUser roleUser = new RoleUser();
+            roleUser.setId(UuidUtil.getShortUuid());
+            roleUser.setRoleId(roleId);
+            roleUser.setUserId(userIdList.get(i));
+            roleUserMapper.insert(roleUser);
+        }
+    }
+
+
+    /**
+     * 按角色加载用户
+     * @param roleId
+     */
+    public List<String> listUser(String roleId) {
+        RoleUserExample example = new RoleUserExample();
+        example.createCriteria().andRoleIdEqualTo(roleId);
+        List<RoleUser> roleUserList = roleUserMapper.selectByExample(example);
+        List<String> userIdList = new ArrayList<>();
+        for (int i = 0, l = roleUserList.size(); i < l; i++) {
+            userIdList.add(roleUserList.get(i).getUserId());
+        }
+        return userIdList;
     }
 }

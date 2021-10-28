@@ -93,4 +93,29 @@ public class RoleController {
         return responseDto;
     }
 
+    /**
+     * 保存用户
+     * @param roleReq
+     */
+    @PostMapping("/save-user")
+    public CommonResp saveUser(@RequestBody RoleReq roleReq) {
+        logger.info("保存角色用户关联开始");
+        CommonResp<RoleReq> responseDto = new CommonResp<>();
+        roleService.saveUser(roleReq);
+        responseDto.setContent(roleReq);
+        return responseDto;
+    }
+
+    /**
+     * 加载用户
+     * @param roleId
+     */
+    @GetMapping("/list-user/{roleId}")
+    public CommonResp listUser(@PathVariable String roleId) {
+        logger.info("加载用户开始");
+        CommonResp responseDto = new CommonResp<>();
+        List<String> userIdList = roleService.listUser(roleId);
+        responseDto.setContent(userIdList);
+        return responseDto;
+    }
 }
