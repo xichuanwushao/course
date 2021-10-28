@@ -15,31 +15,27 @@
         <pagination  ref="pagination" v-bind:list="list" v-bind:itemCount="3"></pagination>
         <table id="simple-table" class="table  table-bordered table-hover">
             <thead>
-            <tr><#list fieldList as field><#if field.nameHump!="createdAt" && field.nameHump!="updatedAt">
-            <th>${field.nameCn}</th></#if></#list>
+            <tr>
+            <th>id</th>
+            <th>角色</th>
+            <th>描述</th>
             <th>操作</th>
             <tr/>
         </thead>
 
         <tbody>
-        <tr v-for="${domain} in ${domain}s">
-            <#list fieldList as field>
-                <#if field.nameHump!="createdAt" && field.nameHump!="updatedAt">
-                    <#if field.enums>
-            <td>{{${field.enumsConst} | optionKV(${domain}.${field.nameHump})}}</td>
-                    <#else>
-            <td>{{${domain}.${field.nameHump}}}</td>
-                    </#if>
-                </#if>
-            </#list>
+        <tr v-for="role in roles">
+            <td>{{role.id}}</td>
+            <td>{{role.name}}</td>
+            <td>{{role.desc}}</td>
         <td>
             <div class="hidden-sm hidden-xs btn-group">
 
-                <button v-on:click="edit(${domain})" class="btn btn-xs btn-info">
+                <button v-on:click="edit(role)" class="btn btn-xs btn-info">
                     <i class="ace-icon fa fa-pencil bigger-120"></i>
                 </button>
 
-                <button v-on:click="del(${domain}.id)" class="btn btn-xs btn-danger">
+                <button v-on:click="del(role.id)" class="btn btn-xs btn-danger">
                     <i class="ace-icon fa fa-trash-o bigger-120"></i>
                 </button>
 
@@ -93,27 +89,18 @@
                     </div>
                     <div class="modal-body">
                         <form class="form-horizontal">
-                            <#list fieldList as field>
-                                <#if field.name!="id" && field.nameHump!="createdAt" && field.nameHump!="updatedAt">
-                                    <#if field.enums>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">${field.nameCn}</label>
+                                            <label class="col-sm-2 control-label">角色</label>
                                             <div class="col-sm-10">
-                                                <select v-model="${domain}.${field.nameHump}" class="form-control">
-                                                    <option v-for="o in ${field.enumsConst}" v-bind:value="o.key">{{o.value}}</option>
-                                                </select>
+                                                <input v-model="role.name" class="form-control">
                                             </div>
                                         </div>
-                                    <#else>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">${field.nameCn}</label>
+                                            <label class="col-sm-2 control-label">描述</label>
                                             <div class="col-sm-10">
-                                                <input v-model="${domain}.${field.nameHump}" class="form-control">
+                                                <input v-model="role.desc" class="form-control">
                                             </div>
                                         </div>
-                                    </#if>
-                                </#if>
-                            </#list>
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -130,20 +117,15 @@
     import Swal from 'sweetalert2'
     export default {
         components: {Pagination},
-        name: "${domain}",
+        name: "role",
         data:function (){
             return {
-                ${domain}: {},
-                ${domain}s: [],
-                <#list fieldList as field>
-                <#if field.enums>
-                ${field.enumsConst}: ${field.enumsConst},
-                </#if>
-                </#list>
+                role: {},
+                roles: [],
             }
         },
         mounted:function () {
-            // this.$parent.activeSidebar("${module}-${domain}-sidebar");
+            // this.$parent.activeSidebar("system-role-sidebar");
             let _this = this;
             _this.$refs.pagination.size = 5;
             _this.list(1);
@@ -151,27 +133,27 @@
         methods:{
             add(){
                 let _this = this;
-                _this.${domain}={};
+                _this.role={};
                 $("#form-modal").modal("show")
             },
 
-            edit(${domain}){
+            edit(role){
                 let _this = this;
-                _this.${domain} = $.extend({},${domain});//对象复制
+                _this.role = $.extend({},role);//对象复制
                 $("#form-modal").modal("show")
             },
             list(page){
                 let _this = this;
                 Loading.show();
                 _this.currentPage=page,
-                    _this.$ajax.post(process.env.VUE_APP_SERVER+"/${module}/${domain}/listPage",{
+                    _this.$ajax.post(process.env.VUE_APP_SERVER+"/system/role/listPage",{
                         page:page,
                         size:_this.$refs.pagination.size,
                     }).then((response=>{
                         Loading.hide();
                         // console.log("查询章列表结果：",response);
                         let resp = response.data;
-                        _this.${domain}s = resp.content.list;
+                        _this.roles = resp.content.list;
                         _this.$refs.pagination.render(page, resp.content.total);
                     }))
             },
@@ -179,22 +161,16 @@
                 let _this = this;
                 // 保存校验 TODO
                 if (1 != 1
-                    <#list fieldList as field>
-                    <#if field.name!="id" && field.nameHump!="createdAt" && field.nameHump!="updatedAt" && field.nameHump!="sort">
-                    <#if !field.nullAble>
-                    || !Validator.require(_this.${domain}.${field.nameHump}, "${field.nameCn}")
-                    </#if>
-                    <#if (field.length > 0)>
-                    || !Validator.length(_this.${domain}.${field.nameHump}, "${field.nameCn}", 1, ${field.length?c})
-                    </#if>
-                    </#if>
-                    </#list>
+                    || !Validator.require(_this.role.name, "角色")
+                    || !Validator.length(_this.role.name, "角色", 1, 50)
+                    || !Validator.require(_this.role.desc, "描述")
+                    || !Validator.length(_this.role.desc, "描述", 1, 100)
                 ) {
                     return;
                 }
 
                 Loading.show();
-                _this.$ajax.post(process.env.VUE_APP_SERVER+"/${module}/${domain}/save", _this.${domain}).then((response=>{
+                _this.$ajax.post(process.env.VUE_APP_SERVER+"/system/role/save", _this.role).then((response=>{
                     Loading.hide();
                     // console.log("保存章列表结果：",response);
                     let resp = response.data;
@@ -211,9 +187,9 @@
                 let _this = this;
                 Confirm.show("删除章节不可恢复确认删除?",function (){
                     Loading.show();
-                    _this.$ajax.delete(process.env.VUE_APP_SERVER+"/${module}/${domain}/delete/"+id, _this.${domain}).then((response=>{
+                    _this.$ajax.delete(process.env.VUE_APP_SERVER+"/system/role/delete/"+id, _this.role).then((response=>{
                         Loading.hide();
-                        // console.log("删除${tableNameCn}列表结果：",response);
+                        // console.log("删除角色列表结果：",response);
                         let resp = response.data;
                         if (resp.success){
                             _this.list( _this.currentPage);
@@ -232,9 +208,9 @@
                 // }).then((result) => {
                 //     if (result.isConfirmed) {
                 //         Loading.show();
-                //         _this.$ajax.delete("http://127.0.0.1:9000/${module}/${domain}/delete/"+id, _this.${domain}).then((response=>{
+                //         _this.$ajax.delete("http://127.0.0.1:9000/system/role/delete/"+id, _this.role).then((response=>{
                 //             Loading.hide();
-                //             console.log("删除${tableNameCn}列表结果：",response);
+                //             console.log("删除角色列表结果：",response);
                 //             let resp = response.data;
                 //             if (resp.success){
                 //                 _this.list( _this.currentPage);
