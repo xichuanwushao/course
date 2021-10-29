@@ -1,10 +1,14 @@
 package com.xichuan.server.service;
 
 import cn.hutool.core.util.IdUtil;
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xichuan.server.exception.BusinessException;
 import com.xichuan.server.exception.BusinessExceptionCode;
+import com.xichuan.server.mapper.UserMapperCust;
+import com.xichuan.server.req.LoginUserReq;
+import com.xichuan.server.req.ResourceReq;
 import com.xichuan.server.req.UserReq;
 import com.xichuan.server.req.PageReq;
 import com.xichuan.server.domain.User;
@@ -24,11 +28,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 @Service
 public class UserService {
     @Resource
     private UserMapper userMapper;
+
+    @Resource
+    private UserMapperCust userMapperCust;
 
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
@@ -126,7 +134,9 @@ public class UserService {
         }else{
             if(dbUser.getPassword().equals(userReq.getPassword())){
                 //登录成功
-                return CopyUtil.copy(dbUser,LoginUserResp.class);
+                LoginUserReq  loginUserReq = CopyUtil.copy(dbUser, LoginUserReq.class);
+                setAuth(loginUserReq);
+                return CopyUtil.copy(loginUserReq,LoginUserResp.class);
             }else {
                 //密码不对
                 logger.info("密码不对,输入密码:{},数据库密码:{}",userReq.getPassword(),dbUser.getPassword());
@@ -134,5 +144,31 @@ public class UserService {
 
             }
         }
+    }
+
+
+
+
+    /**
+     * 为登录用户读取权限
+     */
+    private void setAuth(LoginUserReq loginUserReq) {
+        List<ResourceReq> resourceReqs = userMapperCust.findResources(loginUserReq.getId());
+        loginUserReq.setResources(resourceReqs);
+
+        // 整理所有有权限的请求，用于接口拦截
+        HashSet<String> requestSet = new HashSet<>();
+        if (!CollectionUtils.isEmpty(resourceReqs)) {
+            for (int i = 0, l = resourceReqs.size(); i < l; i++) {
+                ResourceReq resourceReq = resourceReqs.get(i);
+                String arrayString = resourceReq.getRequest();
+                List<String> requestList = JSON.parseArray(arrayString, String.class);
+                if (!CollectionUtils.isEmpty(requestList)) {
+                    requestSet.addAll(requestList);
+                }
+            }
+        }
+        logger.info("有权限的请求：{}", requestSet);
+        loginUserReq.setRequests(requestSet);
     }
 }

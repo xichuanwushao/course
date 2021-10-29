@@ -1,9 +1,10 @@
-package com.xichuan.server.resp;
+package com.xichuan.server.req;
+
 
 import java.util.HashSet;
 import java.util.List;
 
-public class LoginUserResp {
+public class LoginUserReq {
     private String id;
 
     private String loginName;
@@ -20,7 +21,7 @@ public class LoginUserResp {
      * 所以资源 用于前端界面控制
      * @return
      */
-    private List<ResourceResp> resources;
+    private List<ResourceReq> resources;
 
     /***
      * 所有资源中的请求 用于后端接口拦截 用set过滤重复的接口
@@ -59,11 +60,11 @@ public class LoginUserResp {
         this.token = token;
     }
 
-    public List<ResourceResp> getResources() {
+    public List<ResourceReq> getResources() {
         return resources;
     }
 
-    public void setResources(List<ResourceResp> resources) {
+    public void setResources(List<ResourceReq> resources) {
         this.resources = resources;
     }
 
