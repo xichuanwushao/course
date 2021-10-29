@@ -368,7 +368,7 @@
                         <b class="arrow"></b>
                     </li>
 
-                    <li class=""><!--active open-->
+                    <li v-show="hasResource('01')" class=""><!--active open-->
                         <a href="#" class="dropdown-toggle">
                             <i class="menu-icon fa fa-desktop"></i>
                             <span class="menu-text">
@@ -381,7 +381,7 @@
                         <b class="arrow"></b>
 
                         <ul class="submenu">
-                            <li class="" id="system-user-sidebar">
+                            <li  v-show="hasResource('0101')"  class="" id="system-user-sidebar">
                                 <router-link to="/system/user" class="dropdown-toggle">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     用户管理
@@ -446,7 +446,7 @@
 <!--                                </ul>-->
                             </li>
 
-                            <li class="" id="system-resource-sidebar">
+                            <li  v-show="hasResource('0102')"  class="" id="system-resource-sidebar">
                                 <router-link to="/system/resource" class="dropdown-toggle">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     权限管理
@@ -454,7 +454,7 @@
 
                                 <b class="arrow"></b>
                             </li>
-                            <li class="" id="system-role-sidebar">
+                            <li  v-show="hasResource('0103')" class="" id="system-role-sidebar">
                                 <router-link to="/system/role" class="dropdown-toggle">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     角色管理
@@ -466,7 +466,7 @@
                         </ul>
                     </li>
 
-                    <li class="">
+                    <li  v-show="hasResource('02')" class="">
                         <a href="#" class="dropdown-toggle">
                             <i class="menu-icon fa fa-desktop"></i>
                             <span class="menu-text">
@@ -479,7 +479,7 @@
                         <b class="arrow"></b>
 
                         <ul class="submenu">
-                            <li class="" id="business-category-sidebar">
+                            <li  v-show="hasResource('0201')" class="" id="business-category-sidebar">
                                 <router-link to="/business/category" class="dropdown-toggle">
                                     <i class="menu-icon fa fa-caret-right"></i>
 
@@ -490,7 +490,7 @@
                                 <b class="arrow"></b>
 
                             </li>
-                            <li class="" id="business-course-sidebar">
+                            <li v-show="hasResource('0202')"  class="" id="business-course-sidebar">
                                 <router-link to="/business/course" class="dropdown-toggle">
                                     <i class="menu-icon fa fa-caret-right"></i>
 
@@ -501,7 +501,7 @@
                                 <b class="arrow"></b>
 
                             </li>
-                            <li class="" id="business-teacher-sidebar">
+                            <li  v-show="hasResource('0203')" class="" id="business-teacher-sidebar">
                                 <router-link to="/business/teacher" class="dropdown-toggle">
                                     <i class="menu-icon fa fa-caret-right"></i>
 
@@ -547,7 +547,7 @@
 
                         </ul>
                     </li>
-                    <li class="">
+                    <li  v-show="hasResource('03')"  class="">
                         <a href="#" class="dropdown-toggle">
                             <i class="menu-icon fa fa-desktop"></i>
                             <span class="menu-text">
@@ -560,7 +560,7 @@
                         <b class="arrow"></b>
 
                         <ul class="submenu">
-                            <li class="" id="file-file-sidebar">
+                            <li  v-show="hasResource('0301')" class="" id="file-file-sidebar">
                                 <router-link to="/file/file" class="dropdown-toggle">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     文件管理
@@ -661,7 +661,13 @@
             }
         },
         methods:{
-
+            /**
+             * 查找是否有权限
+             * @param id
+             */
+            hasResource(id) {
+                return Tool.hasResource(id);
+            },
             /**
              * 菜单激活样式，id是当前点击的菜单的id
              * @param id
