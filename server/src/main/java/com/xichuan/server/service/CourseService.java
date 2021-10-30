@@ -3,6 +3,7 @@ package com.xichuan.server.service;
 import cn.hutool.core.util.IdUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.xichuan.server.enums.CourseStatusEnum;
 import com.xichuan.server.mapper.CourseMapperCust;
 import com.xichuan.server.req.CourseReq;
 import com.xichuan.server.req.PageReq;
@@ -113,5 +114,18 @@ public class CourseService {
             courseMapperCust.moveSortsBackward(sortReq);
         }
 
+    }
+
+
+    /**
+     * 新课列表查询，只查询已发布的，按创建日期倒序
+     */
+    public List<CourseReq> listNew(PageReq pageReq) {
+        PageHelper.startPage(pageReq.getPage(), pageReq.getSize());
+        CourseExample courseExample = new CourseExample();
+        courseExample.createCriteria().andStatusEqualTo(CourseStatusEnum.PUBLISH.getCode());
+        courseExample.setOrderByClause("created_at desc");
+        List<Course> courseList = courseMapper.selectByExample(courseExample);
+        return CopyUtil.copyList(courseList, CourseReq.class);
     }
 }
