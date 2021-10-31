@@ -20,23 +20,7 @@
         <div class="title1">最新上线</div>
         <div class="row">
           <div v-for="course in news" class="col-md-4">
-            <div class="card mb-4 shadow-sm course">
-              <img class="img-fluid" v-bind:src="course.image">
-              <div class="card-body">
-                <h4 class="">{{course.name}}</h4>
-                <p   id="Loading-btn" >{{course.summary}}</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                  </div>
-                  <div class="text-muted">
-                    <span class="badge badge-info"><i class="fa fa-yen" aria-hidden="true"></i>&nbsp;{{course.price}}</span>&nbsp;
-                    <span class="badge badge-info"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;{{course.enroll}}</span>&nbsp;
-                  </div>
-                </div>
-              </div>
-            </div>
+              <web-courselist-templates v-bind:course="course"></web-courselist-templates>
           </div>
           <div class="col-md-4">
             <div class="card mb-4 shadow-sm">
@@ -61,23 +45,7 @@
         <div class="title2">好课推荐</div>
         <div class="row">
           <div v-for="course in news" class="col-md-4">
-            <div class="card mb-4 shadow-sm course">
-              <img class="img-fluid" v-bind:src="course.image">
-              <div class="card-body">
-                <h4 class="">{{course.name}}</h4>
-                <p   class="Loading-btn" >{{course.summary}}</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                  </div>
-                  <div class="text-muted">
-                    <span class="badge badge-info"><i class="fa fa-yen" aria-hidden="true"></i>&nbsp;{{course.price}}</span>&nbsp;
-                    <span class="badge badge-info"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;{{course.enroll}}</span>&nbsp;
-                  </div>
-                </div>
-              </div>
-            </div>
+            <web-courselist-templates v-bind:course="course"></web-courselist-templates>
           </div>
           <div class="col-md-4">
             <div class="card mb-4 shadow-sm">
@@ -104,8 +72,10 @@
 </template>
 
 <script>
+  import WebCourselistTemplates from '../components/web-courselist-templates.vue'
 export default {
   name: 'index',
+  components: {WebCourselistTemplates},
   data: function () {
     return {
       news: [],
@@ -137,12 +107,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  #Loading-btn{
-    font-size: 14px;
-    font-weight: 400;
-    font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-margin-bottom: 6px;
-  }
+
   .title1{
     margin-bottom: 2rem;
     color: #fafafa;
@@ -157,12 +122,5 @@ export default {
     letter-spacing: 0.04em;
     font-size: 2rem;
   }
-  .course h4 {
-    font-size: 1.25rem;
-    margin: 15px 0;
-  }
 
-  .course .text-muted .badge {
-    font-size: 1rem;
-  }
 </style>
