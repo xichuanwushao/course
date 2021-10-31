@@ -1,0 +1,61 @@
+<template>
+  <main role="main">
+
+    <div class="album py-5 bg-light">
+      <div class="container">
+          <div class="row">
+              <div v-for="course in courses" class="col-md-4">
+                <web-courselist-templates v-bind:course="course"></web-courselist-templates>
+              </div>
+              <h3 v-show="courses.length == 0">课程还未上架</h3>
+          </div>
+      </div>
+    </div>
+
+  </main>
+</template>
+
+<script>
+  import WebCourselistTemplates from '../components/web-courselist-templates.vue'
+  export default {
+    name: 'list',
+    components: {WebCourselistTemplates},
+    data: function () {
+      return {
+        courses: [],
+      }
+    },
+    mounted() {
+      let _this = this;
+      _this.listCourse();
+    },
+    methods: {
+      /**
+       * 查询课程列表
+       */
+      listCourse(page) {
+        let _this = this;
+      },
+    }
+  }
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+
+  .title1{
+    margin-bottom: 2rem;
+    color: #fafafa;
+    letter-spacing: 0;
+    text-shadow: 0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 8px 7px #001135;
+    font-size: 2rem;
+  }
+  .title2{
+    margin-bottom: 2rem;
+    color: transparent;
+    -webkit-text-stroke: 1px black;
+    letter-spacing: 0.04em;
+    font-size: 2rem;
+  }
+
+</style>
