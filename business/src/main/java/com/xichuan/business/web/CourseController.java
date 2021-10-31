@@ -37,4 +37,16 @@ public class CourseController {
     }
 
 
+    /**
+     * 列表查询
+     */
+    @PostMapping("/list")
+    public CommonResp list(@RequestBody PageReq pageReq) {
+        CommonResp commonResp = new CommonResp();
+        courseService.listPage(pageReq);
+        commonResp.setContent(pageReq);
+        return commonResp;
+    }
+
+
 }
