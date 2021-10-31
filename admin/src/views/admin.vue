@@ -645,6 +645,9 @@
             $("body").removeClass("login-layout light-login");
             $("body").attr("class", "no-skin");
             _this.activeSidebar(_this.$route.name.replace("/", "-") + "-sidebar");
+
+            $.getScript('/ace/assets/js/ace.min.js');
+
             _this.loginUser = Tool.getLoginUser();
 
 
