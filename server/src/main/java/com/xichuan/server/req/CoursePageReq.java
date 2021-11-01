@@ -1,11 +1,10 @@
 package com.xichuan.server.req;
 
-import java.math.BigDecimal;
-import java.util.Date;
 
 public class CoursePageReq extends PageReq{
 
     private String status;
+    private String categoryId;
 
 
     public String getStatus() {
@@ -16,10 +15,19 @@ public class CoursePageReq extends PageReq{
         this.status = status;
     }
 
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
+
     @Override
     public String toString() {
         return "CoursePageReq{" +
                 "status='" + status + '\'' +
+                ", categoryId='" + categoryId + '\'' +
                 ", page=" + page +
                 ", size=" + size +
                 ", total=" + total +

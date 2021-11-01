@@ -68,7 +68,7 @@ public class CourseService {
      * 查询状态为已发布的课程
      * @param coursePageReq
      */
-    public void listPage(CoursePageReq coursePageReq) {
+    public void listPageV2(CoursePageReq coursePageReq) {
         PageHelper.startPage(coursePageReq.getPage(),coursePageReq.getSize());//对第一个select有用
         CourseExample courseExample = new CourseExample();
         CourseExample.Criteria exampleCriteria = courseExample.createCriteria();
@@ -81,6 +81,19 @@ public class CourseService {
         coursePageReq.setTotal(pageInfo.getTotal());
         List<CourseResp> courseDtoList = CopyUtil.copyList(courseList, CourseResp.class);
         coursePageReq.setList(courseDtoList);
+    }
+
+
+    /***
+     * 查询状态为已发布的课程
+     * @param coursePageReq
+     */
+    public void listPage(CoursePageReq coursePageReq) {
+        PageHelper.startPage(coursePageReq.getPage(),coursePageReq.getSize());//对第一个select有用
+        List<CourseResp> coursePageReqs = courseMapperCust.list(coursePageReq);//写在select的下一行
+        PageInfo<CourseResp> pageInfo = new PageInfo<>(coursePageReqs);
+        coursePageReq.setTotal(pageInfo.getTotal());
+        coursePageReq.setList(coursePageReqs);
     }
     @Transactional
     public void save(CourseReq courseReq) {
