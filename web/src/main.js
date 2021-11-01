@@ -10,6 +10,7 @@ Vue.config.productionTip = false
 Vue.prototype.$ajax=axios;
 
 /**
+ *
  * axios拦截器
  */
 axios.interceptors.request.use(function (config) {
