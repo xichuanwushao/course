@@ -4,6 +4,12 @@
     <div class="album py-5 bg-light">
       <div class="container">
           <div class="row">
+              <div class="col-md-12">
+                  <pagination ref="pagination" v-bind:list="listCourse"></pagination>
+              </div>
+          </div>
+          <br/>
+          <div class="row">
               <div v-for="course in courses" class="col-md-4">
                 <web-courselist-templates v-bind:course="course"></web-courselist-templates>
               </div>
@@ -16,10 +22,11 @@
 </template>
 
 <script>
-  import WebCourselistTemplates from '../components/web-courselist-templates.vue'
+  import WebCourselistTemplates from '../components/web-courselist-templates.vue';
+  import Pagination from "../components/pagination";
   export default {
     name: 'list',
-    components: {WebCourselistTemplates},
+    components: {WebCourselistTemplates,Pagination},
     data: function () {
       return {
         courses: [],
@@ -27,7 +34,8 @@
     },
     mounted() {
       let _this = this;
-      _this.listCourse(1);
+        _this.$refs.pagination.size = 6;//每页显示多少条数据
+        _this.listCourse(1);
     },
     methods: {
         /**
@@ -37,11 +45,12 @@
             let _this = this;
             _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/web/course/list', {
                 page: page,
-                size: 9,
+                size: _this.$refs.pagination.size,
             }).then((response) => {
                 let resp = response.data;
                 if (resp.success) {
                     _this.courses = resp.content.list;
+                    _this.$refs.pagination.render(page, resp.content.total);
                 }
             }).catch((response) => {
                 console.log("error：", response);
