@@ -93,7 +93,7 @@ export default {
     listNew() {
       let _this = this;
       _this.$ajax.get(process.env.VUE_APP_SERVER + '/business/web/course/list-new').then((response)=>{
-        console.log("查询新上好课结果：", response);
+        // console.log("查询新上好课结果：", response);
         let resp = response.data;
         if (resp.success) {
           _this.news = resp.content;

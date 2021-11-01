@@ -1,4 +1,4 @@
-package com.xichuan.business.web;
+package com.xichuan.business.controller.web;
 
 import com.xichuan.server.enums.CourseStatusEnum;
 import com.xichuan.server.req.CoursePageReq;
