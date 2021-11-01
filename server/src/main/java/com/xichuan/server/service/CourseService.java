@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xichuan.server.enums.CourseStatusEnum;
 import com.xichuan.server.mapper.CourseMapperCust;
+import com.xichuan.server.req.CoursePageReq;
 import com.xichuan.server.req.CourseReq;
 import com.xichuan.server.req.PageReq;
 import com.xichuan.server.domain.Course;
@@ -61,6 +62,25 @@ public class CourseService {
         pageReq.setTotal(pageInfo.getTotal());
         List<CourseResp> courseDtoList = CopyUtil.copyList(courseList, CourseResp.class);
         pageReq.setList(courseDtoList);
+    }
+
+    /***
+     * 查询状态为已发布的课程
+     * @param coursePageReq
+     */
+    public void listPage(CoursePageReq coursePageReq) {
+        PageHelper.startPage(coursePageReq.getPage(),coursePageReq.getSize());//对第一个select有用
+        CourseExample courseExample = new CourseExample();
+        CourseExample.Criteria exampleCriteria = courseExample.createCriteria();
+        if(!StringUtils.isEmpty(coursePageReq.getStatus())){
+            exampleCriteria.andStatusEqualTo(coursePageReq.getStatus());
+        }
+        courseExample.setOrderByClause("sort asc");
+        List<Course> courseList = courseMapper.selectByExample(courseExample);//写在select的下一行
+        PageInfo<Course> pageInfo = new PageInfo<>(courseList);
+        coursePageReq.setTotal(pageInfo.getTotal());
+        List<CourseResp> courseDtoList = CopyUtil.copyList(courseList, CourseResp.class);
+        coursePageReq.setList(courseDtoList);
     }
     @Transactional
     public void save(CourseReq courseReq) {

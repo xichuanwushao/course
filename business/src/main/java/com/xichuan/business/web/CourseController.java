@@ -1,6 +1,7 @@
 package com.xichuan.business.web;
 
 import com.xichuan.server.enums.CourseStatusEnum;
+import com.xichuan.server.req.CoursePageReq;
 import com.xichuan.server.req.CourseReq;
 import com.xichuan.server.req.PageReq;
 import com.xichuan.server.resp.CommonResp;
@@ -41,10 +42,11 @@ public class CourseController {
      * 列表查询
      */
     @PostMapping("/list")
-    public CommonResp list(@RequestBody PageReq pageReq) {
+    public CommonResp list(@RequestBody CoursePageReq coursePageReq) {
         CommonResp commonResp = new CommonResp();
-        courseService.listPage(pageReq);
-        commonResp.setContent(pageReq);
+        coursePageReq.setStatus(CourseStatusEnum.PUBLISH.getCode());
+        courseService.listPage(coursePageReq);
+        commonResp.setContent(coursePageReq);
         return commonResp;
     }
 
