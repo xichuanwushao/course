@@ -3,16 +3,18 @@ package com.xichuan.server.service;
 import cn.hutool.core.util.IdUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.xichuan.server.domain.CourseContent;
 import com.xichuan.server.enums.CourseStatusEnum;
+import com.xichuan.server.mapper.CourseContentMapper;
 import com.xichuan.server.mapper.CourseMapperCust;
-import com.xichuan.server.req.CoursePageReq;
-import com.xichuan.server.req.CourseReq;
-import com.xichuan.server.req.PageReq;
+import com.xichuan.server.req.*;
 import com.xichuan.server.domain.Course;
 import com.xichuan.server.domain.CourseExample;
 import com.xichuan.server.mapper.CourseMapper;
-import com.xichuan.server.req.SortReq;
+import com.xichuan.server.resp.ChapterResp;
 import com.xichuan.server.resp.CourseResp;
+import com.xichuan.server.resp.SectionResp;
+import com.xichuan.server.resp.TeacherResp;
 import com.xichuan.server.util.CopyUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,6 +39,21 @@ public class CourseService {
 
     @Resource
     private CourseCategoryService courseCategoryService;
+
+    @Resource
+    private TeacherService teacherService;
+
+    @Resource
+    private ChapterService chapterService;
+
+    @Resource
+    private SectionService sectionService;
+
+    @Resource
+    private CourseContentMapper courseContentMapper;
+
+
+
     public List<CourseResp> all() {
         CourseExample courseExample = new CourseExample();
 //        courseExample.createCriteria().andIdEqualTo("1");
@@ -160,5 +177,38 @@ public class CourseService {
         courseExample.setOrderByClause("created_at desc");
         List<Course> courseList = courseMapper.selectByExample(courseExample);
         return CopyUtil.copyList(courseList, CourseReq.class);
+    }
+
+    /**
+     * 查找某一课程，供web模块用，只能查已发布的
+     * @param id
+     * @return
+     */
+    public CourseResp findCourse(String id) {
+        Course course = courseMapper.selectByPrimaryKey(id);
+        if (course == null || !CourseStatusEnum.PUBLISH.getCode().equals(course.getStatus())) {
+            return null;
+        }
+        CourseResp courseDto = CopyUtil.copy(course, CourseResp.class);
+
+        // 查询内容
+        CourseContent content = courseContentMapper.selectByPrimaryKey(id);
+        if (content != null) {
+            courseDto.setContent(content.getContent());
+        }
+
+        // 查找讲师信息
+        TeacherResp teacherDto = teacherService.findById(courseDto.getTeacherId());
+        courseDto.setTeacher(teacherDto);
+
+        // 查找章信息
+        List<ChapterResp> chapterDtoList = chapterService.listByCourse(id);
+        courseDto.setChapters(chapterDtoList);
+
+        // 查找节信息
+        List<SectionResp> sectionDtoList = sectionService.listByCourse(id);
+        courseDto.setSections(sectionDtoList);
+
+        return courseDto;
     }
 }

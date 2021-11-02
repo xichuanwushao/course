@@ -86,4 +86,14 @@ public class SectionService {
         sectionMapper.deleteByPrimaryKey( id);
     }
 
+    /**
+     * 查询某一课程下的所有节
+     */
+    public List<SectionResp> listByCourse(String courseId) {
+        SectionExample example = new SectionExample();
+        example.createCriteria().andCourseIdEqualTo(courseId);
+        List<Section> sectionList = sectionMapper.selectByExample(example);
+        List<SectionResp> sectionDtoList = CopyUtil.copyList(sectionList, SectionResp.class);
+        return sectionDtoList;
+    }
 }

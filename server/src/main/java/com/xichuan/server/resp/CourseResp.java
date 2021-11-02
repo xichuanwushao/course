@@ -1,7 +1,11 @@
 package com.xichuan.server.resp;
 
+import com.xichuan.server.req.ChapterReq;
+import com.xichuan.server.req.SectionReq;
+
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 public class CourseResp {
     private String id;
@@ -31,6 +35,14 @@ public class CourseResp {
     private Date updatedAt;
 
     private String teacherId;
+
+    private List<ChapterResp> chapters;
+
+    private List<SectionResp> sections;
+
+    private String content;
+
+    private TeacherResp teacher;
 
     public String getId() {
         return id;
@@ -144,6 +156,38 @@ public class CourseResp {
         this.teacherId = teacherId;
     }
 
+    public List<ChapterResp> getChapters() {
+        return chapters;
+    }
+
+    public void setChapters(List<ChapterResp> chapters) {
+        this.chapters = chapters;
+    }
+
+    public List<SectionResp> getSections() {
+        return sections;
+    }
+
+    public void setSections(List<SectionResp> sections) {
+        this.sections = sections;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public TeacherResp getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(TeacherResp teacher) {
+        this.teacher = teacher;
+    }
+
     @Override
     public String toString() {
         return "CourseResp{" +
@@ -161,6 +205,10 @@ public class CourseResp {
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 ", teacherId='" + teacherId + '\'' +
+                ", chapters=" + chapters +
+                ", sections=" + sections +
+                ", content='" + content + '\'' +
+                ", teacher=" + teacher +
                 '}';
     }
 }

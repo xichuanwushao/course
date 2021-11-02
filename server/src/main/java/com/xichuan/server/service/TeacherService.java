@@ -57,4 +57,13 @@ public class TeacherService {
         teacherMapper.deleteByPrimaryKey( id);
     }
 
+    /**
+     * 查找
+     * @param id
+     */
+    public TeacherResp findById(String id) {
+        Teacher teacher = teacherMapper.selectByPrimaryKey(id);
+        return CopyUtil.copy(teacher, TeacherResp.class);
+    }
+
 }

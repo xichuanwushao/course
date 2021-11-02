@@ -5,6 +5,7 @@ import com.xichuan.server.req.CoursePageReq;
 import com.xichuan.server.req.CourseReq;
 import com.xichuan.server.req.PageReq;
 import com.xichuan.server.resp.CommonResp;
+import com.xichuan.server.resp.CourseResp;
 import com.xichuan.server.service.CourseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,5 +51,13 @@ public class CourseController {
         return commonResp;
     }
 
-
+    @GetMapping("/find/{id}")
+    public CommonResp findCourse(@PathVariable String id) {
+        logger.info("查找课程开始：{}", id);
+        CommonResp responseDto = new CommonResp();
+        CourseResp courseResp = courseService.findCourse(id);
+        responseDto.setContent(courseResp);
+        logger.info("查找课程结束：{}", responseDto);
+        return responseDto;
+    }
 }
