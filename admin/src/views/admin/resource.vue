@@ -237,8 +237,12 @@
                     toast.warning("资源不能为空！");
                     return;
                 }
-                let json = JSON.parse(_this.resourceStr);
-
+                let json = null;
+                try{
+                    json = JSON.parse(_this.resourceStr);
+                }catch (e) {
+                    toast.warning("JSON格式错误！")
+                }
                 Loading.show();
                 _this.$ajax.post(process.env.VUE_APP_SERVER + '/system/resource/save-json', json).then((response)=>{
                     Loading.hide();
