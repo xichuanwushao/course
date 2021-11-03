@@ -34,7 +34,7 @@
           width: '100%',
           autoplay: true,
           source: url,
-          cover: 'http://liveroom-img.oss-cn-qingdao.aliyuncs.com/logo.png',
+          // cover: 'http://liveroom-img.oss-cn-qingdao.aliyuncs.com/logo.png',
         }, function (player) {
           console.log('播放器创建好了11。')
         });
