@@ -160,10 +160,10 @@ export default {
      */
     play(section) {
       let _this = this;
-   // _this.$refs.modalPlayer.playUrl(section.video);
+      _this.$refs.modalPlayer.playUrl(section.video);
    // _this.$refs.player.playUrl(section.video);
         console.info("***"+section.vod)
-     _this.$refs.modalPlayer.playVod(section.vod);
+     // _this.$refs.modalPlayer.playVod(section.vod);
     },
   }
 }
