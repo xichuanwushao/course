@@ -93,7 +93,7 @@
     </div>
     <modal-player ref="modalPlayer"></modal-player>
     <div class="col-md-9">
-<!--      <player  v-bind:player-id="'form-player-div'" ref="player" ></player>-->
+      <player  v-bind:player-id="'form-player-div'" ref="player" ></player>
     </div>
   </main>
 </template>
@@ -160,8 +160,8 @@ export default {
      */
     play(section) {
       let _this = this;
-      _this.$refs.modalPlayer.playUrl(section.video);
-   // _this.$refs.player.playUrl(section.video);
+      // _this.$refs.modalPlayer.playUrl(section.video);
+        _this.$refs.player.playUrl(section.video);
         console.info("***"+section.vod)
      // _this.$refs.modalPlayer.playVod(section.vod);
     },
