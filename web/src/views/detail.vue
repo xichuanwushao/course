@@ -31,10 +31,10 @@
             <!-- Nav tabs -->
             <ul class="nav nav-tabs">
               <li class="nav-item">
-                <a class="nav-link active" href="#info" data-toggle="tab">课程介绍</a>
+                <a class="nav-link " href="#info" data-toggle="tab">课程介绍</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#chapter" data-toggle="tab">章节目录</a>
+                <a class="nav-link active" href="#chapter" data-toggle="tab">章节目录</a>
               </li>
             </ul>
 
@@ -42,9 +42,9 @@
 
             <!-- Tab panes -->
             <div class="tab-content">
-              <div class="tab-pane active" id="info" v-html="course.content">
+              <div class="tab-pane " id="info" v-html="course.content">
               </div>
-              <div class="tab-pane" id="chapter">
+              <div class="tab-pane active" id="chapter">
                 <div v-for="(chapter, i) in chapters" class="chapter">
                     <div v-on:click="doFolded(chapter, i)" class="chapter-chapter">
                       <span>{{chapter.name}}</span>
@@ -57,7 +57,8 @@
                       <table class="table table-striped">
                         <tr v-for="(s, j) in chapter.sections" class="chapter-section-tr">
                           <td class="col-sm-8 col-xs-12">
-                            <div  class="section-title">
+                            <div  v-on:click="play(s)" class="section-title">
+<!--                              <video v-bind:src="s.video" controls="controls" id="videoss"  ></video>-->
                               <i class="fa fa-video-camera d-none d-sm-inline"></i>&nbsp;&nbsp;
                               <span class="d-none d-sm-inline">第{{j+1}}节&nbsp;&nbsp;</span>
                               {{s.title}}
@@ -90,12 +91,19 @@
         </div>
       </div>
     </div>
+    <modal-player ref="modalPlayer"></modal-player>
+    <div class="col-md-9">
+<!--      <player  v-bind:player-id="'form-player-div'" ref="player" ></player>-->
+    </div>
   </main>
 </template>
 
 <script>
+  import ModalPlayer from "../components/modal-player";
+  import Player from "../components/player";
 export default {
   name: 'detail',
+  components: {ModalPlayer,Player},
   data: function () {
     return {
       id: "",
@@ -146,7 +154,17 @@ export default {
       // 在v-for里写v-show，只修改属性不起作用，需要$set
       _this.$set(_this.chapters, i, chapter);
     },
-
+    /**
+     * 播放视频
+     * @param section
+     */
+    play(section) {
+      let _this = this;
+   // _this.$refs.modalPlayer.playUrl(section.video);
+   // _this.$refs.player.playUrl(section.video);
+        console.info("***"+section.vod)
+     _this.$refs.modalPlayer.playVod(section.vod);
+    },
   }
 }
 </script>
@@ -217,5 +235,14 @@ export default {
       font-size: 0.9rem;
     }
   }
-
+  video {
+    width: 100%;
+    height: auto;
+    margin-top: 10px;
+  }
+  player {
+    width: 100%;
+    height: auto;
+    margin-top: 10px;
+  }
 </style>
