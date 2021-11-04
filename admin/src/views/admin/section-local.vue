@@ -225,6 +225,7 @@
                         // console.log("查询章列表结果：",response);
                         let resp = response.data;
                         _this.sections = resp.content.list;
+                        Tool.sortAsc(_this.sections, "title");
                         _this.$refs.pagination.render(page, resp.content.total);
                     }))
             },

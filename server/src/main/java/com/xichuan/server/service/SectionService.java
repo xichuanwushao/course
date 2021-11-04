@@ -11,6 +11,7 @@ import com.xichuan.server.domain.SectionExample;
 import com.xichuan.server.mapper.SectionMapper;
 import com.xichuan.server.resp.SectionResp;
 import com.xichuan.server.util.CopyUtil;
+import com.xichuan.server.util.UuidUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -75,7 +76,7 @@ public class SectionService {
         Date now = new Date();
         section.setCreatedAt(now);
         section.setUpdatedAt(now);
-        section.setId(IdUtil.simpleUUID());
+        section.setId(UuidUtil.getShortUuid());
         sectionMapper.insert(section);
     }
     public void update(Section section) {

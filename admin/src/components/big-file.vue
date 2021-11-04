@@ -43,7 +43,7 @@
                   }
 
 
-                  let shardSize = 1 * 1024 * 1024; //以1MB为1个分片
+                  let shardSize = 3 * 1024 * 1024; //以1MB为1个分片
                   let shardIndex = 1; //分片索引 表示第一个分片
 
                   let size = file.size;

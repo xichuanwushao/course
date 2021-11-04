@@ -11,6 +11,7 @@ import com.xichuan.server.domain.ChapterExample;
 import com.xichuan.server.mapper.ChapterMapper;
 import com.xichuan.server.resp.ChapterResp;
 import com.xichuan.server.util.CopyUtil;
+import com.xichuan.server.util.UuidUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -67,7 +68,8 @@ public class ChapterService {
         }
     }
     public void insert(Chapter chapter) {
-        chapter.setId(IdUtil.simpleUUID());
+//        chapter.setId(IdUtil.simpleUUID());
+        chapter.setId(UuidUtil.getShortUuid());
         chapterMapper.insert(chapter);
     }
     public void update(Chapter chapter) {
