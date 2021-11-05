@@ -290,7 +290,7 @@ insert into `role_user` values ('00000000','00000000','5d5449384bd44668903834a24
 drop table if exists `member`;
 create table `member` (
       `id` char(50) not null default '' comment 'id',
-      `mobile` varchar (20)  comment '手机号',
+      `mobile` varchar (20) not null comment '手机号',
       `password` char(50) not null comment '密码',
       `name` varchar (50)  comment '昵称',
       `photo` varchar (200) comment '头像url',
