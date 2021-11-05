@@ -114,6 +114,20 @@
         "id": "0203",
         "name": "讲师管理",
         "page": "business/teacher"
+      },
+      {
+        "children": [
+          {
+            "id": "020401",
+            "name": "增删改查",
+            "request": [
+              "/business/member"
+            ]
+          }
+        ],
+        "id": "0204",
+        "name": "会员管理",
+        "page": "business/member"
       }
     ],
     "id": "02",
