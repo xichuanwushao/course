@@ -31,23 +31,45 @@
               </div>
             </li>
           </ul>
-          <form class="form-inline my-2 my-lg-0">
+            <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="搜索课程" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">登录/注册</button>
-          </form>
+            </form>
+            <button v-on:click="openLoginModal()" class="btn btn-outline-success my-2 my-sm-0" >登录/注册</button>
         </div>
       </div>
     </nav>
+      <the-login ref="loginComponent"></the-login>
   </header>
 </template>
 
 <script>
-export default {
-  name: 'theHeader',
-}
+    import TheLogin from './login'
+    export default {
+        name: 'theHeader',
+        components: {TheLogin},
+        data: function () {
+            return {
+            }
+        },
+        mounted() {
+
+        },
+        methods: {
+            /**
+             * 打开登录注册窗口
+             */
+            openLoginModal() {
+                let _this = this;
+                _this.$refs.loginComponent.openLoginModal();
+            },
+
+
+        }
+    }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
 </style>
+

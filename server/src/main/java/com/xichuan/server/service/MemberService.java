@@ -10,6 +10,7 @@ import com.xichuan.server.domain.MemberExample;
 import com.xichuan.server.mapper.MemberMapper;
 import com.xichuan.server.resp.MemberResp;
 import com.xichuan.server.util.CopyUtil;
+import com.xichuan.server.util.UuidUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -57,7 +58,8 @@ public class MemberService {
     }
     public void insert(Member member) {
         Date now = new Date();
-        member.setId(IdUtil.simpleUUID());
+        member.setId(UuidUtil.getShortUuid());
+        member.setRegisterTime(now);
         memberMapper.insert(member);
     }
     public void update(Member member) {
