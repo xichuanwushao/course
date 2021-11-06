@@ -178,7 +178,7 @@
             return{
                 section:{},
                 sections:[],
-                currentPage:{},
+                currentPage:1,
                 SECTION_CHARGE:SECTION_CHARGE,
                 FILE_USE:FILE_USE,
                 course: {},
@@ -225,7 +225,7 @@
                         // console.log("查询章列表结果：",response);
                         let resp = response.data;
                         _this.sections = resp.content.list;
-                        Tool.sortAsc(_this.sections, "title");
+                        Tool.sortAsc(_this.sections, "sort");
                         _this.$refs.pagination.render(page, resp.content.total);
                     }))
             },
@@ -248,7 +248,7 @@
                     let resp = response.data;
                     if (resp.success){
                         $("#form-modal").modal("hide");
-                        _this.list(1);
+                        _this.list(_this.currentPage);
                         toast.success("保存成功")
                     }else{
                         toast.success(resp.message)

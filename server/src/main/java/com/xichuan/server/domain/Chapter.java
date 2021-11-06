@@ -5,6 +5,8 @@ public class Chapter {
 
     private String courseId;
 
+    private Integer sort;
+
     private String name;
 
     public String getId() {
@@ -23,6 +25,14 @@ public class Chapter {
         this.courseId = courseId;
     }
 
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
+    }
+
     public String getName() {
         return name;
     }
@@ -39,6 +49,7 @@ public class Chapter {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", courseId=").append(courseId);
+        sb.append(", sort=").append(sort);
         sb.append(", name=").append(name);
         sb.append("]");
         return sb.toString();

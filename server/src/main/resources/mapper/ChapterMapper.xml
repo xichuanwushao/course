@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.xichuan.server.domain.Chapter">
     <id column="id" jdbcType="CHAR" property="id" />
     <result column="course_id" jdbcType="CHAR" property="courseId" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
     <result column="name" jdbcType="VARCHAR" property="name" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -65,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, course_id, `name`
+    id, course_id, sort, `name`
   </sql>
   <select id="selectByExample" parameterType="com.xichuan.server.domain.ChapterExample" resultMap="BaseResultMap">
     select
@@ -98,8 +99,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.xichuan.server.domain.Chapter">
-    insert into chapter (id, course_id, `name`)
-    values (#{id,jdbcType=CHAR}, #{courseId,jdbcType=CHAR}, #{name,jdbcType=VARCHAR})
+    insert into chapter (id, course_id, sort, 
+      `name`)
+    values (#{id,jdbcType=CHAR}, #{courseId,jdbcType=CHAR}, #{sort,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.xichuan.server.domain.Chapter">
     insert into chapter
@@ -109,6 +112,9 @@
       </if>
       <if test="courseId != null">
         course_id,
+      </if>
+      <if test="sort != null">
+        sort,
       </if>
       <if test="name != null">
         `name`,
@@ -120,6 +126,9 @@
       </if>
       <if test="courseId != null">
         #{courseId,jdbcType=CHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
       </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
@@ -141,6 +150,9 @@
       <if test="record.courseId != null">
         course_id = #{record.courseId,jdbcType=CHAR},
       </if>
+      <if test="record.sort != null">
+        sort = #{record.sort,jdbcType=INTEGER},
+      </if>
       <if test="record.name != null">
         `name` = #{record.name,jdbcType=VARCHAR},
       </if>
@@ -153,6 +165,7 @@
     update chapter
     set id = #{record.id,jdbcType=CHAR},
       course_id = #{record.courseId,jdbcType=CHAR},
+      sort = #{record.sort,jdbcType=INTEGER},
       `name` = #{record.name,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -164,6 +177,9 @@
       <if test="courseId != null">
         course_id = #{courseId,jdbcType=CHAR},
       </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
       <if test="name != null">
         `name` = #{name,jdbcType=VARCHAR},
       </if>
@@ -173,6 +189,7 @@
   <update id="updateByPrimaryKey" parameterType="com.xichuan.server.domain.Chapter">
     update chapter
     set course_id = #{courseId,jdbcType=CHAR},
+      sort = #{sort,jdbcType=INTEGER},
       `name` = #{name,jdbcType=VARCHAR}
     where id = #{id,jdbcType=CHAR}
   </update>

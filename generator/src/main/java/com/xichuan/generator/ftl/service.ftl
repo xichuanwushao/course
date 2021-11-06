@@ -78,7 +78,7 @@ public class ${Domain}Service {
         ${domain}.setUpdatedAt(now);
             </#if>
         </#list>
-        ${domain}.setId(IdUtil.simpleUUID());
+        ${domain}.setId(UuidUtil.getShortUuid());
         ${domain}Mapper.insert(${domain});
     }
     public void update(${Domain} ${domain}) {

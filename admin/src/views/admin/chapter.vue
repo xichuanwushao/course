@@ -26,6 +26,7 @@
                     <tr>
                         <th>章节编号</th>
                         <th>名称</th>
+                        <th>顺序</th>
                         <th>操作</th>
                     </tr>
                     </thead>
@@ -36,6 +37,7 @@
 
                         <td>{{chapter.id}}</td>
                         <td>{{chapter.name}}</td>
+                        <td>{{chapter.sort}}</td>
                         <td>
                             <div class="hidden-sm hidden-xs btn-group">
                                 <button v-on:click="toSection(chapter)" class="btn btn-white btn-xs btn-info btn-round">
@@ -110,6 +112,12 @@
                                     <p class="form-control-static">{{course.name}}</p>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">顺序</label>
+                                <div class="col-sm-10">
+                                    <input v-model="chapter.sort" type="text" class="form-control"  placeholder="顺序">
+                                </div>
+                            </div>
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -131,7 +139,7 @@
             return{
                 chapter:{},
                 chapters:[],
-                currentPage:{},
+                currentPage:1,
                 course:{}
             }
         },
@@ -172,7 +180,7 @@
                     // console.log("查询章列表结果：",response);
                     let resp = response.data;
                     _this.chapters = resp.content.list;
-                    Tool.sortAsc(_this.chapters, "name");
+                    Tool.sortAsc(_this.chapters, "sort");
                     _this.$refs.pagination.render(page, resp.content.total);
                 }))
             },
@@ -191,7 +199,7 @@
                     let resp = response.data;
                     if (resp.success){
                         $("#form-modal").modal("hide");
-                        _this.list(1);
+                        _this.list(_this.currentPage);
                         toast.success("保存成功")
                     }else{
                         toast.success(resp.message)

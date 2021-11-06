@@ -318,6 +318,7 @@
                 },
                 teachers:[],
                 files:[],
+                currentPage:1,
             }
         },
         mounted:function () {
@@ -387,7 +388,7 @@
                     let resp = response.data;
                     if (resp.success){
                         $("#form-modal").modal("hide");
-                        _this.list(1);
+                        _this.list(_this.currentPage);
                         toast.success("保存成功")
                     }else{
                         toast.success(resp.message)
