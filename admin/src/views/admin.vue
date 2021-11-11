@@ -535,14 +535,24 @@
 <!--                                <b class="arrow"></b>-->
 
 <!--                            </li>-->
-                            <li class="">
-                                <a href="typography.html">
+                            <li  v-show="hasResource('0204')" class="" id="business-member-sidebar">
+                                <router-link to="/business/member" class="dropdown-toggle">
                                     <i class="menu-icon fa fa-caret-right"></i>
-                                    其他管理
-                                </a>
+                                    会员管理
+                                    <b class="arrow fa fa-angle-down"></b>
+                                </router-link>
 
                                 <b class="arrow"></b>
+
                             </li>
+<!--                            <li class="">-->
+<!--                                <a href="typography.html">-->
+<!--                                    <i class="menu-icon fa fa-caret-right"></i>-->
+<!--                                    其他管理-->
+<!--                                </a>-->
+
+<!--                                <b class="arrow"></b>-->
+<!--                            </li>-->
 
 
                         </ul>

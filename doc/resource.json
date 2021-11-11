@@ -93,7 +93,7 @@
               "/business/category/all",
               "/file/upload-image",
               "/business/chapter",
-              "business/section"
+              "/business/section"
             ]
           }
         ],
@@ -128,6 +128,44 @@
         "id": "0204",
         "name": "会员管理",
         "page": "business/member"
+      },
+      {
+        "children": [
+          {
+            "id": "020501",
+            "name": "增删改查",
+            "request": [
+            ]
+          }
+        ],
+        "id": "0205",
+        "name": "课程内容",
+        "page": "business/content"
+      },
+      {
+        "children": [
+          {
+            "id": "020601",
+            "name": "增删改查",
+            "request": [
+            ]
+          }
+        ],
+        "id": "0206",
+        "name": "大章",
+        "page": "business/chapter"
+      }, {
+        "children": [
+          {
+            "id": "020701",
+            "name": "增删改查",
+            "request": [
+            ]
+          }
+        ],
+        "id": "0207",
+        "name": "小节",
+        "page": "business/section-local"
       }
     ],
     "id": "02",
@@ -143,7 +181,8 @@
             "request": [
               "/file/file",
               "/file/check",
-              "/file/upload"
+              "/file/upload",
+              "/file/course-content-file"
             ]
           }
         ],

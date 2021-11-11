@@ -27,7 +27,7 @@
         <div class="row">
 
           <!-- 课程内容 & 大章小节 -->
-          <div class="col-md-9">
+          <div class="col-md-10">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs">
               <li class="nav-item">
@@ -44,7 +44,7 @@
             <div class="tab-content">
               <div class="tab-pane " id="info" v-html="course.content">
               </div>
-              <div class="tab-pane active" id="chapter">
+              <div class="tab-pane active" id="chapter"> <!--<div class="tab-pane active" id="chapter">-->
                 <div v-for="(chapter, i) in chapters" class="chapter">
                     <div v-on:click="doFolded(chapter, i)" class="chapter-chapter">
                       <span>{{chapter.name}}</span>
@@ -77,7 +77,7 @@
           </div>
 
           <!-- 讲师信息 -->
-          <div class="col-md-3">
+          <div class="col-md-2">
             <div class="card" style="width: 18rem;">
               <img v-bind:src="teacher.image" class="card-img-top">
               <div class="card-body">
@@ -138,6 +138,7 @@ export default {
           }
           Tool.sortAsc(c.sections, "sort");
         }
+        Tool.sortAsc(_this.chapters, "sort");
       })
     },
 
