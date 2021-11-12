@@ -1,5 +1,6 @@
 package com.xichuan.business.config;
 
+import com.xichuan.server.exception.BusinessException;
 import com.xichuan.server.exception.ValidatorException;
 import com.xichuan.server.resp.CommonResp;
 import org.slf4j.Logger;
@@ -17,6 +18,16 @@ public class ControllerExceptionHandler {
         CommonResp responseDto = new CommonResp();
         responseDto.setSuccess(false);
         LOG.warn(e.getMessage());responseDto.setMessage("后台效验异常："+e.getMessage());
+        return responseDto;
+    }
+
+    @ExceptionHandler(value = BusinessException.class)
+    @ResponseBody
+    public CommonResp businessExceptionHandler(BusinessException e) {
+        CommonResp responseDto = new CommonResp();
+        responseDto.setSuccess(false);
+        LOG.error("业务异常：{}", e.getCode().getDesc());
+        responseDto.setMessage(e.getCode().getDesc());
         return responseDto;
     }
 }

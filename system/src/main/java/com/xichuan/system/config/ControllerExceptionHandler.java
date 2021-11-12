@@ -11,15 +11,25 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @ControllerAdvice
 public class ControllerExceptionHandler {
-    private static final Logger LOG = LoggerFactory.getLogger(ControllerExceptionHandler.class);
+    private static final Logger logger = LoggerFactory.getLogger(ControllerExceptionHandler.class);
 //只要代码抛异常 并且异常是ValidatorException 就会被拦截掉
+@ExceptionHandler(value = ValidatorException.class)
+@ResponseBody
+public CommonResp validatorExceptionHandler(ValidatorException e) {
+    CommonResp responseDto = new CommonResp();
+    responseDto.setSuccess(false);
+    logger.warn(e.getMessage());
+    responseDto.setMessage("请求参数异常！");
+    return responseDto;
+}
+
     @ExceptionHandler(value = BusinessException.class)
     @ResponseBody
     public CommonResp businessExceptionHandler(BusinessException e) {
-        CommonResp commonResp = new CommonResp();
-        commonResp.setSuccess(false);
-        LOG.error("业务异常:{}"+e.getCode().getDesc());
-        commonResp.setMessage(e.getCode().getDesc());
-        return commonResp;
+        CommonResp responseDto = new CommonResp();
+        responseDto.setSuccess(false);
+        logger.error("业务异常：{}", e.getCode().getDesc());
+        responseDto.setMessage(e.getCode().getDesc());
+        return responseDto;
     }
 }

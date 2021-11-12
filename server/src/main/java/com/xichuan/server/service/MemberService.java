@@ -1,8 +1,10 @@
 package com.xichuan.server.service;
 
-import cn.hutool.core.util.IdUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.xichuan.server.exception.BusinessException;
+import com.xichuan.server.exception.BusinessExceptionCode;
+import com.xichuan.server.req.LoginMemberReq;
 import com.xichuan.server.req.MemberReq;
 import com.xichuan.server.req.PageReq;
 import com.xichuan.server.domain.Member;
@@ -11,6 +13,8 @@ import com.xichuan.server.mapper.MemberMapper;
 import com.xichuan.server.resp.MemberResp;
 import com.xichuan.server.util.CopyUtil;
 import com.xichuan.server.util.UuidUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -21,6 +25,7 @@ import java.util.List;
         import java.util.Date;
 @Service
 public class MemberService {
+    private static final Logger logger = LoggerFactory.getLogger(MemberService.class);
     @Resource
     private MemberMapper memberMapper;
     public List<MemberResp> all() {
@@ -68,5 +73,53 @@ public class MemberService {
     public void delete(String id) {
         memberMapper.deleteByPrimaryKey( id);
     }
+    /**
+     * 按手机号查找
+     * @param mobile
+     * @return
+     */
+    public MemberReq findByMobile(String mobile) {
+        Member member = this.selectByMobile(mobile);
+        return CopyUtil.copy(member, MemberReq.class);
+    }
 
+    /**
+     * 按手机号查找
+     * @param mobile
+     * @return
+     */
+    public Member selectByMobile(String mobile) {
+        if (StringUtils.isEmpty(mobile)) {
+            return null;
+        }
+        MemberExample example = new MemberExample();
+        example.createCriteria().andMobileEqualTo(mobile);
+        List<Member> memberList = memberMapper.selectByExample(example);
+        if (memberList == null || memberList.size() == 0) {
+            return null;
+        } else {
+            return memberList.get(0);
+        }
+
+    }
+    /**
+     * 登录
+     * @param memberReq
+     */
+    public LoginMemberReq login(MemberReq memberReq) {
+        Member member = selectByMobile(memberReq.getMobile());
+        if (member == null) {
+            logger.info("手机号不存在, {}", memberReq.getMobile());
+            throw new BusinessException(BusinessExceptionCode.LOGIN_MEMBER_ERROR);
+        } else {
+            if (member.getPassword().equals(memberReq.getPassword())) {
+                // 登录成功
+                LoginMemberReq loginMemberDto = CopyUtil.copy(member, LoginMemberReq.class);
+                return loginMemberDto;
+            } else {
+                logger.info("密码不对, 输入密码：{}, 数据库密码：{}", memberReq.getPassword(), member.getPassword());
+                throw new BusinessException(BusinessExceptionCode.LOGIN_MEMBER_ERROR);
+            }
+        }
+    }
 }
