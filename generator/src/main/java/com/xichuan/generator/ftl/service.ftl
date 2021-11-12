@@ -1,6 +1,6 @@
 package com.xichuan.server.service;
 
-import cn.hutool.core.util.IdUtil;
+import com.xichuan.server.util.UuidUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xichuan.server.req.${Domain}Req;
