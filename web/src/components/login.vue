@@ -91,7 +91,7 @@
                 <input id="forget-mobile-code" class="form-control"
                        placeholder="手机验证码" v-model="memberForget.smsCode">
                 <div class="input-group-append">
-                  <button class="btn btn-outline-secondary" id="forget-send-code-btn">
+                  <button class="btn btn-outline-secondary" id="forget-send-code-btn" v-on:click="sendSmsForRegister()">
                     发送验证码
                   </button>
                 </div>
@@ -256,7 +256,39 @@
         let _this = this;
         _this.imageCodeToken = Tool.uuid(8);
         $('#image-code').attr('src', process.env.VUE_APP_SERVER + '/business/web/kaptcha/image-code/' + _this.imageCodeToken);
-      }
+      },
+      /**
+       * 发送注册短信
+       */
+      sendSmsForRegister() {
+        let _this = this;
+        let sms = {
+          mobile: _this.memberRegister.mobile,
+          use: SMS_USE.REGISTER.key
+        };
+        _this.sendSmsCode(sms);
+      },
+
+
+      /**
+       * 发送短信 通用
+       */
+      sendSmsCode(sms, btnId) {
+        let _this = this;
+
+        // 调服务端发短信接口
+        _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/web/sms/send', sms).then((res)=> {
+          let response = res.data;
+          if (response.success) {
+            toast.success("短信已发送");
+
+            // 开始倒计时
+            _this.countdown = 60;
+          } else {
+            toast.warning(response.message);
+          }
+        })
+      },
 
     }
   }
