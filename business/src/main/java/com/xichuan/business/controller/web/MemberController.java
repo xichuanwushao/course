@@ -1,6 +1,7 @@
 package com.xichuan.business.controller.web;
 
 import com.alibaba.fastjson.JSON;
+import com.xichuan.server.exception.BusinessException;
 import com.xichuan.server.req.LoginMemberReq;
 import com.xichuan.server.req.MemberReq;
 import com.xichuan.server.resp.CommonResp;
@@ -97,4 +98,22 @@ public class MemberController {
         logger.info("从redis中删除token:{}", token);
         return responseDto;
     }
+
+    /**
+     * 校验手机号是否存在
+     * 存在则success=true，不存在则success=false
+     */
+    @GetMapping(value = "/is-mobile-exist/{mobile}")
+    public CommonResp isMobileExist(@PathVariable(value = "mobile") String mobile) throws BusinessException {
+        logger.info("查询手机号是否存在开始");
+        CommonResp responseDto = new CommonResp();
+        MemberReq memberDto = memberService.findByMobile(mobile);
+        if (memberDto == null) {
+            responseDto.setSuccess(false);
+        } else {
+            responseDto.setSuccess(true);
+        }
+        return responseDto;
+    }
+
 }
