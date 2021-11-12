@@ -34,8 +34,10 @@
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="搜索课程" aria-label="Search">
             </form>
-            <button v-on:click="openLoginModal()" class="btn btn-outline-success my-2 my-sm-0" >登录/注册</button>
+            <button v-show="!loginMember.id" v-on:click="openLoginModal()" class="btn btn-outline-success my-2 my-sm-0" >登录/注册</button>
+            <button v-show="loginMember.id"  v-on:click="logout()" class="btn btn-outline-success my-2 my-sm-0">退出登录</button>
             &nbsp;&nbsp;&nbsp;&nbsp;<span v-show="loginMember.id" class="text-white pr-3">您好：{{loginMember.name}}</span>
+
         </div>
       </div>
     </nav>
@@ -69,7 +71,20 @@
                 let _this = this;
                 _this.loginMember = loginMember;
             },
-
+            logout () {
+                let _this = this;
+                _this.$ajax.get(process.env.VUE_APP_SERVER + '/business/web/member/logout/' + _this.loginMember.token).then((response)=>{
+                    let resp = response.data;
+                    if (resp.success) {
+                        Tool.setLoginMember(null);//把前端缓存的登录信息清空
+                        _this.loginMember = {};//这里不清空 导航栏上昵称还是会显示
+                        toast.success("退出登录成功");
+                        _this.$router.push("/");//回到首页
+                    } else {
+                        toast.warning(resp.message);
+                    }
+                });
+            },
 
         }
     }
