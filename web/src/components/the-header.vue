@@ -32,9 +32,10 @@
             </li>
           </ul>
             <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="搜索课程" aria-label="Search">
+                <input class="form-control mr-sm-2" type="search" placeholder="搜索课程" aria-label="Search">
             </form>
             <button v-on:click="openLoginModal()" class="btn btn-outline-success my-2 my-sm-0" >登录/注册</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span v-show="loginMember.id" class="text-white pr-3">您好：{{loginMember.name}}</span>
         </div>
       </div>
     </nav>
@@ -49,10 +50,12 @@
         components: {TheLogin},
         data: function () {
             return {
+                loginMember: {}
             }
         },
         mounted() {
-
+            let _this = this;
+            _this.loginMember = Tool.getLoginMember();//这句刷新页面后 先去缓存取
         },
         methods: {
             /**
@@ -61,6 +64,10 @@
             openLoginModal() {
                 let _this = this;
                 _this.$refs.loginComponent.openLoginModal();
+            },
+            setLoginMember(loginMember) {
+                let _this = this;
+                _this.loginMember = loginMember;
             },
 
 
