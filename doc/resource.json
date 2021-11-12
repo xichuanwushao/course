@@ -166,6 +166,19 @@
         "id": "0207",
         "name": "小节",
         "page": "business/section-local"
+      }, {
+        "children": [
+          {
+            "id": "020801",
+            "name": "增删改查",
+            "request": [
+              "/business/sms"
+            ]
+          }
+        ],
+        "id": "0208",
+        "name": "短信管理",
+        "page": "business/sms"
       }
     ],
     "id": "02",

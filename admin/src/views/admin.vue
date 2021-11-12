@@ -545,6 +545,16 @@
                                 <b class="arrow"></b>
 
                             </li>
+                            <li  v-show="hasResource('0208')" class="" id="business-sms-sidebar">
+                                <router-link to="/business/sms" class="dropdown-toggle">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    短信管理
+                                    <b class="arrow fa fa-angle-down"></b>
+                                </router-link>
+
+                                <b class="arrow"></b>
+
+                            </li>
 <!--                            <li class="">-->
 <!--                                <a href="typography.html">-->
 <!--                                    <i class="menu-icon fa fa-caret-right"></i>-->
