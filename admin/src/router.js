@@ -17,6 +17,7 @@ import Resource from "./views/admin/resource.vue"
 import Role from "./views/admin/role.vue"
 import Member from "./views/admin/member.vue"
 import Sms from "./views/admin/sms.vue"
+import MemberCourse from "./views/admin/member-course.vue"
 
 Vue.use(Router);
 
@@ -99,6 +100,10 @@ export default new Router({
             path: "business/sms",
             name: "business/sms",
             component: Sms,
+        },{
+            path: "business/member-course",
+            name: "business/member-course",
+            component: MemberCourse,
         }]
     }
     ]

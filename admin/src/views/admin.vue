@@ -555,6 +555,14 @@
                                 <b class="arrow"></b>
 
                             </li>
+                            <li  v-show="hasResource('0209')" class="" id="business-member-course-sidebar">
+                                <router-link to="/business/member-course" class="dropdown-toggle">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    会员报名
+                                    <b class="arrow fa fa-angle-down"></b>
+                                </router-link>
+                                <b class="arrow"></b>
+                            </li>
 <!--                            <li class="">-->
 <!--                                <a href="typography.html">-->
 <!--                                    <i class="menu-icon fa fa-caret-right"></i>-->

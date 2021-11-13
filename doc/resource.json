@@ -179,6 +179,19 @@
         "id": "0208",
         "name": "短信管理",
         "page": "business/sms"
+      }, {
+        "children": [
+          {
+            "id": "020901",
+            "name": "增删改查",
+            "request": [
+              "/business/member-course"
+            ]
+          }
+        ],
+        "id": "0209",
+        "name": "会员报名",
+        "page": "business/member-course"
       }
     ],
     "id": "02",
