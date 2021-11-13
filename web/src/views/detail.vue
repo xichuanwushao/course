@@ -161,11 +161,32 @@ export default {
     play(section) {
       let _this = this;
       if (section.charge === _this.SECTION_CHARGE.CHARGE.key ) {
+        let loginMember = Tool.getLoginMember();
+        if (Tool.isEmpty(loginMember)) {
           toast.warning("请先登录");
+          return;
         } else {
-        _this.$refs.modalPlayer.playUrl(section.video);
+          if (Tool.isEmpty(_this.memberCourse)) {
+            toast.warning("请先报名");
+            return;
+          }
+        }
       }
+      _this.$refs.modalPlayer.playUrl(section.video);
     },
+    /**
+     * 播放视频
+     * @param section
+     */
+    // play(section) {
+    //   let _this = this;
+    //   if (section.charge === _this.SECTION_CHARGE.CHARGE.key ) {
+    //     let loginMember = Tool.getLoginMember();
+    //       toast.warning("请先登录");
+    //     } else {
+    //     _this.$refs.modalPlayer.playUrl(section.video);
+    //   }
+    // },
     /**
      * 报名
      */
