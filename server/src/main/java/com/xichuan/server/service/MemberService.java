@@ -124,4 +124,19 @@ public class MemberService {
             }
         }
     }
+
+    /**
+     * 重置密码
+     */
+    public void resetPassword(MemberReq memberReq) throws BusinessException {
+        Member memberDb = this.selectByMobile(memberReq.getMobile());
+        if (memberDb == null) {
+            throw new BusinessException(BusinessExceptionCode.MEMBER_NOT_EXIST);
+        } else {
+            Member member = new Member();
+            member.setId(memberDb.getId());
+            member.setPassword(memberReq.getPassword());
+            memberMapper.updateByPrimaryKeySelective(member);
+        }
+    }
 }

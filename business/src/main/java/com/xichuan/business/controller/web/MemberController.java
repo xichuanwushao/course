@@ -7,6 +7,7 @@ import com.xichuan.server.req.LoginMemberReq;
 import com.xichuan.server.req.MemberReq;
 import com.xichuan.server.req.SmsReq;
 import com.xichuan.server.resp.CommonResp;
+import com.xichuan.server.resp.MemberResp;
 import com.xichuan.server.service.MemberService;
 import com.xichuan.server.service.SmsService;
 import com.xichuan.server.util.UuidUtil;
@@ -128,5 +129,23 @@ public class MemberController {
         }
         return responseDto;
     }
+    @PostMapping("/reset-password")
+    public CommonResp resetPassword(@RequestBody MemberReq memberReq) throws BusinessException {
+        logger.info("会员密码重置开始:");
+        memberReq.setPassword(DigestUtils.md5DigestAsHex(memberReq.getPassword().getBytes()));
+        CommonResp<MemberResp> responseDto = new CommonResp();
 
+        // 校验短信验证码
+        SmsReq smsDto = new SmsReq();
+        smsDto.setMobile(memberReq.getMobile());
+        smsDto.setCode(memberReq.getSmsCode());
+        smsDto.setUse(SmsUseEnum.FORGET.getCode());
+        smsService.validCode(smsDto);
+        logger.info("短信验证码校验通过");
+
+        // 重置密码
+        memberService.resetPassword(memberReq);
+
+        return responseDto;
+    }
 }
