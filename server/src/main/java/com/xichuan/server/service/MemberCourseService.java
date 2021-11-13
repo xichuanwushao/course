@@ -1,5 +1,6 @@
 package com.xichuan.server.service;
 
+import com.xichuan.server.resp.CommonResp;
 import com.xichuan.server.util.UuidUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -101,5 +102,13 @@ public class MemberCourseService {
         }
     }
 
+
+    /**
+     * 获取报名信息
+     */
+    public MemberCourseReq getEnroll(MemberCourseReq memberCourseReq) {
+        MemberCourse memberCourse = this.select(memberCourseReq.getMemberId(), memberCourseReq.getCourseId());
+        return CopyUtil.copy(memberCourse, MemberCourseReq.class);
+    }
 
 }

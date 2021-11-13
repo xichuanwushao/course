@@ -37,6 +37,15 @@ public class MemberCourseController {
         responseDto.setContent(memberCourseReq);
         return responseDto;
     }
-
+    /**
+     * 保存，id有值时更新，无值时新增
+     */
+    @PostMapping("/get-enroll")
+    public CommonResp getEnroll(@RequestBody MemberCourseReq memberCourseReq) {
+        CommonResp responseDto = new CommonResp();
+        memberCourseReq = memberCourseService.getEnroll(memberCourseReq);
+        responseDto.setContent(memberCourseReq);
+        return responseDto;
+    }
 
 }
