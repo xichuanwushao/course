@@ -44,6 +44,12 @@ public class MemberReq {
      * 图片验证码token
      */
     private String imageCodeToken;
+
+    /**
+     * 短信验证码
+     */
+    private String smsCode;
+
     public String getId() {
         return id;
     }
@@ -108,6 +114,14 @@ public class MemberReq {
         this.imageCodeToken = imageCodeToken;
     }
 
+    public String getSmsCode() {
+        return smsCode;
+    }
+
+    public void setSmsCode(String smsCode) {
+        this.smsCode = smsCode;
+    }
+
     @Override
     public String toString() {
         return "MemberReq{" +
@@ -119,6 +133,7 @@ public class MemberReq {
                 ", registerTime=" + registerTime +
                 ", imageCode='" + imageCode + '\'' +
                 ", imageCodeToken='" + imageCodeToken + '\'' +
+                ", smsCode='" + smsCode + '\'' +
                 '}';
     }
 }

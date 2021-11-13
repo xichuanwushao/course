@@ -90,7 +90,7 @@ public class SmsService {
         if (smsList == null || smsList.size() == 0) {
             saveAndSend(smsReq);
         } else {
-            logger.warn("短信请求过于频繁, {}", smsReq.getMobile());
+             logger.warn("短信请求过于频繁, {}", smsReq.getMobile());//增加日志
             throw new BusinessException(BusinessExceptionCode.MOBILE_CODE_TOO_FREQUENT);
         }
     }
@@ -108,5 +108,32 @@ public class SmsService {
         this.save(smsReq);
 
         // TODO 调第三方短信接口发送短信
+    }
+
+
+    /**
+     * 验证码5分钟内有效，且操作类型要一致
+     * @param smsReq
+     */
+    public void validCode(SmsReq smsReq) {
+        SmsExample example = new SmsExample();
+        SmsExample.Criteria criteria = example.createCriteria();
+        // 查找5分钟内同手机号同操作发送记录
+        criteria.andMobileEqualTo(smsReq.getMobile()).andUseEqualTo(smsReq.getUse()).andAtGreaterThan(new Date(new Date().getTime() - 1 * 60 * 1000));//如果5分钟内把1改5
+        List<Sms> smsList = smsMapper.selectByExample(example);
+
+        if (smsList != null && smsList.size() > 0) {
+            Sms smsDb = smsList.get(0);
+            if (!smsDb.getCode().equals(smsReq.getCode())) {
+                logger.warn("短信验证码不正确");
+                throw new BusinessException(BusinessExceptionCode.MOBILE_CODE_ERROR);
+            } else {
+                smsReq.setStatus(SmsStatusEnum.USED.getCode());
+                smsMapper.updateByPrimaryKey(smsDb);
+            }
+        } else {
+            logger.warn("短信验证码不存在或已过期，请重新发送短信");
+            throw new BusinessException(BusinessExceptionCode.MOBILE_CODE_EXPIRED);
+        }
     }
 }

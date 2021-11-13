@@ -1,11 +1,14 @@
 package com.xichuan.business.controller.web;
 
 import com.alibaba.fastjson.JSON;
+import com.xichuan.server.enums.SmsUseEnum;
 import com.xichuan.server.exception.BusinessException;
 import com.xichuan.server.req.LoginMemberReq;
 import com.xichuan.server.req.MemberReq;
+import com.xichuan.server.req.SmsReq;
 import com.xichuan.server.resp.CommonResp;
 import com.xichuan.server.service.MemberService;
+import com.xichuan.server.service.SmsService;
 import com.xichuan.server.util.UuidUtil;
 import com.xichuan.server.util.ValidatorUtil;
 import org.slf4j.Logger;
@@ -31,6 +34,9 @@ public class MemberController {
     @Resource(name = "redisTemplate")
     private RedisTemplate redisTemplate;
 
+    @Resource
+    private SmsService smsService;
+
     /**
      * 保存，id有值时更新，无值时新增
      */
@@ -46,6 +52,13 @@ public class MemberController {
         // 密码加密
         memberReq.setPassword(DigestUtils.md5DigestAsHex(memberReq.getPassword().getBytes()));
 
+        // 校验短信验证码
+        SmsReq smsReq = new SmsReq();
+        smsReq.setMobile(memberReq.getMobile());
+        smsReq.setCode(memberReq.getSmsCode());
+        smsReq.setUse(SmsUseEnum.REGISTER.getCode());
+        smsService.validCode(smsReq);
+        logger.info("短信验证码校验通过");
 
         CommonResp commonResp = new CommonResp();
         memberService.save(memberReq);
@@ -107,8 +120,8 @@ public class MemberController {
     public CommonResp isMobileExist(@PathVariable(value = "mobile") String mobile) throws BusinessException {
         logger.info("查询手机号是否存在开始");
         CommonResp responseDto = new CommonResp();
-        MemberReq memberDto = memberService.findByMobile(mobile);
-        if (memberDto == null) {
+        MemberReq memberReq = memberService.findByMobile(mobile);
+        if (memberReq == null) {
             responseDto.setSuccess(false);
         } else {
             responseDto.setSuccess(true);
