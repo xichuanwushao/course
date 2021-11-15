@@ -125,85 +125,115 @@
 
                     <div class="space-12"></div>
                 </div><!-- /.col -->
-                <div class="col-sm-5">
-                    <div class="widget-box">
-                        <div class="widget-header widget-header-flat widget-header-small">
-                            <h5 class="widget-title">
-                                <i class="ace-icon fa fa-signal"></i>
-                                Traffic Sources
-                            </h5>
+                <div class="col-sm-6">
+                    <div class="widget-box transparent">
+                        <div class="widget-header widget-header-flat">
+                            <h4 class="widget-title lighter">
+                                <i class="ace-icon fa fa-star orange"></i>
+                                课程销售排名
+                            </h4>
 
-                            <div class="widget-toolbar no-border">
-                                <div class="inline dropdown-hover">
-                                    <button class="btn btn-minier btn-primary">
-                                        This Week
-                                        <i class="ace-icon fa fa-angle-down icon-on-right bigger-110"></i>
-                                    </button>
+                        </div>
 
-                                    <ul class="dropdown-menu dropdown-menu-right dropdown-125 dropdown-lighter dropdown-close dropdown-caret">
-                                        <li class="active">
-                                            <a href="#" class="blue">
-                                                <i class="ace-icon fa fa-caret-right bigger-110">&nbsp;</i>
-                                                This Week
-                                            </a>
-                                        </li>
+                        <div class="widget-body">
+                            <div class="widget-main no-padding">
+                                <table class="table table-bordered table-striped">
+                                    <thead class="thin-border-bottom">
+                                    <tr>
+                                        <th>
+                                            <i class="ace-icon fa fa-caret-right blue"></i>课程名称
+                                        </th>
 
-                                        <li>
-                                            <a href="#">
-                                                <i class="ace-icon fa fa-caret-right bigger-110 invisible">&nbsp;</i>
-                                                Last Week
-                                            </a>
-                                        </li>
+                                        <th>
+                                            <i class="ace-icon fa fa-caret-right blue"></i>价格
+                                        </th>
 
-                                        <li>
-                                            <a href="#">
-                                                <i class="ace-icon fa fa-caret-right bigger-110 invisible">&nbsp;</i>
-                                                This Month
-                                            </a>
-                                        </li>
+                                        <th>
+                                            <i class="ace-icon fa fa-caret-right blue"></i>购买数
+                                        </th>
+                                    </tr>
+                                    </thead>
 
-                                        <li>
-                                            <a href="#">
-                                                <i class="ace-icon fa fa-caret-right bigger-110 invisible">&nbsp;</i>
-                                                Last Month
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+                                    <tbody>
+                                    <tr>
+                                        <td>开发工具IDEA从入门到爱不释手</td>
+
+                                        <td>
+                                            <b class="green">￥299.00</b>
+                                        </td>
+
+                                        <td>
+                                            <span class="label label-warning arrowed arrowed-right">5,132</span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>开发工具IDEA从入门到爱不释手</td>
+
+                                        <td>
+                                            <b class="red">￥388.00</b>
+                                        </td>
+
+                                        <td>
+                                            <span class="label label-warning arrowed arrowed-right">3,132</span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>开发工具IDEA从入门到爱不释手</td>
+
+                                        <td>
+                                            <b class="green">￥199.00</b>
+                                        </td>
+
+                                        <td>
+                                            <span class="label label-warning arrowed arrowed-right">2,132</span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>开发工具IDEA从入门到爱不释手</td>
+
+                                        <td>
+                                            <b class="green">￥299.00</b>
+                                        </td>
+
+                                        <td>
+                                            <span class="label label-success arrowed arrowed-right">1,654</span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>开发工具IDEA从入门到爱不释手</td>
+
+                                        <td>
+                                            <b class="green">￥199.00</b>
+                                        </td>
+
+                                        <td>
+                                            <span class="label label-success arrowed arrowed-right">1,254</span>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div><!-- /.widget-main -->
+                        </div><!-- /.widget-body -->
+                    </div><!-- /.widget-box -->
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <div class="widget-box transparent">
+                        <div class="widget-header widget-header-flat">
+                            <h4 class="widget-title lighter">
+                                <i class="ace-icon fa fa-star orange"></i>
+                                分类销售排名
+                            </h4>
+
                         </div>
 
                         <div class="widget-body">
                             <div class="widget-main">
                                 <div id="piechart-placeholder"></div>
 
-                                <div class="hr hr8 hr-double"></div>
-
-                                <div class="clearfix">
-                                    <div class="grid3">
-															<span class="grey">
-																<i class="ace-icon fa fa-facebook-square fa-2x blue"></i>
-																&nbsp; likes
-															</span>
-                                        <h4 class="bigger pull-right">1,255</h4>
-                                    </div>
-
-                                    <div class="grid3">
-															<span class="grey">
-																<i class="ace-icon fa fa-twitter-square fa-2x purple"></i>
-																&nbsp; tweets
-															</span>
-                                        <h4 class="bigger pull-right">941</h4>
-                                    </div>
-
-                                    <div class="grid3">
-															<span class="grey">
-																<i class="ace-icon fa fa-pinterest-square fa-2x red"></i>
-																&nbsp; pins
-															</span>
-                                        <h4 class="bigger pull-right">1,050</h4>
-                                    </div>
-                                </div>
                             </div><!-- /.widget-main -->
                         </div><!-- /.widget-body -->
                     </div><!-- /.widget-box -->
@@ -256,65 +286,42 @@
                     }
                 });
             },
-            drawPieChart(){
-                function drawPieChart(placeholder, data, position) {
-                    $.plot(placeholder, data, {
-                        series: {
-                            pie: {
-                                show: true,
-                                tilt:0.8,
-                                highlight: {
-                                    opacity: 0.25
-                                },
-                                stroke: {
-                                    color: '#fff',
-                                    width: 2
-                                },
-                                startAngle: 2
-                            }
-                        },
-                        legend: {
+            drawPieChart() {
+                let placeholder = $('#piechart-placeholder').css({'width':'90%' , 'min-height':'180px'});
+                let data = [
+                    { label: "Java",  data: 38.7, color: "#68BC31"},
+                    { label: "Python",  data: 24.5, color: "#2091CF"},
+                    { label: "Android",  data: 18.6, color: "#DA5430"},
+                    { label: "其它",  data: 10, color: "#FEE074"},
+                ];
+                $.plot(placeholder, data, {
+                    series: {
+                        pie: {
                             show: true,
-                            position: position || "ne",
-                            labelBoxBorderColor: null,
-                            margin:[-30,15]
+                            tilt:0.8,
+                            highlight: {
+                                opacity: 0.25
+                            },
+                            stroke: {
+                                color: '#fff',
+                                width: 2
+                            },
+                            startAngle: 2
                         }
-                        ,
-                        grid: {
-                            hoverable: true,
-                            clickable: true
-                        }
-                    })
-                }
-                drawPieChart(placeholder, data);
-
-                /**
-                 we saved the drawing function and the data to redraw with different position later when switching to RTL mode dynamically
-                 so that's not needed actually.
-                 */
-                placeholder.data('chart', data);
-                placeholder.data('draw', drawPieChart);
-
-
-                //pie chart tooltip example
-                var $tooltip = $("<div class='tooltip top in'><div class='tooltip-inner'></div></div>").hide().appendTo('body');
-                var previousPoint = null;
-
-                placeholder.on('plothover', function (event, pos, item) {
-                    if(item) {
-                        if (previousPoint != item.seriesIndex) {
-                            previousPoint = item.seriesIndex;
-                            var tip = item.series['label'] + " : " + item.series['percent']+'%';
-                            $tooltip.show().children(0).text(tip);
-                        }
-                        $tooltip.css({top:pos.pageY + 10, left:pos.pageX + 10});
-                    } else {
-                        $tooltip.hide();
-                        previousPoint = null;
+                    },
+                    legend: {
+                        show: true,
+                        position: "ne",
+                        labelBoxBorderColor: null,
+                        margin:[-30,15]
                     }
-
-                });
-            }
+                    ,
+                    grid: {
+                        hoverable: true,
+                        clickable: true
+                    }
+                })
+            },
         }
 
     }
