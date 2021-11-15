@@ -135,6 +135,7 @@
             "id": "020501",
             "name": "增删改查",
             "request": [
+              "/business/course","/business/course-content-file"
             ]
           }
         ],
@@ -148,6 +149,7 @@
             "id": "020601",
             "name": "增删改查",
             "request": [
+              "/business/chapter"
             ]
           }
         ],
@@ -160,6 +162,7 @@
             "id": "020701",
             "name": "增删改查",
             "request": [
+              "/business/section-local"
             ]
           }
         ],
