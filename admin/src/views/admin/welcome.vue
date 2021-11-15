@@ -102,19 +102,14 @@
                     <div class="space-12"></div>
 
                 </div>
-                <div class="col-sm-7">
+                <div class="col-sm-12">
                     <div class="widget-box transparent">
                         <div class="widget-header widget-header-flat">
                             <h4 class="widget-title lighter">
                                 <i class="ace-icon fa fa-signal"></i>
-                                Sale Stats
+                                销售量
                             </h4>
 
-                            <div class="widget-toolbar">
-                                <a href="#" data-action="collapse">
-                                    <i class="ace-icon fa fa-chevron-up"></i>
-                                </a>
-                            </div>
                         </div>
 
                         <div class="widget-body">
@@ -123,6 +118,12 @@
                             </div><!-- /.widget-main -->
                         </div><!-- /.widget-body -->
                     </div><!-- /.widget-box -->
+
+                    <div class="space-12"></div>
+
+                    <div class="hr hr2 hr-double"></div>
+
+                    <div class="space-12"></div>
                 </div><!-- /.col -->
             </div>
     </div>
@@ -136,7 +137,7 @@
             _this.drawSaleChart();
         },
         methods:{
-            drawSaleChart(){
+            drawSaleChart() {
                 // 生成随机两组数据
                 let d1 = [];
                 for (let i = 0; i < 30; i += 1) {
@@ -146,15 +147,11 @@
                 for (let i = 0; i < 30; i += 1) {
                     d2.push([i + 1, 1900 + Math.floor((Math.random()*100)+1)]);
                 }
-                let d3 = [];
-                for (let i = 0; i < 30; i += 1) {
-                    d3.push([i + 1, 1900 + Math.floor((Math.random()*100)+1)]);
-                }
-                var sales_charts = $('#sales-charts').css({'width':'100%' , 'height':'220px'});
+
+                let sales_charts = $('#sales-charts').css({'width':'100%' , 'height':'220px'});
                 $.plot("#sales-charts", [
-                    { label: "Domains", data: d1 },
-                    { label: "Hosting", data: d2 },
-                    { label: "Services", data: d3 }
+                    { label: "最近30天", data: d1 },
+                    { label: "上一周期", data: d2 },
                 ], {
                     hoverable: true,
                     shadowSize: 0,
@@ -166,10 +163,7 @@
                         tickLength: 0
                     },
                     yaxis: {
-                        ticks: 10,
-                        min: -2,
-                        max: 2,
-                        tickDecimals: 3
+                        tickLength: 0
                     },
                     grid: {
                         backgroundColor: { colors: [ "#fff", "#fff" ] },
@@ -177,7 +171,7 @@
                         borderColor:'#555'
                     }
                 });
-            }
+            },
 
         }
 
